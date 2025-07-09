@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>甲醇运行班组排班管理系统</title>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+      }
+
+      body {
+        background-color: #f8f8f8;
+        color: #333;
+        line-height: 1.6;
+        padding: 20px;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 98%;
+        margin: 0 auto;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        border: 1px solid #e0e0e0;
+      }
+
+      header {
+        background: white;
+        color: #333;
+        padding: 20px 30px;
+        text-align: center;
+        position: relative;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      h1 {
+        font-size: 28px;
+        margin-bottom: 5px;
+        letter-spacing: 1px;
+        color: #2c3e50;
+      }
+
+      .subtitle {
+        font-size: 16px;
+        opacity: 0.8;
+        color: #7f8c8d;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        background: white;
+        border-bottom: 1px solid #e0e0e0;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn-primary {
+        background: #3498db;
+        color: white;
+        box-shadow: 0 2px 6px rgba(52, 152, 219, 0.2);
+      }
+
+      .btn-primary:hover {
+        background: #2980b9;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+      }
+
+      .btn-orange {
+        background: #e67e22;
+        color: white;
+        box-shadow: 0 2px 6px rgba(230, 126, 34, 0.2);
+      }
+
+      .btn-orange:hover {
+        background: #d35400;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(230, 126, 34, 0.3);
+      }
+
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white;
+        min-width: 180px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.12);
+        z-index: 10000;
+        border-radius: 6px;
+        overflow: hidden;
+        margin-top: 5px;
+        border: 1px solid #e0e0e0;
+      }
+
+      .dropdown-content a {
+        color: #333;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        font-size: 14px;
+        transition: background-color 0.3s;
+      }
+
+      .dropdown-content a:hover {
+        background-color: #f5f5f5;
+      }
+
+      .dropdown.active .dropdown-content {
+        display: block;
+      }
+
+      .dropdown.active .btn-orange {
+        background: #d35400;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(230, 126, 34, 0.3);
+      }
+
+      .dropdown-content a.selected {
+        background-color: #e8f5e9;
+        font-weight: 600;
+      }
+
+      .stats {
+        display: flex;
+        gap: 20px;
+        background: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        flex-wrap: wrap;
+        border: 1px solid #e0e0e0;
+      }
+
+      .stat-item {
+        text-align: center;
+        min-width: 80px;
+      }
+
+      .stat-value {
+        font-size: 22px;
+        font-weight: 700;
+        color: #2c3e50;
+      }
+
+      .stat-label {
+        font-size: 13px;
+        color: #7f8c8d;
+      }
+
+      .table-container {
+        overflow-x: auto;
+        padding: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 1200px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      th,
+      td {
+        padding: 12px 8px;
+        text-align: center;
+        border: 1px solid #e0e0e0;
+      }
+
+      thead th {
+        background: white;
+        color: #2c3e50;
+        font-weight: 600;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 2px solid #e0e0e0;
+      }
+
+      tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      tbody tr:hover {
+        background-color: #f0f0f0;
+      }
+
+      .employee-name {
+        font-weight: 600;
+        color: #2c3e50;
+      }
+
+      .shift-cell {
+        position: relative;
+        height: 40px;
+      }
+
+      .shift-select {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        padding: 0 8px;
+        font-size: 14px;
+        background: white;
+        outline: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        min-width: 60px;
+      }
+
+      .shift-select:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+      }
+
+      .day-off {
+        background-color: #e8f5e9;
+      }
+
+      .night-shift {
+        background-color: #e3f2fd;
+      }
+
+      .overtime {
+        background-color: #fff8e1;
+      }
+
+      .adjust-shift {
+        background-color: #f3e5f5;
+      }
+
+      .total-cell {
+        font-weight: 700;
+        background-color: #f5f5f5;
+      }
+
+      .summary-row td {
+        background-color: #f5f5f5;
+        font-weight: 600;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 25px;
+        color: #7f8c8d;
+        font-size: 14px;
+        border-top: 1px solid #e0e0e0;
+        background: white;
+      }
+
+      .month-selector {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: white;
+        padding: 8px 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e0e0e0;
+      }
+
+      .month-selector select {
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #e0e0e0;
+        font-size: 14px;
+        outline: none;
+        cursor: pointer;
+        min-width: 120px;
+      }
+
+      @media (max-width: 768px) {
+        .controls {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .stats {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>甲醇运行班组排班管理系统</h1>
+        <div class="subtitle" id="monthTitle"></div>
+      </header>
+
+      <div class="controls">
+        <div class="month-selector">
+          <span>选择月份：</span>
+          <select id="monthSelect">
+            <option value="" disabled selected>请选择月份</option>
+            <optgroup label="2025年">
+              <option value="2025-01">2025年1月</option>
+              <option value="2025-02">2025年2月</option>
+              <option value="2025-03">2025年3月</option>
+              <option value="2025-04">2025年4月</option>
+              <option value="2025-05">2025年5月</option>
+              <option value="2025-06">2025年6月</option>
+              <option value="2025-07">2025年7月</option>
+              <option value="2025-08">2025年8月</option>
+              <option value="2025-09">2025年9月</option>
+              <option value="2025-10">2025年10月</option>
+              <option value="2025-11">2025年11月</option>
+              <option value="2025-12">2025年12月</option>
+            </optgroup>
+            <optgroup label="2026年">
+              <option value="2026-01">2026年1月</option>
+              <option value="2026-02">2026年2月</option>
+              <option value="2026-03">2026年3月</option>
+              <option value="2026-04">2026年4月</option>
+              <option value="2026-05">2026年5月</option>
+              <option value="2026-06">2026年6月</option>
+              <option value="2026-07">2026年7月</option>
+              <option value="2026-08">2026年8月</option>
+              <option value="2026-09">2026年9月</option>
+              <option value="2026-10">2026年10月</option>
+              <option value="2026-11">2026年11月</option>
+              <option value="2026-12">2026年12月</option>
+            </optgroup>
+            <optgroup label="2027年">
+              <option value="2027-01">2027年1月</option>
+              <option value="2027-02">2027年2月</option>
+              <option value="2027-03">2027年3月</option>
+              <option value="2027-04">2027年4月</option>
+              <option value="2027-05">2027年5月</option>
+              <option value="2027-06">2027年6月</option>
+              <option value="2027-07">2027年7月</option>
+              <option value="2027-08">2027年8月</option>
+              <option value="2027-09">2027年9月</option>
+              <option value="2027-10">2027年10月</option>
+              <option value="2027-11">2027年11月</option>
+              <option value="2027-12">2027年12月</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="stats">
+          <div class="stat-item">
+            <div class="stat-value" id="totalEmployees">16</div>
+            <div class="stat-label">值班人员</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="totalDays">30</div>
+            <div class="stat-label">排班天数</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="totalOffDays">0</div>
+            <div class="stat-label">总休息天数</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="totalAdjustDays">0</div>
+            <div class="stat-label">总调休天数</div>
+          </div>
+        </div>
+
+        <div class="dropdown">
+          <button class="btn btn-orange" id="exportDropdownBtn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"
+              />
+              <path
+                d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"
+              />
+            </svg>
+            导出排班表
+          </button>
+          <div class="dropdown-content">
+            <a href="#" id="exportPdf">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+                style="margin-right: 8px"
+              >
+                <path
+                  d="M5.523 10.424q.21-.124.459-.238a8 8 0 0 1-.45.606c-.28.337-.498.516-.635.572l-.262.066a1 1 0 0 1-.125-.17 2 2 0 0 1-.128-.272 7 7 0 0 1-.037-.289l.01-.17q.03-.17.093-.353a8 8 0 0 1 2.48-.513m2.943.227q.178.038.364.062a8 8 0 0 1-.19-.238c-.251-.318-.514-.64-.723-.828a3 3 0 0 0-.214-.227 1 1 0 0 0-.078-.069l-.003-.002-.001-.001v.001l.258.065q.213.054.49.13m-1.027-.24q-.3-.035-.554-.08a20 20 0 0 0 .126-.313 4 4 0 0 0-.072-.011 7 7 0 0 0-.34-.04l-.142-.012q-.122-.01-.25-.02a8 8 0 0 1-.273-.027l-.081-.01a3 3 0 0 0-.298-.024 1 1 0 0 0-.109.008l-.001.002v.001l.06.027a3 3 0 0 1 .217.065q.095.04.201.08a7 7 0 0 1 .49.174 7 7 0 0 1 .456.233 3 3 0 0 0 .154.075l.047.018.01.004.003.001z"
+                />
+                <path
+                  d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5z"
+                />
+              </svg>
+              导出为PDF
+            </a>
+            <a href="#" id="exportExcel">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+                style="margin-right: 8px"
+              >
+                <path
+                  d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"
+                />
+                <path
+                  d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"
+                />
+              </svg>
+              导出为Excel
+            </a>
+            <a href="#" id="exportImage">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+                style="margin-right: 8px"
+              >
+                <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                <path
+                  d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"
+                />
+              </svg>
+              导出为图片
+            </a>
+          </div>
+        </div>
+
+        <button id="saveBtn" class="btn btn-primary">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1z"
+            />
+          </svg>
+          保存HTML网页
+        </button>
+      </div>
+
+      <div class="table-container">
+        <table id="scheduleTable">
+          <thead>
+            <tr id="dateHeaderRow1">
+              <th rowspan="3">序号</th>
+              <th rowspan="3">姓名</th>
+              <th colspan="30" id="dateRangeHeader">日期</th>
+              <th rowspan="3">休息天数</th>
+            </tr>
+            <tr id="dateHeaderRow2">
+              <!-- 日期列会通过JavaScript动态生成 -->
+            </tr>
+            <tr id="dayHeaderRow">
+              <!-- 星期列会通过JavaScript动态生成 -->
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 员工排班数据会通过JavaScript动态生成 -->
+          </tbody>
+          <tfoot>
+            <tr class="summary-row">
+              <td colspan="2">休息人数</td>
+              <!-- 休息人数列会通过JavaScript动态生成 -->
+            </tr>
+            <tr class="summary-row">
+              <td colspan="2">调休人数</td>
+              <!-- 调休人数列会通过JavaScript动态生成 -->
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="footer">
+        <p>
+          甲醇运行班组排班管理系统 &copy; 2025 | 数据更新于
+          <span id="updateDate">2025-07-09</span>
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // 员工排班数据
+      const scheduleData = [
+        { id: 1, name: "闫忠孝", shifts: [] },
+        { id: 2, name: "雷兴伟", shifts: [] },
+        { id: 3, name: "郑仕龙", shifts: [] },
+        { id: 4, name: "王照卓", shifts: [] },
+        { id: 5, name: "罗鑫", shifts: [] },
+        { id: 6, name: "王栋永", shifts: [] },
+        { id: 7, name: "段玉俊", shifts: [] },
+        { id: 8, name: "胡荣杰", shifts: [] },
+        { id: 9, name: "郝亚东", shifts: [] },
+        { id: 10, name: "张宇杰", shifts: [] },
+        { id: 11, name: "郝瑞", shifts: [] },
+        { id: 12, name: "霍壮伟", shifts: [] },
+        { id: 13, name: "田志胜", shifts: [] },
+        { id: 14, name: "杜飞", shifts: [] },
+        { id: 15, name: "李宁", shifts: [] },
+        { id: 16, name: "杜佳飞", shifts: [] },
+      ];
+
+      // 班次选项
+      const shiftOptions = ["", "夜", "加", "调", "休"];
+
+      // 当前月份和天数
+      let currentMonth = "2025-06";
+      let daysInMonth = 30;
+
+      // 获取月份的天数
+      function getDaysInMonth(year, month) {
+        return new Date(year, month, 0).getDate();
+      }
+
+      // 更新日期表头
+      function updateDateHeaders() {
+        const [year, month] = currentMonth.split("-").map(Number);
+        daysInMonth = getDaysInMonth(year, month);
+
+        // 更新月份标题
+        document.getElementById(
+          "monthTitle"
+        ).textContent = `${year}年${month}月`;
+
+        // 更新总天数显示
+        document.getElementById("totalDays").textContent = daysInMonth;
+
+        // 更新日期范围表头
+        document.getElementById("dateRangeHeader").colSpan = daysInMonth;
+
+        // 更新日期数字行
+        const dateHeaderRow2 = document.getElementById("dateHeaderRow2");
+        dateHeaderRow2.innerHTML = "";
+
+        for (let day = 1; day <= daysInMonth; day++) {
+          const th = document.createElement("th");
+          th.textContent = day;
+          dateHeaderRow2.appendChild(th);
+        }
+
+        // 更新星期行
+        const dayHeaderRow = document.getElementById("dayHeaderRow");
+        dayHeaderRow.innerHTML = "";
+
+        const weekDays = ["日", "一", "二", "三", "四", "五", "六"];
+        for (let day = 1; day <= daysInMonth; day++) {
+          const date = new Date(year, month - 1, day);
+          const dayOfWeek = weekDays[date.getDay()];
+
+          const th = document.createElement("th");
+          th.textContent = dayOfWeek;
+          dayHeaderRow.appendChild(th);
+        }
+
+        // 更新数据更新时间
+        const now = new Date();
+        const formattedDate = `${now.getFullYear()}-${String(
+          now.getMonth() + 1
+        ).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+        document.getElementById("updateDate").textContent = formattedDate;
+      }
+
+      // 初始化表格
+      function initScheduleTable() {
+        const tbody = document.querySelector("#scheduleTable tbody");
+        tbody.innerHTML = "";
+
+        // 添加员工行
+        scheduleData.forEach((employee) => {
+          const row = document.createElement("tr");
+
+          // 序号
+          const idCell = document.createElement("td");
+          idCell.textContent = employee.id;
+          row.appendChild(idCell);
+
+          // 姓名
+          const nameCell = document.createElement("td");
+          nameCell.textContent = employee.name;
+          nameCell.className = "employee-name";
+          row.appendChild(nameCell);
+
+          // 班次选择
+          let offDays = 0;
+
+          for (let day = 0; day < daysInMonth; day++) {
+            const shiftCell = document.createElement("td");
+            shiftCell.className = "shift-cell";
+
+            const select = document.createElement("select");
+            select.className = "shift-select";
+
+            // 添加默认未选择选项
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.textContent = "—";
+            defaultOption.selected = true;
+            select.appendChild(defaultOption);
+
+            // 添加其他选项
+            shiftOptions
+              .filter((opt) => opt !== "")
+              .forEach((option) => {
+                const optionElem = document.createElement("option");
+                optionElem.value = option;
+                optionElem.textContent = option;
+                select.appendChild(optionElem);
+              });
+
+            // 使用员工数据中的班次，如果天数超出则使用空值
+            if (day < employee.shifts.length && employee.shifts[day]) {
+              select.value = employee.shifts[day];
+              defaultOption.selected = false;
+            }
+
+            shiftCell.appendChild(select);
+
+            // 添加样式
+            const shift = select.value;
+            if (shift === "休" || shift === "加") offDays++;
+            if (shift === "休") shiftCell.classList.add("day-off");
+            if (shift === "夜") shiftCell.classList.add("night-shift");
+            if (shift === "加") shiftCell.classList.add("overtime");
+            if (shift === "调") shiftCell.classList.add("adjust-shift");
+
+            // 添加事件监听器
+            select.addEventListener("change", function () {
+              const newShift = this.value;
+
+              // 更新单元格样式
+              shiftCell.className = "shift-cell";
+              if (newShift === "休") shiftCell.classList.add("day-off");
+              if (newShift === "夜") shiftCell.classList.add("night-shift");
+              if (newShift === "加") shiftCell.classList.add("overtime");
+              if (newShift === "调") shiftCell.classList.add("adjust-shift");
+
+              // 重新计算休息天数
+              calculateOffDays(row);
+              // 重新计算每日休息/调休人数
+              calculateDailyStats();
+              // 更新统计数据
+              updateStatistics();
+            });
+
+            row.appendChild(shiftCell);
+          }
+
+          // 休息天数
+          const offDaysCell = document.createElement("td");
+          offDaysCell.textContent = offDays;
+          offDaysCell.className = "total-cell";
+          row.appendChild(offDaysCell);
+
+          tbody.appendChild(row);
+        });
+
+        // 初始化每日统计
+        calculateDailyStats();
+        // 更新统计数据
+        updateStatistics();
+      }
+
+      // 计算休息天数
+      function calculateOffDays(row) {
+        let offDays = 0;
+        const shiftCells = row.querySelectorAll(".shift-cell");
+
+        shiftCells.forEach((cell) => {
+          const shift = cell.querySelector("select").value;
+          if (shift === "休" || shift === "加") {
+            offDays++;
+          }
+        });
+
+        row.querySelector("td:last-child").textContent = offDays;
+        return offDays;
+      }
+
+      // 计算每日休息/调休人数
+      function calculateDailyStats() {
+        const restRow = document.querySelector(".summary-row:first-child");
+        const adjustRow = document.querySelector(".summary-row:last-child");
+
+        // 清除原有数据
+        restRow.innerHTML = '<td colspan="2">休息人数</td>';
+        adjustRow.innerHTML = '<td colspan="2">调休人数</td>';
+
+        // 计算每日数据
+        for (let day = 0; day < daysInMonth; day++) {
+          let restCount = 0;
+          let adjustCount = 0;
+
+          scheduleData.forEach((employee, index) => {
+            const row = document.querySelector(
+              `#scheduleTable tbody tr:nth-child(${index + 1})`
+            );
+            const shiftSelects = row.querySelectorAll(".shift-cell select");
+            if (day < shiftSelects.length) {
+              const shift = shiftSelects[day].value;
+              if (shift === "休") restCount++;
+              if (shift === "调") adjustCount++;
+            }
+          });
+
+          // 休息人数
+          const restCell = document.createElement("td");
+          restCell.textContent = restCount;
+          restCell.className = "total-cell";
+          restRow.appendChild(restCell);
+
+          // 调休人数
+          const adjustCell = document.createElement("td");
+          adjustCell.textContent = adjustCount;
+          adjustCell.className = "total-cell";
+          adjustRow.appendChild(adjustCell);
+        }
+      }
+
+      // 更新统计数据
+      function updateStatistics() {
+        let totalOffDays = 0;
+        let totalAdjustDays = 0;
+
+        document.querySelectorAll("#scheduleTable tbody tr").forEach((row) => {
+          const shiftCells = row.querySelectorAll(".shift-cell");
+          shiftCells.forEach((cell) => {
+            const shift = cell.querySelector("select").value;
+            if (shift === "休") totalOffDays++;
+            if (shift === "调") totalAdjustDays++;
+          });
+        });
+
+        document.getElementById("totalOffDays").textContent = totalOffDays;
+        document.getElementById("totalAdjustDays").textContent =
+          totalAdjustDays;
+      }
+
+      // 保存为HTML文件
+      function saveAsHtml() {
+        const htmlContent = document.documentElement.outerHTML;
+        const blob = new Blob([htmlContent], { type: "text/html" });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `甲醇运行班组${currentMonth.split("-")[0]}年${
+          currentMonth.split("-")[1]
+        }月份排班表.html`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }
+      // 保存为图片（完整页面布局）
+      function saveAsImage() {
+        const element = document.querySelector(".container");
+
+        html2canvas(element, {
+          scale: 0.5,
+          width: element.scrollWidth,
+          height: element.scrollHeight,
+          scrollX: 0,
+          scrollY: 0,
+          windowWidth: element.scrollWidth,
+          windowHeight: element.scrollHeight,
+          logging: true,
+          useCORS: true,
+          allowTaint: true,
+        }).then((canvas) => {
+          const link = document.createElement("a");
+          link.download = `甲醇运行班组${currentMonth.split("-")[0]}年${
+            currentMonth.split("-")[1]
+          }月份排班表.png`;
+          link.href = canvas.toDataURL("image/png");
+          link.click();
+        });
+      }
+
+      // 导出为PDF（强制横向 + 完整布局）
+      function exportToPdf() {
+        const { jsPDF } = window.jspdf;
+        const element = document.querySelector(".container");
+
+        html2canvas(element, {
+          scale: 0.5,
+          width: element.scrollWidth,
+          height: element.scrollHeight,
+          scrollX: 0,
+          scrollY: 0,
+          windowWidth: element.scrollWidth,
+          windowHeight: element.scrollHeight,
+          logging: true,
+          useCORS: true,
+          allowTaint: true,
+        }).then((canvas) => {
+          const imgData = canvas.toDataURL("image/png");
+
+          // 强制横向设置
+          const pdfWidth = 297; // A3横向宽度(mm)
+          const pdfHeight = 210; // A3横向高度(mm)
+
+          // 计算图像适应尺寸（保持宽高比）
+          const imgRatio = canvas.width / canvas.height;
+          const pdfRatio = pdfWidth / pdfHeight;
+
+          let finalWidth, finalHeight;
+          if (imgRatio > pdfRatio) {
+            // 图像比PDF更宽
+            finalWidth = pdfWidth;
+            finalHeight = pdfWidth / imgRatio;
+          } else {
+            // 图像比PDF更高
+            finalHeight = pdfHeight;
+            finalWidth = pdfHeight * imgRatio;
+          }
+
+          const doc = new jsPDF({
+            orientation: "landscape", // 强制横向
+            unit: "mm",
+          });
+
+          // 居中显示
+          const xOffset = (pdfWidth - finalWidth) / 2;
+          const yOffset = (pdfHeight - finalHeight) / 2;
+
+          doc.addImage(
+            imgData,
+            "PNG",
+            xOffset,
+            yOffset,
+            finalWidth,
+            finalHeight
+          );
+          doc.save(
+            `甲醇运行班组${currentMonth.split("-")[0]}年${
+              currentMonth.split("-")[1]
+            }月份排班表.pdf`
+          );
+        });
+      }
+
+      // 导出为Excel - 完整导出当前编辑数据和统计信息
+      function exportToExcel() {
+        // 创建工作簿
+        const wb = XLSX.utils.book_new();
+
+        // 1. 创建排班数据工作表
+        const scheduleData = getCurrentScheduleData();
+        const dailyStats = getDailyStatistics();
+
+        // 准备排班表数据
+        const wsData = [];
+
+        // 添加主标题
+        const title = `甲醇运行班组${currentMonth.split("-")[0]}年${
+          currentMonth.split("-")[1]
+        }月份排班表`;
+        wsData.push([title], []);
+
+        // 添加表头
+        const headers = ["序号", "姓名"];
+        for (let i = 1; i <= daysInMonth; i++) {
+          headers.push(i.toString());
+        }
+        headers.push("休息天数");
+        wsData.push(headers);
+
+        // 添加员工数据
+        scheduleData.forEach((employee) => {
+          const row = [employee.id, employee.name];
+          employee.shifts.forEach((shift) => {
+            row.push(shift || "—");
+          });
+          // 计算休息天数
+          const offDays = employee.shifts.filter(
+            (s) => s === "休" || s === "加"
+          ).length;
+          row.push(offDays);
+          wsData.push(row);
+        });
+
+        // 添加空行分隔
+        wsData.push([]);
+
+        // 添加每日统计
+
+        wsData.push(["休息人数", "", ...dailyStats.restDays]);
+        wsData.push(["调休人数", "", ...dailyStats.adjustDays]);
+
+        // 创建工作表
+        const ws = XLSX.utils.aoa_to_sheet(wsData);
+
+        // 设置列宽
+        const colWidths = [
+          { wch: 8 }, // 序号
+          { wch: 10 }, // 姓名
+          ...Array(daysInMonth).fill({ wch: 5 }), // 日期列
+          { wch: 10 }, // 休息天数
+        ];
+        ws["!cols"] = colWidths;
+
+        // 添加工作表到工作簿
+        XLSX.utils.book_append_sheet(wb, ws, "排班表");
+
+        // 2. 创建统计汇总工作表
+        const summaryData = [
+          [title],
+          [],
+          ["统计汇总"],
+          [],
+          ["总人数", scheduleData.length],
+          ["排班天数", daysInMonth],
+          ["总休息天数", document.getElementById("totalOffDays").textContent],
+          [
+            "总调休天数",
+            document.getElementById("totalAdjustDays").textContent,
+          ],
+          [],
+          ["每日休息人数统计"],
+          ["日期", ...Array.from({ length: daysInMonth }, (_, i) => i + 1)],
+          ["休息人数", ...dailyStats.restDays],
+          [],
+          ["每日调休人数统计"],
+          ["日期", ...Array.from({ length: daysInMonth }, (_, i) => i + 1)],
+          ["调休人数", ...dailyStats.adjustDays],
+        ];
+
+        const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
+        wsSummary["!cols"] = [
+          { wch: 15 },
+          ...Array(daysInMonth).fill({ wch: 8 }),
+        ];
+        XLSX.utils.book_append_sheet(wb, wsSummary, "统计汇总");
+
+        // 导出文件
+        XLSX.writeFile(wb, `${title}.xlsx`);
+      }
+
+      // 获取当前排班数据
+      function getCurrentScheduleData() {
+        const currentData = [];
+        const rows = document.querySelectorAll("#scheduleTable tbody tr");
+
+        rows.forEach((row) => {
+          const id = parseInt(row.cells[0].textContent);
+          const name = row.cells[1].textContent;
+          const shifts = [];
+
+          // 获取每天的班次选择
+          for (let i = 2; i < row.cells.length - 1; i++) {
+            const select = row.cells[i].querySelector("select");
+            shifts.push(select ? select.value : "");
+          }
+
+          currentData.push({
+            id,
+            name,
+            shifts,
+          });
+        });
+
+        return currentData;
+      }
+
+      // 获取每日统计信息
+      function getDailyStatistics() {
+        const restDays = [];
+        const adjustDays = [];
+
+        const restRow = document.querySelector(".summary-row:first-child");
+        const adjustRow = document.querySelector(".summary-row:last-child");
+        //
+        // 获取休息人数数据
+        for (let i = 2; i < restRow.cells.length; i++) {
+          restDays.push(parseInt(restRow.cells[i].textContent) || 0);
+        }
+
+        // 获取调休人数数据
+        for (let i = 2; i < adjustRow.cells.length; i++) {
+          adjustDays.push(parseInt(adjustRow.cells[i].textContent) || 0);
+        }
+
+        return {
+          restDays,
+          adjustDays,
+        };
+      }
+
+      // [Rest of the code remains the same]
+
+      // 初始化（保持不变）
+      document.addEventListener("DOMContentLoaded", function () {
+        // 设置默认月份为2025年8月
+        document.getElementById("monthSelect").value = "2025-08";
+        currentMonth = "2025-08";
+
+        updateDateHeaders();
+        initScheduleTable();
+
+        // 绑定保存按钮事件
+        document
+          .getElementById("saveBtn")
+          .addEventListener("click", saveAsHtml);
+
+        // 绑定导出按钮事件
+        document
+          .getElementById("exportPdf")
+          .addEventListener("click", function (e) {
+            e.preventDefault();
+            exportToPdf();
+            setSelectedExportOption(this);
+          });
+        document
+          .getElementById("exportExcel")
+          .addEventListener("click", function (e) {
+            e.preventDefault();
+            exportToExcel();
+            setSelectedExportOption(this);
+          });
+        document
+          .getElementById("exportImage")
+          .addEventListener("click", function (e) {
+            e.preventDefault();
+            saveAsImage();
+            setSelectedExportOption(this);
+          });
+
+        // 月份选择变化事件
+        document
+          .getElementById("monthSelect")
+          .addEventListener("change", function () {
+            currentMonth = this.value;
+            updateDateHeaders();
+            initScheduleTable();
+          });
+
+        // 下拉菜单自保持功能
+        const dropdown = document.querySelector(".dropdown");
+        const dropdownBtn = document.getElementById("exportDropdownBtn");
+
+        dropdownBtn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          dropdown.classList.toggle("active");
+        });
+
+        // 点击页面其他地方关闭下拉菜单
+        document.addEventListener("click", function () {
+          dropdown.classList.remove("active");
+        });
+
+        // 阻止下拉菜单项的点击事件冒泡到document
+        document.querySelectorAll(".dropdown-content a").forEach((item) => {
+          item.addEventListener("click", function (e) {
+            e.stopPropagation();
+            // 点击后不自动关闭下拉菜单
+          });
+        });
+      });
+
+      // 设置选中的导出选项
+      function setSelectedExportOption(element) {
+        // 移除所有选项的选中状态
+        document.querySelectorAll(".dropdown-content a").forEach((item) => {
+          item.classList.remove("selected");
+        });
+
+        // 添加当前选项的选中状态
+        element.classList.add("selected");
+      }
+    </script>
+  </body>
+</html>
