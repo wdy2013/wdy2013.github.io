@@ -1,1064 +1,1138 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>月度考试题目分享</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 800px;
-            background-color: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .header {
-            background: linear-gradient(to right, #f8d486, #f5a623);
-            color: #333;
-            padding: 30px 40px;
-            position: relative;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        /* 标题区域样式 - 修改为垂直对齐 */
-        .title-container {
-            display: flex;
-            align-items: center;
-            height: 100%;
-            gap: 10px;
-        }
-        
-        /* 主页图标容器 - 新增毛玻璃效果 */
-        .home-container {
-            backdrop-filter: blur(8px);
-            background-color: rgba(255, 255, 255, 0.45);
-            border-radius: 999px;
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 
-                0 2px 4px rgba(0, 0, 0, 0.05),
-                inset 0 0 10px rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            width: 36px;
-            height: 36px;
-            cursor: pointer;
-        }
-        
-        .home-icon {
-            width: 20px;
-            height: 20px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>') no-repeat center;
-            opacity: 0.7;
-        }
-        
-        .divider {
-            height: 24px;
-            width: 1px;
-            background-color: rgba(0, 0, 0, 0.1);
-            margin: 0 5px;
-        }
-        
-        .title-text {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            line-height: 1.3;
-        }
-        
-        .breadcrumb {
-            font-size: 12px;
-            color: #555;
-        }
-        
-        .main-title {
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-        }
-        
-        /* 导航下拉菜单样式 - 修改为统一高度 */
-        .nav-container {
-            position: relative;
-            display: flex;
-            gap: 15px;
-            z-index: 1000;
-            align-items: center;
-            height: 36px;
-        }
-        
-        .nav-dropdown {
-            backdrop-filter: blur(8px);
-            background-color: rgba(255, 255, 255, 0.45);
-            border-radius: 999px;
-            padding: 0 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 
-                0 2px 4px rgba(0, 0, 0, 0.05),
-                inset 0 0 10px rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            cursor: pointer;
-            position: relative;
-            font-size: 14px;
-            height: 36px;
-        }
-        
-        .nav-dropdown::after {
-            content: "";
-            width: 16px;
-            height: 16px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat center;
-            opacity: 0.7;
-        }
-        
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            z-index: 1001;
-            display: none;
-            padding: 10px 0;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .dropdown-item {
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: background 0.2s;
-            text-align: center;
-        }
-        
-        .dropdown-item:hover {
-            background: #FFECC7;
-        }
-        
-        /* 修复下拉菜单显示问题 */
-        .nav-container:hover .dropdown-menu {
-            display: block;
-        }
-        
-        /* 搜索容器 - 修改为统一高度 */
-        .search-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            backdrop-filter: blur(8px);
-            background-color: rgba(255, 255, 255, 0.45);
-            border-radius: 999px;
-            padding: 0 15px;
-            box-shadow: 
-                0 2px 4px rgba(0, 0, 0, 0.05),
-                inset 0 0 10px rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            height: 36px;
-        }
-        
-        .search-icon {
-            width: 18px;
-            height: 18px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 0 0 1.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 0 0-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 0 0 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>') no-repeat center;
-            opacity: 0.7;
-            cursor: pointer;
-        }
-        
-        .search-input {
-            border: none;
-            background: transparent;
-            outline: none;
-            width: 150px;
-            font-size: 14px;
-            color: #333;
-            padding: 4px 8px;
-            transition: all 0.3s;
-            border-bottom: none !important;
-        }
-        
-        .search-input:focus {
-            width: 180px;
-        }
-        
-        /* 分享按钮样式 - 统一高度 */
-        .share-container {
-            backdrop-filter: blur(8px);
-            background-color: rgba(255, 255, 255, 0.45);
-            border-radius: 999px;
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 
-                0 2px 4px rgba(0, 0, 0, 0.05),
-                inset 0 0 10px rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            cursor: pointer;
-            width: 36px;
-            height: 36px;
-            margin-left: 0;
-        }
-        
-        .share-icon {
-            width: 20px;
-            height: 20px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>') no-repeat center;
-            opacity: 0.7;
-        }
-        
-        /* 分享模态框样式 */
-        .share-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-        }
-        
-        .share-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .share-card {
-            background-color: white;
-            border-radius: 16px;
-            padding: 30px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            position: relative;
-        }
-        
-        .share-title {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #333;
-            text-align: center;
-        }
-        
-        .share-content {
-            margin-bottom: 30px;
-        }
-        
-        .share-question {
-            font-size: 18px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        
-        .share-answer {
-            font-size: 16px;
-            line-height: 1.6;
-            color: #666;
-            padding-left: 20px;
-            border-left: 3px solid #f5a623;
-        }
-        
-        .share-answer-item {
-            display: block;
-            margin-bottom: 10px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
-        }
-        
-        .share-actions {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-        
-        /* 按钮统一样式 */
-        .share-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            color: white;
-            border-radius: 30px;
-            cursor: pointer;
-            border: none;
-            font-size: 16px;
-            transition: all 0.3s;
-            min-width: 100px;
-            justify-content: center;
-        }
-        
-        .share-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        .share-copy {
-            background-color: #67c23a;
-        }
-        
-        .share-copy:hover {
-            background-color: #5daf34;
-        }
-        
-        .share-download {
-            background-color: #f5a623;
-        }
-        
-        .share-download:hover {
-            background-color: #e69500;
-        }
-        
-        .share-share {
-            background-color: #409eff;
-        }
-        
-        .share-share:hover {
-            background-color: #3a8ee6;
-        }
-        
-        .btn-icon {
-            width: 20px;
-            height: 20px;
-        }
-        
-        .copy-icon {
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>') no-repeat center;
-        }
-        
-        .download-icon {
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>') no-repeat center;
-        }
-        
-        .share-btn-icon {
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>') no-repeat center;
-        }
-        
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 24px;
-            height: 24px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>') no-repeat center;
-            opacity: 0.5;
-            cursor: pointer;
-        }
-        
-        .content {
-            padding: 40px;
-        }
-        
-        .question-container {
-            position: relative;
-            margin-bottom: 40px;
-            padding-bottom: 25px;
-        }
-        
-        /* 修复分割线位置 - 题目和选项之间 */
-        .question-divider {
-            border-bottom: 1px dashed rgba(0,0,0,0.1);
-            margin-bottom: 25px;
-            padding-bottom: 25px;
-        }
-        
+      @font-face {
+        font-family: "AlibabaPuHuiTi";
+        src: url("https://puhuiti.oss-cn-hangzhou.aliyuncs.com/AlibabaPuHuiTi-3/AlibabaPuHuiTi-3-45-Light/AlibabaPuHuiTi-3-45-Light.woff2")
+          format("woff2");
+        font-weight: 300;
+        font-style: normal;
+      }
+      body {
+        font-family: "AlibabaPuHuiTi", sans-serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 800px;
+        background-color: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .header {
+        background: linear-gradient(to right, #f8d486, #f5a623);
+        color: #333;
+        padding: 30px 40px;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      /* 标题区域样式 - 修改为垂直对齐 */
+      .title-container {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        gap: 10px;
+      }
+
+      /* 主页图标容器 - 新增毛玻璃效果 */
+      .home-container {
+        backdrop-filter: blur(8px);
+        background-color: rgba(255, 255, 255, 0.45);
+        border-radius: 999px;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05),
+          inset 0 0 10px rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+      }
+
+      .home-icon {
+        width: 20px;
+        height: 20px;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>')
+          no-repeat center;
+        opacity: 0.7;
+      }
+
+      .divider {
+        height: 24px;
+        width: 1px;
+        background-color: rgba(0, 0, 0, 0.1);
+        margin: 0 5px;
+      }
+
+      .title-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        line-height: 1.3;
+      }
+
+      .breadcrumb {
+        font-size: 12px;
+        color: #555;
+      }
+
+      .main-title {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      /* 导航下拉菜单样式 - 修改为统一高度 */
+      .nav-container {
+        position: relative;
+        display: flex;
+        gap: 15px;
+        z-index: 1000;
+        align-items: center;
+        height: 36px;
+      }
+
+      .nav-dropdown {
+        backdrop-filter: blur(8px);
+        background-color: rgba(255, 255, 255, 0.45);
+        border-radius: 999px;
+        padding: 0 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05),
+          inset 0 0 10px rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        cursor: pointer;
+        position: relative;
+        font-size: 14px;
+        height: 36px;
+      }
+
+      .nav-dropdown::after {
+        content: "";
+        width: 16px;
+        height: 16px;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M7 10l5 5 5-5z"/></svg>')
+          no-repeat center;
+        opacity: 0.7;
+      }
+
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        z-index: 1001;
+        display: none;
+        padding: 10px 0;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      .dropdown-item {
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background 0.2s;
+        text-align: center;
+      }
+
+      .dropdown-item:hover {
+        background: #ffecc7;
+      }
+
+      /* 修复下拉菜单显示问题 */
+      .nav-dropdown:hover .dropdown-menu {
+        display: block;
+      }
+
+      /* 搜索容器 - 修改为统一高度 */
+      .search-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        backdrop-filter: blur(8px);
+        background-color: rgba(255, 255, 255, 0.45);
+        border-radius: 999px;
+        padding: 0 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05),
+          inset 0 0 10px rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        height: 36px;
+      }
+
+      .search-icon {
+        width: 18px;
+        height: 18px;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 0 0 1.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 0 0-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 0 0 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>')
+          no-repeat center;
+        opacity: 0.7;
+        cursor: pointer;
+      }
+
+      .search-input {
+        border: none;
+        background: transparent;
+        outline: none;
+        width: 150px;
+        font-size: 14px;
+        color: #333;
+        padding: 4px 8px;
+        transition: all 0.3s;
+        border-bottom: none !important;
+      }
+
+      .search-input:focus {
+        width: 180px;
+      }
+
+      /* 分享按钮样式 - 统一高度 */
+      .share-container {
+        backdrop-filter: blur(8px);
+        background-color: rgba(255, 255, 255, 0.45);
+        border-radius: 999px;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05),
+          inset 0 0 10px rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        cursor: pointer;
+        width: 36px;
+        height: 36px;
+        margin-left: 0;
+      }
+
+      .share-icon {
+        width: 20px;
+        height: 20px;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>')
+          no-repeat center;
+        opacity: 0.7;
+      }
+
+      /* 分享模态框样式 */
+      .share-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s;
+      }
+
+      .share-modal.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .share-card {
+        background-color: white;
+        border-radius: 16px;
+        padding: 30px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        position: relative;
+      }
+
+      .share-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #333;
+        text-align: center;
+      }
+
+      .share-content {
+        margin-bottom: 30px;
+      }
+
+      .share-question {
+        font-size: 18px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .share-answer {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #666;
+        padding-left: 20px;
+        border-left: 3px solid #f5a623;
+      }
+
+      .share-answer-item {
+        display: block;
+        margin-bottom: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+      }
+
+      .share-actions {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      /* 按钮统一样式 */
+      .share-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        color: white;
+        border-radius: 30px;
+        cursor: pointer;
+        border: none;
+        font-size: 16px;
+        transition: all 0.3s;
+        min-width: 100px;
+        justify-content: center;
+      }
+
+      .share-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .share-copy {
+        background-color: #67c23a;
+      }
+
+      .share-copy:hover {
+        background-color: #5daf34;
+      }
+
+      .share-download {
+        background-color: #f5a623;
+      }
+
+      .share-download:hover {
+        background-color: #e69500;
+      }
+
+      .share-share {
+        background-color: #409eff;
+      }
+
+      .share-share:hover {
+        background-color: #3a8ee6;
+      }
+
+      .btn-icon {
+        width: 20px;
+        height: 20px;
+      }
+
+      .copy-icon {
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>')
+          no-repeat center;
+      }
+
+      .download-icon {
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>')
+          no-repeat center;
+      }
+
+      .share-btn-icon {
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>')
+          no-repeat center;
+      }
+
+      .close-modal {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 24px;
+        height: 24px;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>')
+          no-repeat center;
+        opacity: 0.5;
+        cursor: pointer;
+      }
+
+      .content {
+        padding: 40px;
+      }
+
+      .question-container {
+        position: relative;
+        margin-bottom: 40px;
+        padding-bottom: 25px;
+      }
+
+      /* 修复分割线位置 - 题目和选项之间 */
+      .question-divider {
+        border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+        margin-bottom: 25px;
+        padding-bottom: 25px;
+      }
+
+      .question {
+        font-size: clamp(
+          18px,
+          4vw,
+          24px
+        ); /* 响应式字体大小，在小屏幕上使用更小的字体 */
+        line-height: 1.6;
+        color: #333;
+        padding: 0%; /* 左右边距改为百分比，适应不同屏幕宽度 */
+        position: relative;
+        text-indent: 0; /* 移除固定缩进 */
+        margin: 1rem 0; /* 添加适当的上下边距 */
+      }
+
+      /* 可选：为较大屏幕保留特定样式 */
+      @media (min-width: 768px) {
         .question {
-            font-size: 24px;
-            line-height: 1.6;
-            color: #333;
-            padding-left: -100px;
-            position: relative;
-            text-indent: 6ch; 
+          padding-left: -100px; /* 仅在大屏幕上保留左侧大间距 */
+          text-indent: 6ch; /* 仅在大屏幕上使用文本缩进 */
         }
-        
-        .question-type {
-            position: absolute;
-            left: 0;
-            top: 0;
-            background: #FFECC7;
-            color: #DE8006;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 16px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .question-type {
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: #ffecc7;
+        color: #de8006;
+        padding: 8px 20px;
+        border-radius: 30px;
+        font-weight: bold;
+        font-size: 16px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-family: "AlibabaPuHuiTi";
+      }
+
+      .options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      /* 判断题样式 */
+      .judge-options {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .option,
+      .judge-option {
+        padding: 20px;
+        border-radius: 12px;
+        background-color: #f8f9fa;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        border: 1px solid #e1e5eb;
+        position: relative;
+      }
+
+      .judge-option {
+        flex: 1;
+        justify-content: center;
+        font-size: 20px;
+      }
+
+      /* 悬浮态样式调整 */
+      .option:hover,
+      .judge-option:hover {
+        transform: translateY(-3px);
+        background-color: #ffecc7;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .option:hover .option-label,
+      .judge-option:hover .option-label {
+        background-color: #de8006;
+        color: white;
+      }
+
+      /* 选中态样式调整 */
+      .option.correct,
+      .judge-option.correct {
+        background-color: #f0f9eb;
+        border-color: #67c23a;
+        box-shadow: 0 4px 10px rgba(103, 194, 58, 0.2);
+      }
+
+      .option.correct .option-label,
+      .judge-option.correct .option-label {
+        background-color: #67c23a;
+        color: white;
+      }
+
+      .option.correct::after,
+      .judge-option.correct::after {
+        content: "";
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        width: 30px;
+        height: 30px;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2367c23a"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>')
+          no-repeat;
+        opacity: 0.3;
+      }
+
+      .option-label {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 36px;
+        height: 36px;
+        background-color: #e1e5eb;
+        border-radius: 50%;
+        font-weight: bold;
+        margin-right: 15px;
+        flex-shrink: 0;
+        transition: all 0.3s ease;
+      }
+
+      .option-text {
+        font-size: 20px;
+        color: #444;
+      }
+
+      @media (max-width: 600px) {
+        .header {
+          padding: 20px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 15px;
         }
-        
+
+        .nav-container {
+          width: 100%;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          height: auto;
+          gap: 10px;
+        }
+
+        .content {
+          padding: 25px;
+        }
+
+        .question {
+          font-size: 20px;
+          padding-left: 80px;
+        }
+
         .options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+          grid-template-columns: 1fr;
         }
-        
-        /* 判断题样式 */
+
         .judge-options {
-            display: flex;
-            gap: 30px;
-            margin-top: 20px;
+          flex-direction: column;
+          gap: 15px;
         }
-        
-        .option, .judge-option {
-            padding: 20px;
-            border-radius: 12px;
-            background-color: #f8f9fa;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            border: 1px solid #e1e5eb;
-            position: relative;
+
+        .dropdown-menu {
+          width: 100%;
         }
-        
-        .judge-option {
-            flex: 1;
-            justify-content: center;
-            font-size: 20px;
+
+        .search-input {
+          width: 100px;
         }
-        
-        /* 悬浮态样式调整 */
-        .option:hover, .judge-option:hover {
-            transform: translateY(-3px);
-            background-color: #FFECC7;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+        .search-input:focus {
+          width: 120px;
         }
-        
-        .option:hover .option-label, .judge-option:hover .option-label {
-            background-color: #DE8006;
-            color: white;
+
+        .title-text {
+          margin-left: 3px;
         }
-        
-        /* 选中态样式调整 */
-        .option.correct, .judge-option.correct {
-            background-color: #f0f9eb;
-            border-color: #67c23a;
-            box-shadow: 0 4px 10px rgba(103, 194, 58, 0.2);
+
+        .breadcrumb {
+          font-size: 10px;
         }
-        
-        .option.correct .option-label, .judge-option.correct .option-label {
-            background-color: #67c23a;
-            color: white;
+
+        .main-title {
+          font-size: 14px;
         }
-        
-        .option.correct::after, .judge-option.correct::after {
-            content: "";
-            position: absolute;
-            right: 10px;
-            bottom: 10px;
-            width: 30px;
-            height: 30px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2367c23a"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>') no-repeat;
-            opacity: 0.3;
+
+        .share-card {
+          padding: 20px;
         }
-        
-        .option-label {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 36px;
-            height: 36px;
-            background-color: #e1e5eb;
-            border-radius: 50%;
-            font-weight: bold;
-            margin-right: 15px;
-            flex-shrink: 0;
-            transition: all 0.3s ease;
+
+        .share-title {
+          font-size: 18px;
         }
-        
-        .option-text {
-            font-size: 20px;
-            color: #444;
+
+        .share-question {
+          font-size: 16px;
         }
-        
-        @media (max-width: 600px) {
-            .header {
-                padding: 20px;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-            
-            .nav-container {
-                width: 100%;
-                justify-content: space-between;
-                flex-wrap: wrap;
-                height: auto;
-                gap: 10px;
-            }
-            
-            .content {
-                padding: 25px;
-            }
-            
-            .question {
-                font-size: 20px;
-                padding-left: 80px;
-            }
-            
-            .options {
-                grid-template-columns: 1fr;
-            }
-            
-            .judge-options {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .dropdown-menu {
-                width: 100%;
-            }
-            
-            .search-input {
-                width: 100px;
-            }
-            
-            .search-input:focus {
-                width: 120px;
-            }
-            
-            .title-text {
-                margin-left: 3px;
-            }
-            
-            .breadcrumb {
-                font-size: 10px;
-            }
-            
-            .main-title {
-                font-size: 14px;
-            }
-            
-            .share-card {
-                padding: 20px;
-            }
-            
-            .share-title {
-                font-size: 18px;
-            }
-            
-            .share-question {
-                font-size: 16px;
-            }
-            
-            .share-answer {
-                font-size: 14px;
-            }
-            
-            .share-actions {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .share-btn {
-                width: 100%;
-            }
+
+        .share-answer {
+          font-size: 14px;
         }
+
+        .share-actions {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .share-btn {
+          width: 100%;
+        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="header">
-            <div class="title-container">
-                <div class="home-container" id="homeIcon">
-                    <div class="home-icon"></div>
-                </div>
-                <div class="divider"></div>
-                <div class="title-text">
-                    <div class="breadcrumb">宝丰人 › 企业文化践行 › 政策热点学习</div>
-                    <div class="main-title">中华人民共和国安全生产法</div>
-                </div>
-            </div>
-            
-            <div class="nav-container">
-                <div class="nav-dropdown">
-                    <span>题目导航</span>
-                    <div class="dropdown-menu" id="questionMenu">
-                        <!-- 题目导航菜单将通过JS动态生成 -->
-                    </div>
-                </div>
-                
-                <div class="search-container">
-                    <input type="text" class="search-input" id="searchInput" placeholder="搜索...">
-                    <div class="search-icon" id="searchIcon"></div>
-                </div>
-                
-                <div class="share-container" id="shareButton">
-                    <div class="share-icon"></div>
-                </div>
-            </div>
+      <div class="header">
+        <div class="title-container">
+          <div class="home-container" id="homeIcon">
+            <div class="home-icon"></div>
+          </div>
+          <div class="divider"></div>
+          <div class="title-text">
+            <div class="breadcrumb">宝丰人 › 企业文化践行 › 政策热点学习</div>
+            <div class="main-title">中华人民共和国安全生产法</div>
+          </div>
         </div>
-        
-        <div class="content" id="contentArea">
-            <div class="question-container">
-                <div class="question-type" id="questionType">单选</div>
-                <div class="question" id="currentQuestion">
-                    请从题目导航中选择题目
-                </div>
-                
-                <!-- 修复后的分割线位置 - 题目和选项之间 -->
-                <div class="question-divider"></div>
-                
-                <div id="optionsContainer"></div>
+
+        <div class="nav-container">
+          <div class="nav-dropdown">
+            <span>题目导航</span>
+            <div class="dropdown-menu" id="questionMenu">
+              <!-- 题目导航菜单将通过JS动态生成 -->
             </div>
+          </div>
+
+          <div class="search-container">
+            <input
+              type="text"
+              class="search-input"
+              id="searchInput"
+              placeholder="搜索..."
+            />
+            <div class="search-icon" id="searchIcon"></div>
+          </div>
+
+          <div class="share-container" id="shareButton">
+            <div class="share-icon"></div>
+          </div>
         </div>
+      </div>
+
+      <div class="content" id="contentArea">
+        <div class="question-container">
+          <div class="question-type" id="questionType">单选</div>
+          <div class="question" id="currentQuestion">
+            请从题目导航中选择题目
+          </div>
+
+          <!-- 修复后的分割线位置 - 题目和选项之间 -->
+          <div class="question-divider"></div>
+
+          <div id="optionsContainer"></div>
+        </div>
+      </div>
     </div>
 
     <!-- 分享模态框 -->
     <div class="share-modal" id="shareModal">
-        <div class="share-card">
-            <div class="close-modal" id="closeModal"></div>
-            <div class="share-title">题目分享</div>
-            <div class="share-content">
-                <div class="share-question" id="shareQuestion"></div>
-                <div class="share-answer" id="shareAnswer"></div>
-            </div>
-            <div class="share-actions">
-                <button class="share-btn share-copy" id="copyButton">
-                    <div class="btn-icon copy-icon"></div>
-                    <span>复制</span>
-                </button>
-                <button class="share-btn share-share" id="sharePageButton">
-                    <div class="btn-icon share-btn-icon"></div>
-                    <span>分享</span>
-                </button>
-                <button class="share-btn share-download" id="downloadButton">
-                    <div class="btn-icon download-icon"></div>
-                    <span>下载</span>
-                </button>
-            </div>
+      <div class="share-card">
+        <div class="close-modal" id="closeModal"></div>
+        <div class="share-title">题目分享</div>
+        <div class="share-content">
+          <div class="share-question" id="shareQuestion"></div>
+          <div class="share-answer" id="shareAnswer"></div>
         </div>
+        <div class="share-actions">
+          <button class="share-btn share-copy" id="copyButton">
+            <div class="btn-icon copy-icon"></div>
+            <span>复制</span>
+          </button>
+          <button class="share-btn share-share" id="sharePageButton">
+            <div class="btn-icon share-btn-icon"></div>
+            <span>分享</span>
+          </button>
+          <button class="share-btn share-download" id="downloadButton">
+            <div class="btn-icon download-icon"></div>
+            <span>下载</span>
+          </button>
+        </div>
+      </div>
     </div>
 
     <script>
-        // 题目数据
-        const questions = [
+      // 题目数据
+      const questions = [
+        {
+          id: 1,
+          type: "single",
+          question:
+            "根据《中华人民共和国安全生产法》，生产经营单位的（ ）对本单位的安全生产工作全面负责。",
+          options: [
+            { text: "安全管理人员", correct: false },
+            { text: "主要负责人", correct: true },
+            { text: "技术负责人", correct: false },
+            { text: "法定代表人", correct: false },
+          ],
+        },
+        {
+          id: 7,
+          type: "judge",
+          question: "222222",
+          options: [
+            { text: "22222", correct: false },
+            { text: "11111", correct: true },
+          ],
+        },
+        {
+          id: 2,
+          type: "single",
+          question:
+            "依据《工伤保险条例》，职工因工作遭受事故伤害或者患职业病需要暂停工作接受工伤医疗的，在停工留薪期内，原工资福利待遇不变，由（ ）按月支付。",
+          options: [
+            { text: "工伤保险基金", correct: false },
+            { text: "用人单位", correct: true },
+            { text: "劳动监察部门", correct: false },
+            { text: "工会组织", correct: false },
+          ],
+        },
+        {
+          id: 3,
+          type: "judge",
+          question:
+            "生产经营单位可以与从业人员订立协议，免除或者减轻其对从业人员因生产安全事故伤亡依法应承担的责任。",
+          options: [
+            { text: "正确", correct: false },
+            { text: "错误", correct: true },
+          ],
+        },
+        {
+          id: 4,
+          type: "judge",
+          question:
+            "从业人员发现直接危及人身安全的紧急情况时，有权停止作业或者在采取可能的应急措施后撤离作业场所，生产经营单位不得因此降低其工资、福利等待遇或者解除与其订立的劳动合同。",
+          options: [
+            { text: "正确", correct: true },
+            { text: "错误", correct: false },
+          ],
+        },
+        {
+          id: 5,
+          type: "multi",
+          question:
+            "根据《中华人民共和国安全生产法》，生产经营单位的安全生产管理机构以及安全生产管理人员履行的职责包括（ ）。",
+          options: [
             {
-                id: 1,
-                type: "single",
-                question: "根据《中华人民共和国安全生产法》，生产经营单位的（ ）对本单位的安全生产工作全面负责。",
-                options: [
-                    { text: "安全管理人员", correct: false },
-                    { text: "主要负责人", correct: true },
-                    { text: "技术负责人", correct: false },
-                    { text: "法定代表人", correct: false }
-                ]
-            },            
-          {
-                id: 7,
-                type: "judge",
-                question: "222222",
-                options: [
-                    { text: "22222", correct: false },
-                    { text: "11111", correct: true },
-                ]
+              text: "组织或者参与拟订本单位安全生产规章制度、操作规程和生产安全事故应急救援预案",
+              correct: true,
             },
             {
-                id: 2,
-                type: "single",
-                question: "依据《工伤保险条例》，职工因工作遭受事故伤害或者患职业病需要暂停工作接受工伤医疗的，在停工留薪期内，原工资福利待遇不变，由（ ）按月支付。",
-                options: [
-                    { text: "工伤保险基金", correct: false },
-                    { text: "用人单位", correct: true },
-                    { text: "劳动监察部门", correct: false },
-                    { text: "工会组织", correct: false }
-                ]
+              text: "组织或者参与本单位安全生产教育和培训，如实记录安全生产教育和培训情况",
+              correct: true,
             },
+            { text: "督促落实本单位重大危险源的安全管理措施", correct: true },
+            { text: "组织或者参与本单位应急救援演练", correct: true },
+          ],
+        },
+        {
+          id: 6,
+          type: "multi",
+          question:
+            "依据《生产安全事故报告和调查处理条例》，下列属于较大事故的有（ ）。",
+          options: [
+            { text: "造成 3 人以上 10 人以下死亡的事故", correct: true },
+            { text: "造成 10 人以上 50 人以下重伤的事故", correct: true },
             {
-                id: 3,
-                type: "judge",
-                question: "生产经营单位可以与从业人员订立协议，免除或者减轻其对从业人员因生产安全事故伤亡依法应承担的责任。",
-                options: [
-                    { text: "正确", correct: false },
-                    { text: "错误", correct: true }
-                ]
+              text: "造成 1000 万元以上 5000 万元以下直接经济损失的事故",
+              correct: true,
             },
-            {
-                id: 4,
-                type: "judge",
-                question: "从业人员发现直接危及人身安全的紧急情况时，有权停止作业或者在采取可能的应急措施后撤离作业场所，生产经营单位不得因此降低其工资、福利等待遇或者解除与其订立的劳动合同。",
-                options: [
-                    { text: "正确", correct: true },
-                    { text: "错误", correct: false }
-                ]
-            },
-            {
-                id: 5,
-                type: "multi",
-                question: "根据《中华人民共和国安全生产法》，生产经营单位的安全生产管理机构以及安全生产管理人员履行的职责包括（ ）。",
-                options: [
-                    { text: "组织或者参与拟订本单位安全生产规章制度、操作规程和生产安全事故应急救援预案", correct: true },
-                    { text: "组织或者参与本单位安全生产教育和培训，如实记录安全生产教育和培训情况", correct: true },
-                    { text: "督促落实本单位重大危险源的安全管理措施", correct: true },
-                    { text: "组织或者参与本单位应急救援演练", correct: true }
-                ]
-            },
-            {
-                id: 6,
-                type: "multi",
-                question: "依据《生产安全事故报告和调查处理条例》，下列属于较大事故的有（ ）。",
-                options: [
-                    { text: "造成 3 人以上 10 人以下死亡的事故", correct: true },
-                    { text: "造成 10 人以上 50 人以下重伤的事故", correct: true },
-                    { text: "造成 1000 万元以上 5000 万元以下直接经济损失的事故", correct: true },
-                    { text: "造成 10 人以上 30 人以下死亡的事故", correct: false }
-                ]
+            { text: "造成 10 人以上 30 人以下死亡的事故", correct: false },
+          ],
+        },
+      ];
+
+      // 当前显示的题目ID
+      let currentQuestionId = 0;
+
+      // 初始化导航菜单
+      const questionMenu = document.getElementById("questionMenu");
+      questions.forEach((q, index) => {
+        const item = document.createElement("div");
+        item.className = "dropdown-item";
+
+        // 根据题型显示不同的前缀
+        let typePrefix = "";
+        if (q.type === "single") typePrefix = "单选题";
+        else if (q.type === "multi") typePrefix = "多选题";
+        else if (q.type === "judge") typePrefix = "判断题";
+
+        item.textContent = `${typePrefix} ${index + 1}`;
+        item.dataset.id = q.id;
+        item.addEventListener("click", () => {
+          loadQuestion(q.id);
+          // 点击后隐藏菜单
+          questionMenu.style.display = "none";
+        });
+        questionMenu.appendChild(item);
+      });
+
+      // 修复下拉菜单显示问题
+      const navContainer = document.querySelector(".nav-dropdown");
+      navContainer.addEventListener("mouseenter", () => {
+        questionMenu.style.display = "block";
+      });
+
+      navContainer.addEventListener("mouseleave", () => {
+        // 延迟隐藏以避免立即消失
+        setTimeout(() => {
+          if (!questionMenu.matches(":hover")) {
+            questionMenu.style.display = "none";
+          }
+        }, 200);
+      });
+
+      questionMenu.addEventListener("mouseleave", () => {
+        questionMenu.style.display = "none";
+      });
+
+      // 加载题目函数
+      function loadQuestion(id) {
+        const question = questions.find((q) => q.id === id);
+        if (!question) return;
+
+        currentQuestionId = id;
+
+        // 更新题型显示
+        const typeElement = document.getElementById("questionType");
+        if (question.type === "single") typeElement.textContent = "单选";
+        else if (question.type === "multi") typeElement.textContent = "多选";
+        else if (question.type === "judge") typeElement.textContent = "判断";
+
+        // 更新题目
+        document.getElementById("currentQuestion").textContent =
+          question.question;
+
+        // 更新选项
+        const optionsContainer = document.getElementById("optionsContainer");
+        optionsContainer.innerHTML = "";
+
+        if (question.type === "judge") {
+          // 判断题特殊布局
+          const judgeContainer = document.createElement("div");
+          judgeContainer.className = "judge-options";
+
+          question.options.forEach((opt, index) => {
+            const option = document.createElement("div");
+            option.className = `judge-option`;
+            option.dataset.correct = opt.correct;
+            option.innerHTML = `
+                        <span class="option-label">${
+                          index === 0 ? "√" : "×"
+                        }</span>
+                        <span class="option-text">${opt.text}</span>
+                    `;
+
+            // 默认显示正确答案
+            if (opt.correct) {
+              option.classList.add("correct");
             }
 
-        ];
+            option.addEventListener("click", function () {
+              // 先移除所有选中状态
+              document.querySelectorAll(".judge-option").forEach((opt) => {
+                opt.classList.remove("correct");
+              });
 
-        // 当前显示的题目ID
-        let currentQuestionId = 0;
-
-        // 初始化导航菜单
-        const questionMenu = document.getElementById('questionMenu');
-        questions.forEach((q, index) => {
-            const item = document.createElement('div');
-            item.className = 'dropdown-item';
-            
-            // 根据题型显示不同的前缀
-            let typePrefix = "";
-            if(q.type === "single") typePrefix = "单选题";
-            else if(q.type === "multi") typePrefix = "多选题";
-            else if(q.type === "judge") typePrefix = "判断题";
-            
-            item.textContent = `${typePrefix} ${index + 1}`;
-            item.dataset.id = q.id;
-            item.addEventListener('click', () => {
-                loadQuestion(q.id);
-                // 点击后隐藏菜单
-                questionMenu.style.display = 'none';
+              if (opt.correct) {
+                this.classList.add("correct");
+              }
             });
-            questionMenu.appendChild(item);
-        });
+            judgeContainer.appendChild(option);
+          });
+          optionsContainer.appendChild(judgeContainer);
+        } else {
+          // 单选题和多选题布局
+          const optionsGrid = document.createElement("div");
+          optionsGrid.className = "options";
 
-        // 修复下拉菜单显示问题
-        const navContainer = document.querySelector('.nav-container');
-        navContainer.addEventListener('mouseenter', () => {
-            questionMenu.style.display = 'block';
-        });
-        
-        navContainer.addEventListener('mouseleave', () => {
-            // 延迟隐藏以避免立即消失
-            setTimeout(() => {
-                if(!questionMenu.matches(':hover')) {
-                    questionMenu.style.display = 'none';
+          question.options.forEach((opt, index) => {
+            const option = document.createElement("div");
+            option.className = `option`;
+            option.dataset.correct = opt.correct;
+            option.innerHTML = `
+                        <span class="option-label">${String.fromCharCode(
+                          65 + index
+                        )}</span>
+                        <span class="option-text">${opt.text}</span>
+                    `;
+
+            // 默认显示正确答案
+            if (opt.correct) {
+              option.classList.add("correct");
+            }
+
+            // 多选题支持多选
+            if (question.type === "multi") {
+              option.addEventListener("click", function () {
+                if (opt.correct) {
+                  this.classList.toggle("correct");
+                } else {
+                  // 错误选项点击时取消所有选中
+                  document.querySelectorAll(".option").forEach((optEl) => {
+                    optEl.classList.remove("correct");
+                  });
                 }
-            }, 200);
-        });
-        
-        questionMenu.addEventListener('mouseleave', () => {
-            questionMenu.style.display = 'none';
-        });
-
-        // 加载题目函数
-        function loadQuestion(id) {
-            const question = questions.find(q => q.id === id);
-            if (!question) return;
-            
-            currentQuestionId = id;
-            
-            // 更新题型显示
-            const typeElement = document.getElementById('questionType');
-            if(question.type === "single") typeElement.textContent = "单选";
-            else if(question.type === "multi") typeElement.textContent = "多选";
-            else if(question.type === "judge") typeElement.textContent = "判断";
-            
-            // 更新题目
-            document.getElementById('currentQuestion').textContent = question.question;
-            
-            // 更新选项
-            const optionsContainer = document.getElementById('optionsContainer');
-            optionsContainer.innerHTML = '';
-            
-            if(question.type === "judge") {
-                // 判断题特殊布局
-                const judgeContainer = document.createElement('div');
-                judgeContainer.className = 'judge-options';
-                
-                question.options.forEach((opt, index) => {
-                    const option = document.createElement('div');
-                    option.className = `judge-option`;
-                    option.dataset.correct = opt.correct;
-                    option.innerHTML = `
-                        <span class="option-label">${index === 0 ? "√" : "×"}</span>
-                        <span class="option-text">${opt.text}</span>
-                    `;
-                    
-                    // 默认显示正确答案
-                    if(opt.correct) {
-                        option.classList.add('correct');
-                    }
-                    
-                    option.addEventListener('click', function() {
-                        // 先移除所有选中状态
-                        document.querySelectorAll('.judge-option').forEach(opt => {
-                            opt.classList.remove('correct');
-                        });
-                        
-                        if (opt.correct) {
-                            this.classList.add('correct');
-                        }
-                    });
-                    judgeContainer.appendChild(option);
-                });
-                optionsContainer.appendChild(judgeContainer);
+              });
             } else {
-                // 单选题和多选题布局
-                const optionsGrid = document.createElement('div');
-                optionsGrid.className = 'options';
-                
-                question.options.forEach((opt, index) => {
-                    const option = document.createElement('div');
-                    option.className = `option`;
-                    option.dataset.correct = opt.correct;
-                    option.innerHTML = `
-                        <span class="option-label">${String.fromCharCode(65 + index)}</span>
-                        <span class="option-text">${opt.text}</span>
-                    `;
-                    
-                    // 默认显示正确答案
-                    if(opt.correct) {
-                        option.classList.add('correct');
-                    }
-                    
-                    // 多选题支持多选
-                    if(question.type === "multi") {
-                        option.addEventListener('click', function() {
-                            if (opt.correct) {
-                                this.classList.toggle('correct');
-                            } else {
-                                // 错误选项点击时取消所有选中
-                                document.querySelectorAll('.option').forEach(optEl => {
-                                    optEl.classList.remove('correct');
-                                });
-                            }
-                        });
-                    } else {
-                        option.addEventListener('click', function() {
-                            // 先移除所有选中状态
-                            document.querySelectorAll('.option').forEach(optEl => {
-                                optEl.classList.remove('correct');
-                            });
-                            
-                            if (opt.correct) {
-                                this.classList.add('correct');
-                            }
-                        });
-                    }
-                    
-                    optionsGrid.appendChild(option);
+              option.addEventListener("click", function () {
+                // 先移除所有选中状态
+                document.querySelectorAll(".option").forEach((optEl) => {
+                  optEl.classList.remove("correct");
                 });
-                optionsContainer.appendChild(optionsGrid);
+
+                if (opt.correct) {
+                  this.classList.add("correct");
+                }
+              });
             }
+
+            optionsGrid.appendChild(option);
+          });
+          optionsContainer.appendChild(optionsGrid);
+        }
+      }
+
+      // 搜索功能
+      const searchIcon = document.getElementById("searchIcon");
+      const searchInput = document.getElementById("searchInput");
+
+      searchIcon.addEventListener("click", function () {
+        const searchText = searchInput.value.trim();
+        if (searchText) {
+          // 跳转到百度搜索
+          window.open(
+            `https://www.baidu.com/s?wd=${encodeURIComponent(searchText)}`,
+            "_blank"
+          );
+        }
+      });
+
+      // 支持按回车键搜索
+      searchInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          searchIcon.click();
+        }
+      });
+
+      // 主页图标点击事件 - 返回初始化页面
+      const homeIcon = document.getElementById("homeIcon");
+      homeIcon.addEventListener("click", function () {
+        if (questions.length > 0) {
+          loadQuestion(questions[0].id);
+        }
+      });
+
+      // 分享功能
+      const shareButton = document.getElementById("shareButton");
+      const shareModal = document.getElementById("shareModal");
+      const closeModal = document.getElementById("closeModal");
+      const downloadButton = document.getElementById("downloadButton");
+      const copyButton = document.getElementById("copyButton");
+      const sharePageButton = document.getElementById("sharePageButton");
+      const shareQuestion = document.getElementById("shareQuestion");
+      const shareAnswer = document.getElementById("shareAnswer");
+
+      shareButton.addEventListener("click", function () {
+        if (currentQuestionId === 0) {
+          alert("请先选择题目");
+          return;
         }
 
-        // 搜索功能
-        const searchIcon = document.getElementById('searchIcon');
-        const searchInput = document.getElementById('searchInput');
-        
-        searchIcon.addEventListener('click', function() {
-            const searchText = searchInput.value.trim();
-            if(searchText) {
-                // 跳转到百度搜索
-                window.open(`https://www.baidu.com/s?wd=${encodeURIComponent(searchText)}`, '_blank');
-            }
-        });
-        
-        // 支持按回车键搜索
-        searchInput.addEventListener('keypress', function(e) {
-            if(e.key === 'Enter') {
-                searchIcon.click();
-            }
-        });
+        const question = questions.find((q) => q.id === currentQuestionId);
+        if (!question) return;
 
-        // 主页图标点击事件 - 返回初始化页面
-        const homeIcon = document.getElementById('homeIcon');
-        homeIcon.addEventListener('click', function() {
-            if(questions.length > 0) {
-                loadQuestion(questions[0].id);
-            }
-        });
+        // 设置分享内容
+        shareQuestion.textContent = question.question;
 
-        // 分享功能
-        const shareButton = document.getElementById('shareButton');
-        const shareModal = document.getElementById('shareModal');
-        const closeModal = document.getElementById('closeModal');
-        const downloadButton = document.getElementById('downloadButton');
-        const copyButton = document.getElementById('copyButton');
-        const sharePageButton = document.getElementById('sharePageButton');
-        const shareQuestion = document.getElementById('shareQuestion');
-        const shareAnswer = document.getElementById('shareAnswer');
-        
-        shareButton.addEventListener('click', function() {
-            if(currentQuestionId === 0) {
-                alert('请先选择题目');
-                return;
-            }
-            
-            const question = questions.find(q => q.id === currentQuestionId);
-            if(!question) return;
-            
-            // 设置分享内容
-            shareQuestion.textContent = question.question;
-            
-            // 清空之前的答案
-            shareAnswer.innerHTML = '';
-            
-            // 获取正确答案
-            let correctAnswers = [];
-            if(question.type === "judge") {
-                correctAnswers = question.options.filter(opt => opt.correct).map(opt => opt.text);
-            } else {
-                correctAnswers = question.options.filter(opt => opt.correct).map((opt, index) => {
-                    return `${String.fromCharCode(65 + index)}. ${opt.text}`;
-                });
-            }
-            
-            // 创建答案项，每个选项单独一行并限制20个字符
-            correctAnswers.forEach(answer => {
-                const answerItem = document.createElement('span');
-                answerItem.className = 'share-answer-item';
-                answerItem.textContent = answer.length > 20 ? answer.substring(0, 20) + '...' : answer;
-                shareAnswer.appendChild(answerItem);
+        // 清空之前的答案
+        shareAnswer.innerHTML = "";
+
+        // 获取正确答案
+        let correctAnswers = [];
+        if (question.type === "judge") {
+          correctAnswers = question.options
+            .filter((opt) => opt.correct)
+            .map((opt) => opt.text);
+        } else {
+          correctAnswers = question.options
+            .filter((opt) => opt.correct)
+            .map((opt, index) => {
+              return `${String.fromCharCode(65 + index)}. ${opt.text}`;
             });
-            
-            // 显示模态框
-            shareModal.classList.add('active');
-        });
-        
-        closeModal.addEventListener('click', function() {
-            shareModal.classList.remove('active');
-        });
-        
-        // 点击模态框外部关闭
-        shareModal.addEventListener('click', function(e) {
-            if(e.target === shareModal) {
-                shareModal.classList.remove('active');
-            }
-        });
-        
-        // 复制功能
-        copyButton.addEventListener('click', function() {
-            if(currentQuestionId === 0) return;
-            
-            const question = questions.find(q => q.id === currentQuestionId);
-            if(!question) return;
-            
-            // 获取题目和答案内容
-            let content = `题目：${question.question}\n\n`;
-            
-            // 获取正确答案
-            if(question.type === "judge") {
-                const correctAnswer = question.options.find(opt => opt.correct);
-                content += `答案：${correctAnswer.text}`;
-            } else {
-                content += "答案：\n";
-                const correctOptions = question.options.filter(opt => opt.correct);
-                correctOptions.forEach((opt, index) => {
-                    const optionIndex = question.options.indexOf(opt);
-                    content += `${String.fromCharCode(65 + optionIndex)}. ${opt.text}\n`;
-                });
-            }
-            
-            // 复制到剪贴板
-            navigator.clipboard.writeText(content).then(() => {
-                alert('内容已复制到剪贴板');
-            }).catch(err => {
-                console.error('复制失败:', err);
-                // 降级方案
-                const textarea = document.createElement('textarea');
-                textarea.value = content;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                alert('内容已复制到剪贴板');
-            });
-        });
-        
-        // 分享功能
-        sharePageButton.addEventListener('click', function() {
-            if (navigator.share) {
-                navigator.share({
-                    title: '题目分享',
-                    text: '我正在学习《中华人民共和国安全生产法》',
-                    url: window.location.href
-                }).catch(err => {
-                    console.log('分享失败:', err);
-                    alert('分享失败，请手动分享');
-                });
-            } else {
-                alert('您的浏览器不支持分享功能，请手动分享');
-                // 可以在这里添加其他分享方式的代码
-            }
-        });
-        
-        // 下载功能 - 修改为下载图片
-        downloadButton.addEventListener('click', function() {
-            if(currentQuestionId === 0) return;
-            
-            const question = questions.find(q => q.id === currentQuestionId);
-            if(!question) return;
-            
-            // 获取分享卡片内容
-            const shareCard = document.querySelector('.share-card');
-            
-            // 使用html2canvas库将卡片转为图片
-            if(typeof html2canvas !== 'undefined') {
-                html2canvas(shareCard).then(canvas => {
-                    // 创建下载链接
-                    const link = document.createElement('a');
-                    link.download = `题目${currentQuestionId}.png`;
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                });
-            } else {
-                alert('html2canvas库未加载，无法下载图片');
-                console.error('html2canvas is not loaded');
-            }
-        });
-
-        // 默认加载第一题并显示正确答案
-        if(questions.length > 0) {
-            loadQuestion(questions[0].id);
         }
-      
+
+        // 创建答案项，每个选项单独一行并限制20个字符
+        correctAnswers.forEach((answer) => {
+          const answerItem = document.createElement("span");
+          answerItem.className = "share-answer-item";
+          answerItem.textContent =
+            answer.length > 20 ? answer.substring(0, 20) + "..." : answer;
+          shareAnswer.appendChild(answerItem);
+        });
+
+        // 显示模态框
+        shareModal.classList.add("active");
+      });
+
+      closeModal.addEventListener("click", function () {
+        shareModal.classList.remove("active");
+      });
+
+      // 点击模态框外部关闭
+      shareModal.addEventListener("click", function (e) {
+        if (e.target === shareModal) {
+          shareModal.classList.remove("active");
+        }
+      });
+
+      // 复制功能
+      copyButton.addEventListener("click", function () {
+        if (currentQuestionId === 0) return;
+
+        const question = questions.find((q) => q.id === currentQuestionId);
+        if (!question) return;
+
+        // 获取题目和答案内容
+        let content = `题目：${question.question}\n\n`;
+
+        // 获取正确答案
+        if (question.type === "judge") {
+          const correctAnswer = question.options.find((opt) => opt.correct);
+          content += `答案：${correctAnswer.text}`;
+        } else {
+          content += "答案：\n";
+          const correctOptions = question.options.filter((opt) => opt.correct);
+          correctOptions.forEach((opt, index) => {
+            const optionIndex = question.options.indexOf(opt);
+            content += `${String.fromCharCode(65 + optionIndex)}. ${
+              opt.text
+            }\n`;
+          });
+        }
+
+        // 复制到剪贴板
+        navigator.clipboard
+          .writeText(content)
+          .then(() => {
+            alert("内容已复制到剪贴板");
+          })
+          .catch((err) => {
+            console.error("复制失败:", err);
+            // 降级方案
+            const textarea = document.createElement("textarea");
+            textarea.value = content;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+            alert("内容已复制到剪贴板");
+          });
+      });
+
+      // 分享功能
+      sharePageButton.addEventListener("click", function () {
+        if (navigator.share) {
+          navigator
+            .share({
+              title: "题目分享",
+              text: "我正在学习《中华人民共和国安全生产法》",
+              url: window.location.href,
+            })
+            .catch((err) => {
+              console.log("分享失败:", err);
+              alert("分享失败，请手动分享");
+            });
+        } else {
+          alert("您的浏览器不支持分享功能，请手动分享");
+          // 可以在这里添加其他分享方式的代码
+        }
+      });
+
+      // 下载功能 - 修改为下载图片
+      downloadButton.addEventListener("click", function () {
+        if (currentQuestionId === 0) return;
+
+        const question = questions.find((q) => q.id === currentQuestionId);
+        if (!question) return;
+
+        // 获取分享卡片内容
+        const shareCard = document.querySelector(".share-card");
+
+        // 使用html2canvas库将卡片转为图片
+        if (typeof html2canvas !== "undefined") {
+          html2canvas(shareCard).then((canvas) => {
+            // 创建下载链接
+            const link = document.createElement("a");
+            link.download = `题目${currentQuestionId}.png`;
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+          });
+        } else {
+          alert("html2canvas库未加载，无法下载图片");
+          console.error("html2canvas is not loaded");
+        }
+      });
+
+      // 默认加载第一题并显示正确答案
+      if (questions.length > 0) {
+        loadQuestion(questions[0].id);
+      }
     </script>
-    
+
     <!-- 添加html2canvas库用于图片下载 -->
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-</body>
+  </body>
 </html>
