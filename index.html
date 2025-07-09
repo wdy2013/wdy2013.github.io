@@ -32,6 +32,24 @@
         padding: 20px;
       }
 
+      /* 修改tips容器的样式 */
+      .tips-container {
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+        margin-top: 5px;
+        padding: 20px 0;
+        border-top: 1px dashed #eee; /* 可选的顶部分割线 */
+      }
+
+      /* 移动端适配 */
+      @media (max-width: 600px) {
+        .tips-container {
+          padding: 8px 0;
+          font-size: 11px;
+        }
+      }
+
       .container {
         width: 100%;
         max-width: 800px;
@@ -673,6 +691,10 @@
           <div class="question-divider"></div>
 
           <div id="optionsContainer"></div>
+        </div>
+
+        <div class="tips-container">
+          Tips：遇题目导航点击无效时，点按页面任意空白区域即可恢复正常
         </div>
       </div>
     </div>
