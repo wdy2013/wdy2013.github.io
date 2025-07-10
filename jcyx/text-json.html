@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>试题文本转换JSON代码工具</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        line-height: 1.6;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      textarea {
+        width: 100%;
+        height: 300px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+      }
+      button {
+        padding: 10px 20px;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        flex: 1;
+        min-width: 120px;
+      }
+      .convert-btn {
+        background-color: #4caf50;
+        margin-right: 10px;
+      }
+      .convert-btn:hover {
+        background-color: #45a049;
+      }
+      .result {
+        border: 1px solid #ddd;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 4px;
+        white-space: pre-wrap;
+        overflow-x: auto;
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+      }
+      .examples {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        align-items: center; /* 新增这行代码确保垂直居中 */
+      }
+
+      .example-btns {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center; /* 新增这行代码确保按钮组内垂直居中 */
+      }
+      .example-btn {
+        background-color: #2196f3;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        flex: 0 0 auto;
+      }
+      .example-btn:hover {
+        background-color: #0b7dda;
+      }
+      .clear-btn {
+        background-color: #f44336;
+        height: fit-content;
+        /* 移除原来的 align-self: flex-end; */
+        flex: 0 0 auto;
+        margin-bottom: 10px; /* 保持与示例按钮相同的下边距 */
+      }
+      .clear-btn:hover {
+        background-color: #d32f2f;
+      }
+      .action-btns {
+        display: flex;
+        justify-content: space-between;
+      }
+      .copy-btn {
+        background-color: #ff9800;
+      }
+      .copy-btn:hover {
+        background-color: #f57c00;
+      }
+      .btn-group {
+        display: flex;
+        width: 100%;
+        gap: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>试题文本转换JSON代码工具</h1>
+
+    <div class="container">
+      <div class="examples">
+        <div class="example-btns">
+          <button class="example-btn" onclick="loadExample(1)">
+            加载示例1
+          </button>
+          <button class="example-btn" onclick="loadExample(2)">
+            加载示例2
+          </button>
+          <button class="example-btn" onclick="loadExample(3)">
+            加载示例3
+          </button>
+        </div>
+        <button class="clear-btn" onclick="clearInput()">清空输入</button>
+      </div>
+
+      <textarea id="inputText" placeholder="请在此粘贴试题文本..."></textarea>
+
+      <div class="btn-group">
+        <button class="convert-btn" onclick="convertText()">转换</button>
+        <button class="copy-btn" onclick="copyResult()">复制结果</button>
+      </div>
+
+      <div class="result" id="result">转换结果将显示在这里...</div>
+    </div>
+
+    <script>
+      // 示例数据
+      const examples = {
+        1: `根据《中华人民共和国安全生产法》（2021 年修订），生产经营单位的主要负责人未履行安全生产管理职责，导致发生特别重大事故的，应处上一年年收入的多少比例罚款？
+A. 60%
+B. 80%
+C. 100%
+D. 120%
+答案：D
+
+根据《中华人民共和国安全生产法》，生产经营单位的主要负责人需履行的职责包括哪些？（多选）
+A. 建立健全全员安全生产责任制
+B. 组织制定并实施安全生产教育和培训计划
+C. 保证安全生产投入的有效实施
+D. 定期组织消防演练
+答案：A、B、C
+
+消防通道的净宽度不应小于 1.4 米，且疏散走道和楼梯的净宽度不应小于 1.1 米。
+答案：正确`,
+
+        2: `依据《工伤保险条例》，职工因工作遭受事故伤害或者患职业病需要暂停工作接受工伤医疗的，在停工留薪期内，原工资福利待遇不变，由（ ）按月支付。
+A. 工伤保险基金
+B. 用人单位
+C. 劳动监察部门
+D. 工会组织
+答案：B
+
+生产经营单位可以与从业人员订立协议，免除或者减轻其对从业人员因生产安全事故伤亡依法应承担的责任。
+答案：错误`,
+
+        3: `根据《中华人民共和国安全生产法》，生产经营单位的安全生产管理机构以及安全生产管理人员履行的职责包括（ ）。
+A. 组织或者参与拟订本单位安全生产规章制度、操作规程和生产安全事故应急救援预案
+B. 组织或者参与本单位安全生产教育和培训，如实记录安全生产教育和培训情况
+C. 督促落实本单位重大危险源的安全管理措施
+D. 组织或者参与本单位应急救援演练
+答案：A、B、C、D`,
+      };
+
+      function loadExample(num) {
+        document.getElementById("inputText").value = examples[num] || "";
+      }
+
+      function clearInput() {
+        document.getElementById("inputText").value = "";
+      }
+
+      function copyResult() {
+        const resultText = document.getElementById("result").textContent;
+        if (!resultText || resultText === "转换结果将显示在这里...") {
+          alert("没有可复制的内容！");
+          return;
+        }
+
+        // 创建临时textarea元素
+        const textarea = document.createElement("textarea");
+        textarea.value = resultText;
+        textarea.style.position = "fixed"; // 防止页面滚动
+        document.body.appendChild(textarea);
+        textarea.select();
+
+        try {
+          const successful = document.execCommand("copy");
+          if (successful) {
+            alert("已复制到剪贴板！");
+          } else {
+            throw new Error("复制命令失败");
+          }
+        } catch (err) {
+          alert("复制失败，请手动复制: " + err);
+        } finally {
+          document.body.removeChild(textarea);
+        }
+      }
+
+      function convertText() {
+        const inputText = document.getElementById("inputText").value.trim();
+        if (!inputText) {
+          alert("请输入试题文本！");
+          return;
+        }
+
+        try {
+          const questions = parseQuestions(inputText);
+          const jsonOutput = formatOutput(questions);
+          document.getElementById("result").textContent = jsonOutput;
+        } catch (error) {
+          document.getElementById("result").textContent =
+            "转换出错: " + error.message;
+        }
+      }
+
+      function parseQuestions(text) {
+        const questionBlocks = text
+          .split(/\n\s*\n/)
+          .filter((block) => block.trim());
+        const questions = [];
+        let id = 1;
+
+        for (const block of questionBlocks) {
+          const lines = block.split("\n").filter((line) => line.trim());
+          if (lines.length < 2) continue;
+
+          // 提取问题
+          let questionText = lines[0].trim();
+          const hasMultiHint =
+            questionText.includes("（多选）") ||
+            questionText.includes("(多选)");
+          questionText = questionText.replace(/（多选）|\(多选\)/g, "").trim();
+
+          // 提取选项和答案
+          const options = [];
+          let correctAnswers = [];
+          let answerLine = "";
+          let isJudgeQuestion = false;
+
+          // 先收集所有选项和答案行
+          for (let i = 1; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (line.startsWith("答案：")) {
+              answerLine = line;
+              continue;
+            }
+
+            // 解析选项（支持A.或A、格式）
+            const optionMatch =
+              line.match(/^([A-D])[\.、]\s*(.*)/) ||
+              line.match(/^([A-D])\s+(.*)/);
+            if (optionMatch) {
+              const optionText = optionMatch[2].trim();
+              options.push({
+                letter: optionMatch[1],
+                text: optionText,
+                correct: false,
+              });
+            }
+          }
+
+          // 如果没有找到选项，可能是判断题
+          if (options.length === 0 && answerLine) {
+            const answerText = answerLine.replace("答案：", "").trim();
+            isJudgeQuestion = answerText === "正确" || answerText === "错误";
+
+            if (isJudgeQuestion) {
+              questions.push({
+                id: id++,
+                type: "judge",
+                question: questionText,
+                options: [
+                  { text: "正确", correct: answerText === "正确" },
+                  { text: "错误", correct: answerText === "错误" },
+                ],
+              });
+              continue;
+            }
+          }
+
+          // 处理选择题
+          if (answerLine && options.length > 0) {
+            const answerText = answerLine.replace("答案：", "").trim();
+
+            // 处理答案（支持多种分隔符：顿号、逗号、空格）
+            const answers = answerText
+              .split(/[、,，\s]+/)
+              .map((a) => a.trim())
+              .filter((a) => a);
+
+            // 标记正确答案
+            options.forEach((option) => {
+              option.correct = answers.includes(option.letter);
+            });
+
+            // 确定题型
+            const correctCount = options.filter((opt) => opt.correct).length;
+            let questionType = "single";
+
+            // 多选题条件：明确有多选提示或有多个正确答案
+            if (hasMultiHint || correctCount > 1) {
+              questionType = "multi";
+            }
+
+            questions.push({
+              id: id++,
+              type: questionType,
+              question: questionText,
+              options: options.map((opt) => ({
+                text: opt.text,
+                correct: opt.correct,
+              })),
+            });
+          }
+        }
+
+        return questions;
+      }
+
+      function formatOutput(questions) {
+        let output = "const questions = [\n";
+
+        questions.forEach((q, index) => {
+          output += `  {\n`;
+          output += `    id: ${q.id},\n`;
+          output += `    type: "${q.type}",\n`;
+          output += `    question: "${escapeString(q.question)}",\n`;
+          output += `    options: [\n`;
+
+          q.options.forEach((opt, optIndex) => {
+            output += `      { text: "${escapeString(opt.text)}", correct: ${
+              opt.correct
+            } }`;
+            output += optIndex < q.options.length - 1 ? ",\n" : "\n";
+          });
+
+          output += `    ]\n`;
+          output += `  }`;
+          output += index < questions.length - 1 ? ",\n" : "\n";
+        });
+
+        output += "];";
+
+        return output;
+      }
+
+      function escapeString(str) {
+        return str
+          .replace(/"/g, '\\"')
+          .replace(/\n/g, "\\n")
+          .replace(/\r/g, "\\r");
+      }
+    </script>
+  </body>
+</html>
