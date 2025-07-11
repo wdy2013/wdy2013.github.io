@@ -727,94 +727,183 @@
 
     <script>
       // 题目数据
-      const questions = [
-        {
-          id: 1,
-          type: "single",
-          question:
-            "根据《中华人民共和国安全生产法》，生产经营单位的（ ）对本单位的安全生产工作全面负责。",
-          options: [
-            { text: "安全管理人员", correct: false },
-            { text: "主要负责人", correct: true },
-            { text: "技术负责人", correct: false },
-            { text: "法定代表人", correct: false },
-          ],
-        },
-        {
-          id: 7,
-          type: "judge",
-          question: "222222",
-          options: [
-            { text: "22222", correct: false },
-            { text: "11111", correct: true },
-          ],
-        },
-        {
-          id: 2,
-          type: "single",
-          question:
-            "依据《工伤保险条例》，职工因工作遭受事故伤害或者患职业病需要暂停工作接受工伤医疗的，在停工留薪期内，原工资福利待遇不变，由（ ）按月支付。",
-          options: [
-            { text: "工伤保险基金", correct: false },
-            { text: "用人单位", correct: true },
-            { text: "劳动监察部门", correct: false },
-            { text: "工会组织", correct: false },
-          ],
-        },
-        {
-          id: 3,
-          type: "judge",
-          question:
-            "生产经营单位可以与从业人员订立协议，免除或者减轻其对从业人员因生产安全事故伤亡依法应承担的责任。",
-          options: [
-            { text: "正确", correct: false },
-            { text: "错误", correct: true },
-          ],
-        },
-        {
-          id: 4,
-          type: "judge",
-          question:
-            "从业人员发现直接危及人身安全的紧急情况时，有权停止作业或者在采取可能的应急措施后撤离作业场所，生产经营单位不得因此降低其工资、福利等待遇或者解除与其订立的劳动合同。",
-          options: [
-            { text: "正确", correct: true },
-            { text: "错误", correct: false },
-          ],
-        },
-        {
-          id: 5,
-          type: "multi",
-          question:
-            "根据《中华人民共和国安全生产法》，生产经营单位的安全生产管理机构以及安全生产管理人员履行的职责包括（ ）。",
-          options: [
-            {
-              text: "组织或者参与拟订本单位安全生产规章制度、操作规程和生产安全事故应急救援预案",
-              correct: true,
-            },
-            {
-              text: "组织或者参与本单位安全生产教育和培训，如实记录安全生产教育和培训情况",
-              correct: true,
-            },
-            { text: "督促落实本单位重大危险源的安全管理措施", correct: true },
-            { text: "组织或者参与本单位应急救援演练", correct: true },
-          ],
-        },
-        {
-          id: 6,
-          type: "multi",
-          question:
-            "依据《生产安全事故报告和调查处理条例》，下列属于较大事故的有（ ）。",
-          options: [
-            { text: "造成 3 人以上 10 人以下死亡的事故", correct: true },
-            { text: "造成 10 人以上 50 人以下重伤的事故", correct: true },
-            {
-              text: "造成 1000 万元以上 5000 万元以下直接经济损失的事故",
-              correct: true,
-            },
-            { text: "造成 10 人以上 30 人以下死亡的事故", correct: false },
-          ],
-        },
-      ];
+const questions = [
+  {
+    id: 1,
+    type: "single",
+    question: "1.绿电直连中，直连线路是指（)",
+    options: [
+      { text: "电源与公共电网直接连接的专用电力线路", correct: false },
+      { text: "电源与电力用户直接连接的专用电力线路", correct: true },
+      { text: "电力用户与公共电网直接连接的专用电力线路", correct: false },
+      { text: "多个电源之间直接连接的专用电力线路", correct: false }
+    ]
+  },
+  {
+    id: 2,
+    type: "single",
+    question: "2.绿电直连项目的发展目标不包括（）",
+    options: [
+      { text: "满足企业绿色用能需求", correct: false },
+      { text: "提升新能源就近就地消纳水平", correct: false },
+      { text: "优先保障电网企业利益", correct: true },
+      { text: "公平合理承担各类责任", correct: false }
+    ]
+  },
+  {
+    id: 3,
+    type: "single",
+    question: "3.存量负荷开展绿电直连的前提之一是（)",
+    options: [
+      { text: "关闭所有燃煤燃气自备电厂", correct: false },
+      { text: "燃煤燃气自备电厂足额清缴可再生能源发展基金 C.获得省级电网企业独家授权", correct: true },
+      { text: "周边无其他新能源项目", correct: false }
+    ]
+  },
+  {
+    id: 4,
+    type: "single",
+    question: "4.绿电直连项目接入电压等级一般不超过（）",
+    options: [
+      { text: "110千伏", correct: false },
+      { text: "220（330）千伏", correct: true },
+      { text: "500千伏", correct: false },
+      { text: "750千伏", correct: false }
+    ]
+  },
+  {
+    id: 5,
+    type: "single",
+    question: "5.绿电直连项目原则上由（）作为主责单位",
+    options: [
+      { text: "电网企业", correct: false },
+      { text: "发电企业", correct: false },
+      { text: "负荷", correct: true },
+      { text: "地方政府单选", correct: false }
+    ]
+  },
+  {
+    id: 6,
+    type: "single",
+    question: "6.并网型绿电直连项目整体新能源年自发自用电量 占总可用发电量的比例应不低于（）",
+    options: [
+      { text: "30%", correct: false },
+      { text: "50%", correct: false },
+      { text: "60%", correct: true },
+      { text: "80%", correct: false }
+    ]
+  },
+  {
+    id: 7,
+    type: "single",
+    question: "7.绿电直连项目与公共电网的安全责任界面按（）划分",
+    options: [
+      { text: "行政区域", correct: false },
+      { text: "电压等级", correct: false },
+      { text: "产权分界点", correct: true },
+      { text: "项目投资额", correct: false }
+    ]
+  },
+  {
+    id: 8,
+    type: "single",
+    question: "8.并网型绿电直连项目应作为（）整体参与",
+    options: [
+      { text: "电力市场交易", correct: true },
+      { text: "碳排放权交易", correct: false },
+      { text: "可再生能源配额交易", correct: false },
+      { text: "电力设备采购招标", correct: false }
+    ]
+  },
+  {
+    id: 9,
+    type: "single",
+    question: "9.零碳园区建设的重点任务不包括（）",
+    options: [
+      { text: "加快用能结构转型", correct: false },
+      { text: "推进节能降碳", correct: false },
+      { text: "扩大高耗能产业规模", correct: true },
+      { text: "强化资源节约集约", correct: false }
+    ]
+  },
+  {
+    id: 10,
+    type: "single",
+    question: "10.零碳园区应建设覆盖主要用能企业的（）",
+    options: [
+      { text: "安全生产管理平台", correct: false },
+      { text: "能碳管理平台", correct: true },
+      { text: "人力资源管理平台", correct: false },
+      { text: "物流运输管理平台", correct: false }
+    ]
+  },
+  {
+    id: 11,
+    type: "single",
+    question: "11.鼓励零碳园区以（）等形式参与电力市场",
+    options: [
+      { text: "电网企业代理", correct: false },
+      { text: "虚拟电厂 (负荷聚合商)", correct: true },
+      { text: "政府统一协调", correct: false },
+      { text: "发电企业独家运营单选", correct: false }
+    ]
+  },
+  {
+    id: 12,
+    type: "single",
+    question: "12.国家对零碳园区建设的资金支持方式不包括（）",
+    options: [
+      { text: "统筹利用现有资金渠道", correct: false },
+      { text: "地方政府专项债券", correct: false },
+      { text: "政策性银行中长期信贷", correct: false },
+      { text: "强制要求电网企业全额投资", correct: true }
+    ]
+  },
+  {
+    id: 13,
+    type: "single",
+    question: "13.各地区推荐国家级零碳园区的数量不超过（)",
+    options: [
+      { text: "1", correct: false },
+      { text: "2", correct: true },
+      { text: "3", correct: false },
+      { text: "4", correct: false }
+    ]
+  },
+  {
+    id: 14,
+    type: "single",
+    question: "14.绿电直连项目中，直连专线原则上由（）投资",
+    options: [
+      { text: "电网企业", correct: false },
+      { text: "地方政府", correct: false },
+      { text: "负荷、电源主体", correct: true },
+      { text: "第三方投资公司", correct: false }
+    ]
+  },
+  {
+    id: 15,
+    type: "multi",
+    question: "15.绿电直连的适用范围包括（）",
+    options: [
+      { text: "风电", correct: true },
+      { text: "太阳能发电", correct: true },
+      { text: "生物质发电", correct: true },
+      { text: "燃煤发电", correct: false }
+    ]
+  },
+  {
+    id: 16,
+    type: "multi",
+    question: "16.绿电直连项目建设运行的原则包括（）",
+    options: [
+      { text: "安全优先", correct: true },
+      { text: "绿色友好", correct: true },
+      { text: "权责对等", correct: true },
+      { text: "源荷匹配", correct: true }
+    ]
+  }
+];
 
       // 当前显示的题目ID
       let currentQuestionId = 0;
