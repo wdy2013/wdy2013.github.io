@@ -42,6 +42,187 @@
         border-top: 1px dashed #eee; /* 可选的顶部分割线 */
       }
 
+      /* 滑动提示弹窗样式 */
+      .swipe-tip-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 3000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s;
+      }
+
+      .swipe-tip-modal.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .swipe-tip-card {
+        background-color: white;
+        border-radius: 16px;
+        padding: 20px;
+        width: 80%;
+        max-width: 300px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .swipe-tip-content {
+        font-size: 16px;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .swipe-tip-confirm {
+        padding: 10px 20px;
+        background-color: #f5a623;
+        color: white;
+        border-radius: 30px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      /* 滑动容器样式 */
+      .swipe-container {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .swipe-wrapper {
+        display: flex;
+        transition: transform 0.3s ease;
+        width: 100%;
+      }
+
+      .swipe-slide {
+        flex: 0 0 100%;
+        width: 100%;
+      }
+
+      /* ========== 修改导航容器样式 START ========== */
+      .nav-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        z-index: 1000;
+        flex-wrap: nowrap; /* 确保不换行 */
+        min-width: 0; /* 允许内容收缩 */
+      }
+
+      .nav-dropdown {
+        backdrop-filter: blur(8px);
+        background-color: rgba(255, 255, 255, 0.45);
+        border-radius: 999px;
+        padding: 8px 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        cursor: pointer;
+        position: relative;
+        font-size: 14px;
+        height: 36px;
+        min-width: 80px; /* 最小宽度 */
+        flex-shrink: 1; /* 允许收缩 */
+        white-space: nowrap; /* 防止文字换行 */
+      }
+
+      .search-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        backdrop-filter: blur(8px);
+        background-color: rgba(255, 255, 255, 0.45);
+        border-radius: 999px;
+        padding: 0 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        height: 36px;
+        flex-grow: 1; /* 允许增长填充剩余空间 */
+        max-width: 300px; /* 最大宽度限制 */
+        min-width: 120px; /* 最小宽度 */
+      }
+
+      .search-input {
+        border: none;
+        background: transparent;
+        outline: none;
+        width: 100%; /* 填充容器宽度 */
+        font-size: 14px;
+        color: #333;
+        padding: 4px 8px;
+        transition: all 0.3s;
+        border-bottom: none !important;
+      }
+
+      .share-container {
+        flex-shrink: 0; /* 禁止收缩 */
+        /* 其他原有样式保持不变 */
+      }
+      /* ========== 修改导航容器样式 END ========== */
+
+      /* ========== 移动端适配调整 START ========== */
+
+      /* ========== 正确答案显示样式 START ========== */
+      .share-answer-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        line-height: 1.6;
+      }
+
+      .correct-dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background-color: #67c23a;
+        border-radius: 50%;
+        margin-right: 10px;
+        flex-shrink: 0;
+      }
+      /* ========== 正确答案显示样式 END ========== */
+
+      @media (max-width: 600px) {
+        .header {
+          padding: 15px;
+        }
+
+        .nav-container {
+          gap: 8px;
+        }
+
+        .nav-dropdown {
+          padding: 8px 12px;
+          font-size: 13px;
+          min-width: 70px;
+        }
+
+        .search-container {
+          padding: 0 10px;
+          min-width: 100px;
+        }
+
+        .search-input {
+          width: 80px; /* 移动端固定宽度 */
+        }
+
+        .search-input:focus {
+          width: 120px;
+        }
+      }
+      /* ========== 移动端适配调整 END ========== */
+
       /* 移动端适配 */
       @media (max-width: 600px) {
         .tips-container {
@@ -656,28 +837,31 @@
           </div>
         </div>
 
+        <!-- ========== 修改导航部分结构 START ========== -->
         <div class="nav-container">
+          <!-- 题目导航按钮 -->
           <div class="nav-dropdown">
             <span>题目导航</span>
-            <div class="dropdown-menu" id="questionMenu">
-              <!-- 题目导航菜单将通过JS动态生成 -->
-            </div>
+            <div class="dropdown-menu" id="questionMenu"></div>
           </div>
 
+          <!-- 搜索框 -->
           <div class="search-container">
             <input
               type="text"
               class="search-input"
               id="searchInput"
-              placeholder="2025年7月"
+              placeholder="搜索..."
             />
             <div class="search-icon" id="searchIcon"></div>
           </div>
 
+          <!-- 分享按钮 -->
           <div class="share-container" id="shareButton">
             <div class="share-icon"></div>
           </div>
         </div>
+        <!-- ========== 修改导航部分结构 END ========== -->
       </div>
 
       <div class="content" id="contentArea">
@@ -696,6 +880,17 @@
         <div class="tips-container">
           Tips：遇题目导航点击无效时，点按页面任意空白区域即可恢复正常
         </div>
+      </div>
+    </div>
+
+    <!-- 滑动提示弹窗 -->
+    <div class="swipe-tip-modal" id="swipeTipModal">
+      <div class="swipe-tip-card">
+        <div class="swipe-tip-content">
+          1、移动端现已全面支持左右滑动切换试题，欢迎尝鲜
+          2、遇题目导航点击无效时，点按页面任意空白区域即可恢复正常
+        </div>
+        <button class="swipe-tip-confirm" id="swipeTipConfirm">知道了</button>
       </div>
     </div>
 
@@ -727,186 +922,194 @@
 
     <script>
       // 题目数据
-const questions = [
-  {
-    id: 1,
-    type: "single",
-    question: "1.绿电直连中，直连线路是指（)",
-    options: [
-      { text: "电源与公共电网直接连接的专用电力线路", correct: false },
-      { text: "电源与电力用户直接连接的专用电力线路", correct: true },
-      { text: "电力用户与公共电网直接连接的专用电力线路", correct: false },
-      { text: "多个电源之间直接连接的专用电力线路", correct: false }
-    ]
-  },
-  {
-    id: 2,
-    type: "single",
-    question: "2.绿电直连项目的发展目标不包括（）",
-    options: [
-      { text: "满足企业绿色用能需求", correct: false },
-      { text: "提升新能源就近就地消纳水平", correct: false },
-      { text: "优先保障电网企业利益", correct: true },
-      { text: "公平合理承担各类责任", correct: false }
-    ]
-  },
-  {
-    id: 3,
-    type: "single",
-    question: "3.存量负荷开展绿电直连的前提之一是（)",
-    options: [
-      { text: "关闭所有燃煤燃气自备电厂", correct: false },
-      { text: "燃煤燃气自备电厂足额清缴可再生能源发展基金 C.获得省级电网企业独家授权", correct: true },
-      { text: "周边无其他新能源项目", correct: false }
-    ]
-  },
-  {
-    id: 4,
-    type: "single",
-    question: "4.绿电直连项目接入电压等级一般不超过（）",
-    options: [
-      { text: "110千伏", correct: false },
-      { text: "220（330）千伏", correct: true },
-      { text: "500千伏", correct: false },
-      { text: "750千伏", correct: false }
-    ]
-  },
-  {
-    id: 5,
-    type: "single",
-    question: "5.绿电直连项目原则上由（）作为主责单位",
-    options: [
-      { text: "电网企业", correct: false },
-      { text: "发电企业", correct: false },
-      { text: "负荷", correct: true },
-      { text: "地方政府单选", correct: false }
-    ]
-  },
-  {
-    id: 6,
-    type: "single",
-    question: "6.并网型绿电直连项目整体新能源年自发自用电量 占总可用发电量的比例应不低于（）",
-    options: [
-      { text: "30%", correct: false },
-      { text: "50%", correct: false },
-      { text: "60%", correct: true },
-      { text: "80%", correct: false }
-    ]
-  },
-  {
-    id: 7,
-    type: "single",
-    question: "7.绿电直连项目与公共电网的安全责任界面按（）划分",
-    options: [
-      { text: "行政区域", correct: false },
-      { text: "电压等级", correct: false },
-      { text: "产权分界点", correct: true },
-      { text: "项目投资额", correct: false }
-    ]
-  },
-  {
-    id: 8,
-    type: "single",
-    question: "8.并网型绿电直连项目应作为（）整体参与",
-    options: [
-      { text: "电力市场交易", correct: true },
-      { text: "碳排放权交易", correct: false },
-      { text: "可再生能源配额交易", correct: false },
-      { text: "电力设备采购招标", correct: false }
-    ]
-  },
-  {
-    id: 9,
-    type: "single",
-    question: "9.零碳园区建设的重点任务不包括（）",
-    options: [
-      { text: "加快用能结构转型", correct: false },
-      { text: "推进节能降碳", correct: false },
-      { text: "扩大高耗能产业规模", correct: true },
-      { text: "强化资源节约集约", correct: false }
-    ]
-  },
-  {
-    id: 10,
-    type: "single",
-    question: "10.零碳园区应建设覆盖主要用能企业的（）",
-    options: [
-      { text: "安全生产管理平台", correct: false },
-      { text: "能碳管理平台", correct: true },
-      { text: "人力资源管理平台", correct: false },
-      { text: "物流运输管理平台", correct: false }
-    ]
-  },
-  {
-    id: 11,
-    type: "single",
-    question: "11.鼓励零碳园区以（）等形式参与电力市场",
-    options: [
-      { text: "电网企业代理", correct: false },
-      { text: "虚拟电厂 (负荷聚合商)", correct: true },
-      { text: "政府统一协调", correct: false },
-      { text: "发电企业独家运营单选", correct: false }
-    ]
-  },
-  {
-    id: 12,
-    type: "single",
-    question: "12.国家对零碳园区建设的资金支持方式不包括（）",
-    options: [
-      { text: "统筹利用现有资金渠道", correct: false },
-      { text: "地方政府专项债券", correct: false },
-      { text: "政策性银行中长期信贷", correct: false },
-      { text: "强制要求电网企业全额投资", correct: true }
-    ]
-  },
-  {
-    id: 13,
-    type: "single",
-    question: "13.各地区推荐国家级零碳园区的数量不超过（)",
-    options: [
-      { text: "1", correct: false },
-      { text: "2", correct: true },
-      { text: "3", correct: false },
-      { text: "4", correct: false }
-    ]
-  },
-  {
-    id: 14,
-    type: "single",
-    question: "14.绿电直连项目中，直连专线原则上由（）投资",
-    options: [
-      { text: "电网企业", correct: false },
-      { text: "地方政府", correct: false },
-      { text: "负荷、电源主体", correct: true },
-      { text: "第三方投资公司", correct: false }
-    ]
-  },
-  {
-    id: 15,
-    type: "multi",
-    question: "15.绿电直连的适用范围包括（）",
-    options: [
-      { text: "风电", correct: true },
-      { text: "太阳能发电", correct: true },
-      { text: "生物质发电", correct: true },
-      { text: "燃煤发电", correct: false }
-    ]
-  },
-  {
-    id: 16,
-    type: "multi",
-    question: "16.绿电直连项目建设运行的原则包括（）",
-    options: [
-      { text: "安全优先", correct: true },
-      { text: "绿色友好", correct: true },
-      { text: "权责对等", correct: true },
-      { text: "源荷匹配", correct: true }
-    ]
-  }
-];
-
+      const questions = [
+        {
+          id: 1,
+          type: "single",
+          question: "1.绿电直连中，直连线路是指（)",
+          options: [
+            { text: "电源与公共电网直接连接的专用电力线路", correct: false },
+            { text: "电源与电力用户直接连接的专用电力线路", correct: true },
+            {
+              text: "电力用户与公共电网直接连接的专用电力线路",
+              correct: false,
+            },
+            { text: "多个电源之间直接连接的专用电力线路", correct: false },
+          ],
+        },
+        {
+          id: 2,
+          type: "single",
+          question: "2.绿电直连项目的发展目标不包括（）",
+          options: [
+            { text: "满足企业绿色用能需求", correct: false },
+            { text: "提升新能源就近就地消纳水平", correct: false },
+            { text: "优先保障电网企业利益", correct: true },
+            { text: "公平合理承担各类责任", correct: false },
+          ],
+        },
+        {
+          id: 3,
+          type: "single",
+          question: "3.存量负荷开展绿电直连的前提之一是（)",
+          options: [
+            { text: "关闭所有燃煤燃气自备电厂", correct: false },
+            {
+              text: "燃煤燃气自备电厂足额清缴可再生能源发展基金",
+              correct: true,
+            },
+            { text: "获得省级电网企业独家授权", correct: false },
+            { text: "周边无其他新能源项目", correct: false },
+          ],
+        },
+        {
+          id: 4,
+          type: "single",
+          question: "4.绿电直连项目接入电压等级一般不超过（）",
+          options: [
+            { text: "110千伏", correct: false },
+            { text: "220（330）千伏", correct: true },
+            { text: "500千伏", correct: false },
+            { text: "750千伏", correct: false },
+          ],
+        },
+        {
+          id: 5,
+          type: "single",
+          question: "5.绿电直连项目原则上由（）作为主责单位",
+          options: [
+            { text: "电网企业", correct: false },
+            { text: "发电企业", correct: false },
+            { text: "负荷", correct: true },
+            { text: "地方政府单选", correct: false },
+          ],
+        },
+        {
+          id: 6,
+          type: "single",
+          question:
+            "6.并网型绿电直连项目整体新能源年自发自用电量 占总可用发电量的比例应不低于（）",
+          options: [
+            { text: "30%", correct: false },
+            { text: "50%", correct: false },
+            { text: "60%", correct: true },
+            { text: "80%", correct: false },
+          ],
+        },
+        {
+          id: 7,
+          type: "single",
+          question: "7.绿电直连项目与公共电网的安全责任界面按（）划分",
+          options: [
+            { text: "行政区域", correct: false },
+            { text: "电压等级", correct: false },
+            { text: "产权分界点", correct: true },
+            { text: "项目投资额", correct: false },
+          ],
+        },
+        {
+          id: 8,
+          type: "single",
+          question: "8.并网型绿电直连项目应作为（）整体参与",
+          options: [
+            { text: "电力市场交易", correct: true },
+            { text: "碳排放权交易", correct: false },
+            { text: "可再生能源配额交易", correct: false },
+            { text: "电力设备采购招标", correct: false },
+          ],
+        },
+        {
+          id: 9,
+          type: "single",
+          question: "9.零碳园区建设的重点任务不包括（）",
+          options: [
+            { text: "加快用能结构转型", correct: false },
+            { text: "推进节能降碳", correct: false },
+            { text: "扩大高耗能产业规模", correct: true },
+            { text: "强化资源节约集约", correct: false },
+          ],
+        },
+        {
+          id: 10,
+          type: "single",
+          question: "10.零碳园区应建设覆盖主要用能企业的（）",
+          options: [
+            { text: "安全生产管理平台", correct: false },
+            { text: "能碳管理平台", correct: true },
+            { text: "人力资源管理平台", correct: false },
+            { text: "物流运输管理平台", correct: false },
+          ],
+        },
+        {
+          id: 11,
+          type: "single",
+          question: "11.鼓励零碳园区以（）等形式参与电力市场",
+          options: [
+            { text: "电网企业代理", correct: false },
+            { text: "虚拟电厂 (负荷聚合商)", correct: true },
+            { text: "政府统一协调", correct: false },
+            { text: "发电企业独家运营单选", correct: false },
+          ],
+        },
+        {
+          id: 12,
+          type: "single",
+          question: "12.国家对零碳园区建设的资金支持方式不包括（）",
+          options: [
+            { text: "统筹利用现有资金渠道", correct: false },
+            { text: "地方政府专项债券", correct: false },
+            { text: "政策性银行中长期信贷", correct: false },
+            { text: "强制要求电网企业全额投资", correct: true },
+          ],
+        },
+        {
+          id: 13,
+          type: "single",
+          question: "13.各地区推荐国家级零碳园区的数量不超过（)",
+          options: [
+            { text: "1", correct: false },
+            { text: "2", correct: true },
+            { text: "3", correct: false },
+            { text: "4", correct: false },
+          ],
+        },
+        {
+          id: 14,
+          type: "single",
+          question: "14.绿电直连项目中，直连专线原则上由（）投资",
+          options: [
+            { text: "电网企业", correct: false },
+            { text: "地方政府", correct: false },
+            { text: "负荷、电源主体", correct: true },
+            { text: "第三方投资公司", correct: false },
+          ],
+        },
+        {
+          id: 15,
+          type: "multi",
+          question: "15.绿电直连的适用范围包括（）",
+          options: [
+            { text: "风电", correct: true },
+            { text: "太阳能发电", correct: true },
+            { text: "生物质发电", correct: true },
+            { text: "燃煤发电", correct: false },
+          ],
+        },
+        {
+          id: 16,
+          type: "multi",
+          question: "16.绿电直连项目建设运行的原则包括（）",
+          options: [
+            { text: "安全优先", correct: true },
+            { text: "绿色友好", correct: true },
+            { text: "权责对等", correct: true },
+            { text: "源荷匹配", correct: true },
+          ],
+        },
+      ];
       // 当前显示的题目ID
       let currentQuestionId = 0;
+      let currentSlideIndex = 0;
 
       // 初始化导航菜单
       const questionMenu = document.getElementById("questionMenu");
@@ -924,6 +1127,7 @@ const questions = [
         item.dataset.id = q.id;
         item.addEventListener("click", () => {
           loadQuestion(q.id);
+          currentSlideIndex = index;
           // 点击后隐藏菜单
           questionMenu.style.display = "none";
         });
@@ -980,11 +1184,11 @@ const questions = [
             option.className = `judge-option`;
             option.dataset.correct = opt.correct;
             option.innerHTML = `
-                        <span class="option-label">${
-                          index === 0 ? "√" : "×"
-                        }</span>
-                        <span class="option-text">${opt.text}</span>
-                    `;
+                      <span class="option-label">${
+                        index === 0 ? "√" : "×"
+                      }</span>
+                      <span class="option-text">${opt.text}</span>
+                  `;
 
             // 默认显示正确答案
             if (opt.correct) {
@@ -1014,11 +1218,11 @@ const questions = [
             option.className = `option`;
             option.dataset.correct = opt.correct;
             option.innerHTML = `
-                        <span class="option-label">${String.fromCharCode(
-                          65 + index
-                        )}</span>
-                        <span class="option-text">${opt.text}</span>
-                    `;
+                      <span class="option-label">${String.fromCharCode(
+                        65 + index
+                      )}</span>
+                      <span class="option-text">${opt.text}</span>
+                  `;
 
             // 默认显示正确答案
             if (opt.correct) {
@@ -1083,6 +1287,7 @@ const questions = [
       homeIcon.addEventListener("click", function () {
         if (questions.length > 0) {
           loadQuestion(questions[0].id);
+          currentSlideIndex = 0;
         }
       });
 
@@ -1114,25 +1319,29 @@ const questions = [
         // 获取正确答案
         let correctAnswers = [];
         if (question.type === "judge") {
-          correctAnswers = question.options
-            .filter((opt) => opt.correct)
-            .map((opt) => opt.text);
-        } else {
-          correctAnswers = question.options
-            .filter((opt) => opt.correct)
-            .map((opt, index) => {
-              return `${String.fromCharCode(65 + index)}. ${opt.text}`;
-            });
-        }
-
-        // 创建答案项，每个选项单独一行并限制20个字符
-        correctAnswers.forEach((answer) => {
-          const answerItem = document.createElement("span");
+          // 判断题特殊处理
+          const correctOption = question.options.find((opt) => opt.correct);
+          const answerItem = document.createElement("div");
           answerItem.className = "share-answer-item";
-          answerItem.textContent =
-            answer.length > 20 ? answer.substring(0, 20) + "..." : answer;
+          answerItem.innerHTML = `
+            <span class="correct-dot"></span>
+            <span>${correctOption.text}</span>
+        `;
           shareAnswer.appendChild(answerItem);
-        });
+        } else {
+          // 选择题处理
+          question.options.forEach((opt, index) => {
+            if (opt.correct) {
+              const answerItem = document.createElement("div");
+              answerItem.className = "share-answer-item";
+              answerItem.innerHTML = `
+                    <span class="correct-dot"></span>
+                    <span>${opt.text}</span>
+                `;
+              shareAnswer.appendChild(answerItem);
+            }
+          });
+        }
 
         // 显示模态框
         shareModal.classList.add("active");
@@ -1236,6 +1445,80 @@ const questions = [
           console.error("html2canvas is not loaded");
         }
       });
+
+      // ========== 新增滑动功能 START ==========
+      // 初始化滑动功能
+      function initSwipe() {
+        const contentArea = document.getElementById("contentArea");
+        let startX = 0;
+        let currentX = 0;
+
+        contentArea.addEventListener(
+          "touchstart",
+          (e) => {
+            startX = e.touches[0].clientX;
+          },
+          { passive: true }
+        );
+
+        contentArea.addEventListener(
+          "touchmove",
+          (e) => {
+            currentX = e.touches[0].clientX - startX;
+          },
+          { passive: true }
+        );
+
+        contentArea.addEventListener(
+          "touchend",
+          () => {
+            const threshold = 50;
+
+            if (currentX > threshold && currentSlideIndex > 0) {
+              // 向左滑动，切换到上一题
+              currentSlideIndex--;
+              loadQuestion(questions[currentSlideIndex].id);
+            } else if (
+              currentX < -threshold &&
+              currentSlideIndex < questions.length - 1
+            ) {
+              // 向右滑动，切换到下一题
+              currentSlideIndex++;
+              loadQuestion(questions[currentSlideIndex].id);
+            }
+
+            currentX = 0;
+          },
+          { passive: true }
+        );
+
+        // 显示滑动提示（首次访问）
+        const hasSeenTip = localStorage.getItem("hasSeenSwipeTip");
+        if (!hasSeenTip && window.innerWidth <= 600) {
+          const tipModal = document.createElement("div");
+          tipModal.className = "swipe-tip-modal active";
+          tipModal.innerHTML = `
+            <div class="swipe-tip-card">
+              <div class="swipe-tip-content">
+                移动端现已全面支持左右滑动切换试题，欢迎尝鲜
+              </div>
+              <button class="swipe-tip-confirm" id="swipeTipConfirm">知道了</button>
+            </div>
+          `;
+          document.body.appendChild(tipModal);
+
+          document
+            .getElementById("swipeTipConfirm")
+            .addEventListener("click", () => {
+              tipModal.remove();
+              localStorage.setItem("hasSeenSwipeTip", "true");
+            });
+        }
+      }
+
+      // 初始化滑动功能
+      initSwipe();
+      // ========== 新增滑动功能 END ==========
 
       // 默认加载第一题并显示正确答案
       if (questions.length > 0) {
