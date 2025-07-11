@@ -1511,13 +1511,13 @@
           document.body.appendChild(tipModal);
           localStorage.setItem("hasSeenSwipeTip", "true");
 
-          // 5秒后自动消失
+          // 2秒后自动消失
           setTimeout(() => {
             tipModal.classList.remove("active");
             setTimeout(() => {
               tipModal.remove();
             }, 300); // 等待过渡动画完成
-          }, 5000);
+          }, 2000);
         }
       }
       // ========== 修复后的滑动功能 END ==========
