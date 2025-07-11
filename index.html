@@ -56,7 +56,7 @@
         z-index: 3000;
         opacity: 0;
         visibility: hidden;
-        transition: all 0.3s;
+        transition: all 0.3s ease;
       }
 
       .swipe-tip-modal.active {
@@ -851,7 +851,7 @@
               type="text"
               class="search-input"
               id="searchInput"
-              placeholder="2025年7月"
+              placeholder="搜索..."
             />
             <div class="search-icon" id="searchIcon"></div>
           </div>
@@ -887,7 +887,8 @@
     <div class="swipe-tip-modal" id="swipeTipModal">
       <div class="swipe-tip-card">
         <div class="swipe-tip-content">
-          移动端现已全面支持左右滑动切换试题，欢迎尝鲜
+          1、移动端现已全面支持左右滑动切换试题，欢迎尝鲜
+          2、遇题目导航点击无效时，点按页面任意空白区域即可恢复正常
         </div>
         <button class="swipe-tip-confirm" id="swipeTipConfirm">知道了</button>
       </div>
@@ -1506,14 +1507,23 @@
           `;
           document.body.appendChild(tipModal);
 
+          // 修复：确保正确绑定事件并移除元素
           document
             .getElementById("swipeTipConfirm")
-            .addEventListener("click", () => {
-              tipModal.remove();
-              localStorage.setItem("hasSeenSwipeTip", "true");
+            .addEventListener("click", function onClick() {
+              tipModal.classList.remove("active");
+              setTimeout(() => {
+                tipModal.remove();
+                localStorage.setItem("hasSeenSwipeTip", "true");
+                // 移除事件监听防止内存泄漏
+                document
+                  .getElementById("swipeTipConfirm")
+                  .removeEventListener("click", onClick);
+              }, 300); // 等待动画结束
             });
         }
       }
+      // ========== 修复后的滑动功能 END ==========
 
       // 初始化滑动功能
       initSwipe();
