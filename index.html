@@ -1508,19 +1508,16 @@
           document.body.appendChild(tipModal);
 
           // 修复：确保正确绑定事件并移除元素
-          document
-            .getElementById("swipeTipConfirm")
-            .addEventListener("click", function onClick() {
-              tipModal.classList.remove("active");
-              setTimeout(() => {
-                tipModal.remove();
-                localStorage.setItem("hasSeenSwipeTip", "true");
-                // 移除事件监听防止内存泄漏
-                document
-                  .getElementById("swipeTipConfirm")
-                  .removeEventListener("click", onClick);
-              }, 300); // 等待动画结束
-            });
+          document.body.appendChild(tipModal);
+          localStorage.setItem("hasSeenSwipeTip", "true");
+
+          // 5秒后自动消失
+          setTimeout(() => {
+            tipModal.classList.remove("active");
+            setTimeout(() => {
+              tipModal.remove();
+            }, 300); // 等待过渡动画完成
+          }, 5000);
         }
       }
       // ========== 修复后的滑动功能 END ==========
