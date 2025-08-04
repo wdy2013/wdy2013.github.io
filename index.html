@@ -833,7 +833,7 @@
           <div class="divider"></div>
           <div class="title-text">
             <div class="breadcrumb">宝丰人 › 企业文化践行 › 政策热点学习</div>
-            <div class="main-title">关于有序推动绿电直连发展有关事项的通知</div>
+            <div class="main-title">关于深入贯彻落实宝丰集团2025年中经营管理工作会议精神的通知</div>
           </div>
         </div>
 
@@ -851,7 +851,7 @@
               type="text"
               class="search-input"
               id="searchInput"
-              placeholder="搜索..."
+              placeholder="2025年8月"
             />
             <div class="search-icon" id="searchIcon"></div>
           </div>
@@ -923,190 +923,171 @@
     <script>
       // 题目数据
       const questions = [
-        {
-          id: 1,
-          type: "single",
-          question: "1.绿电直连中，直连线路是指（)",
-          options: [
-            { text: "电源与公共电网直接连接的专用电力线路", correct: false },
-            { text: "电源与电力用户直接连接的专用电力线路", correct: true },
-            {
-              text: "电力用户与公共电网直接连接的专用电力线路",
-              correct: false,
-            },
-            { text: "多个电源之间直接连接的专用电力线路", correct: false },
-          ],
-        },
-        {
-          id: 2,
-          type: "single",
-          question: "2.绿电直连项目的发展目标不包括（）",
-          options: [
-            { text: "满足企业绿色用能需求", correct: false },
-            { text: "提升新能源就近就地消纳水平", correct: false },
-            { text: "优先保障电网企业利益", correct: true },
-            { text: "公平合理承担各类责任", correct: false },
-          ],
-        },
-        {
-          id: 3,
-          type: "single",
-          question: "3.存量负荷开展绿电直连的前提之一是（)",
-          options: [
-            { text: "关闭所有燃煤燃气自备电厂", correct: false },
-            {
-              text: "燃煤燃气自备电厂足额清缴可再生能源发展基金",
-              correct: true,
-            },
-            { text: "获得省级电网企业独家授权", correct: false },
-            { text: "周边无其他新能源项目", correct: false },
-          ],
-        },
-        {
-          id: 4,
-          type: "single",
-          question: "4.绿电直连项目接入电压等级一般不超过（）",
-          options: [
-            { text: "110千伏", correct: false },
-            { text: "220（330）千伏", correct: true },
-            { text: "500千伏", correct: false },
-            { text: "750千伏", correct: false },
-          ],
-        },
-        {
-          id: 5,
-          type: "single",
-          question: "5.绿电直连项目原则上由（）作为主责单位",
-          options: [
-            { text: "电网企业", correct: false },
-            { text: "发电企业", correct: false },
-            { text: "负荷", correct: true },
-            { text: "地方政府单选", correct: false },
-          ],
-        },
-        {
-          id: 6,
-          type: "single",
-          question:
-            "6.并网型绿电直连项目整体新能源年自发自用电量 占总可用发电量的比例应不低于（）",
-          options: [
-            { text: "30%", correct: false },
-            { text: "50%", correct: false },
-            { text: "60%", correct: true },
-            { text: "80%", correct: false },
-          ],
-        },
-        {
-          id: 7,
-          type: "single",
-          question: "7.绿电直连项目与公共电网的安全责任界面按（）划分",
-          options: [
-            { text: "行政区域", correct: false },
-            { text: "电压等级", correct: false },
-            { text: "产权分界点", correct: true },
-            { text: "项目投资额", correct: false },
-          ],
-        },
-        {
-          id: 8,
-          type: "single",
-          question: "8.并网型绿电直连项目应作为（）整体参与",
-          options: [
-            { text: "电力市场交易", correct: true },
-            { text: "碳排放权交易", correct: false },
-            { text: "可再生能源配额交易", correct: false },
-            { text: "电力设备采购招标", correct: false },
-          ],
-        },
-        {
-          id: 9,
-          type: "single",
-          question: "9.零碳园区建设的重点任务不包括（）",
-          options: [
-            { text: "加快用能结构转型", correct: false },
-            { text: "推进节能降碳", correct: false },
-            { text: "扩大高耗能产业规模", correct: true },
-            { text: "强化资源节约集约", correct: false },
-          ],
-        },
-        {
-          id: 10,
-          type: "single",
-          question: "10.零碳园区应建设覆盖主要用能企业的（）",
-          options: [
-            { text: "安全生产管理平台", correct: false },
-            { text: "能碳管理平台", correct: true },
-            { text: "人力资源管理平台", correct: false },
-            { text: "物流运输管理平台", correct: false },
-          ],
-        },
-        {
-          id: 11,
-          type: "single",
-          question: "11.鼓励零碳园区以（）等形式参与电力市场",
-          options: [
-            { text: "电网企业代理", correct: false },
-            { text: "虚拟电厂 (负荷聚合商)", correct: true },
-            { text: "政府统一协调", correct: false },
-            { text: "发电企业独家运营单选", correct: false },
-          ],
-        },
-        {
-          id: 12,
-          type: "single",
-          question: "12.国家对零碳园区建设的资金支持方式不包括（）",
-          options: [
-            { text: "统筹利用现有资金渠道", correct: false },
-            { text: "地方政府专项债券", correct: false },
-            { text: "政策性银行中长期信贷", correct: false },
-            { text: "强制要求电网企业全额投资", correct: true },
-          ],
-        },
-        {
-          id: 13,
-          type: "single",
-          question: "13.各地区推荐国家级零碳园区的数量不超过（)",
-          options: [
-            { text: "1", correct: false },
-            { text: "2", correct: true },
-            { text: "3", correct: false },
-            { text: "4", correct: false },
-          ],
-        },
-        {
-          id: 14,
-          type: "single",
-          question: "14.绿电直连项目中，直连专线原则上由（）投资",
-          options: [
-            { text: "电网企业", correct: false },
-            { text: "地方政府", correct: false },
-            { text: "负荷、电源主体", correct: true },
-            { text: "第三方投资公司", correct: false },
-          ],
-        },
-        {
-          id: 15,
-          type: "multi",
-          question: "15.绿电直连的适用范围包括（）",
-          options: [
-            { text: "风电", correct: true },
-            { text: "太阳能发电", correct: true },
-            { text: "生物质发电", correct: true },
-            { text: "燃煤发电", correct: false },
-          ],
-        },
-        {
-          id: 16,
-          type: "multi",
-          question: "16.绿电直连项目建设运行的原则包括（）",
-          options: [
-            { text: "安全优先", correct: true },
-            { text: "绿色友好", correct: true },
-            { text: "权责对等", correct: true },
-            { text: "源荷匹配", correct: true },
-          ],
-        },
-      ];
+  {
+    id: 1,
+    type: "single",
+    question: "宝丰集团2025年中经营管理工作会上，董事长强 调全员盘点的核心是?",
+    options: [
+      { text: "人员数量统计", correct: false },
+      { text: "对标岗位评价员工能力素养，确保人岗匹配", correct: true },
+      { text: "员工工龄梳理", correct: false },
+      { text: "部门人员结构分析", correct: false }
+    ]
+  },
+  {
+    id: 2,
+    type: "single",
+    question: "关于人才布局 董事长提出的关键措施不包括？",
+    options: [
+      { text: "搭建老中青人才梯队", correct: false },
+      { text: "对关键岗位表现差的人制定替代或提升方案", correct: false },
+      { text: "仅由人力资源部门负责", correct: true },
+      { text: "做好大学生招聘及职业发展规划", correct: false }
+    ]
+  },
+  {
+    id: 3,
+    type: "single",
+    question: "行政管理部门对会议的核心要求是？",
+    options: [
+      { text: "确保全员参与", correct: false },
+      { text: "必须解决问题，不开“闲会”", correct: true },
+      { text: "会议时长不超过1小时", correct: false },
+      { text: "会后发布详细纪要", correct: false }
+    ]
+  },
+  {
+    id: 4,
+    type: "single",
+    question: "经营管理中强调的办事风格是？",
+    options: [
+      { text: "每周总结问题", correct: false },
+      { text: "当天问题不过夜", correct: true },
+      { text: "每月集中解决问题", correct: false },
+      { text: "重大问题上报后再处理", correct: false }
+    ]
+  },
+  {
+    id: 5,
+    type: "single",
+    question: "监察部的核心职能是？",
+    options: [
+      { text: "事后审计决策质量", correct: false },
+      { text: "事前全面监督 降低各环节风险至“零”", correct: true },
+      { text: "仅负责招标流程监督", correct: false },
+      { text: "替代管理层处理经营问题", correct: false }
+    ]
+  },
+  {
+    id: 6,
+    type: "single",
+    question: "审计管理的核心是?",
+    options: [
+      { text: "第三方财务审计，找出数字问题", correct: false },
+      { text: "对团队和管理干部的决策能力、质量进行审计，为为管理提升提供支撑", correct: true },
+      { text: "仅审计采购部门", correct: false },
+      { text: "制定企业管理制度", correct: false }
+    ]
+  },
+  {
+    id: 7,
+    type: "single",
+    question: "宝丰集团认为“企业生命线”是？",
+    options: [
+      { text: "利润增长", correct: false },
+      { text: "安全环保", correct: true },
+      { text: "人才储备", correct: false },
+      { text: "市场份额", correct: false }
+    ]
+  },
+  {
+    id: 8,
+    type: "single",
+    question: "企管部的工作核心应聚焦于？",
+    options: [
+      { text: "被动修订组织架构和制度", correct: false },
+      { text: "提高效益、降低成本，将架构设计为效益中心、流程为降本核心", correct: true },
+      { text: "仅负责部门协调", correct: false },
+      { text: "制定招聘计划", correct: false }
+    ]
+  },
+  {
+    id: 9,
+    type: "single",
+    question: "采购管理的核心思想是?",
+    options: [
+      { text: "优先选择低价供应商", correct: false },
+      { text: "以质论价，用最少的钱买最好的东西", correct: true },
+      { text: "仅关注采购数量", correct: false },
+      { text: "简化采购流程，提高效率", correct: false }
+    ]
+  },
+  {
+    id: 10,
+    type: "single",
+    question: "销售管理中，储能系统及材料销售的当前突出",
+    options: [
+      { text: "市场需求不足", correct: false },
+      { text: "销售团队搭建不专业", correct: true },
+      { text: "产品质量问题", correct: false },
+      { text: "价格过高", correct: false }
+    ]
+  },
+  {
+    id: 11,
+    type: "single",
+    question: "宝丰能源目前聚烯烃产能约为？",
+    options: [
+      { text: "300万吨", correct: false },
+      { text: "500多万吨", correct: true },
+      { text: "800万吨", correct: false },
+      { text: "1000万吨", correct: false }
+    ]
+  },
+  {
+    id: 12,
+    type: "single",
+    question: "储能产业计划何时全面实现全产业链投产？ A.2025年底",
+    options: [
+      { text: "2026年", correct: true },
+      { text: "2027年", correct: false },
+      { text: "2028年", correct: false }
+    ]
+  },
+  {
+    id: 13,
+    type: "single",
+    question: "新能源汽车项目的建设地点是？",
+    options: [
+      { text: "宁夏宁东", correct: false },
+      { text: "内蒙古", correct: false },
+      { text: "山东济南", correct: true },
+      { text: "新疆准东", correct: false }
+    ]
+  },
+  {
+    id: 14,
+    type: "single",
+    question: "宝丰医院计划由哪家机构参与运营管理？",
+    options: [
+      { text: "清华大学医学部", correct: false },
+      { text: "北京大学医学部", correct: true },
+      { text: "上海交通大学医学部", correct: false },
+      { text: "浙江大学医学部", correct: false }
+    ]
+  },
+  {
+    id: 15,
+    type: "single",
+    question: "AI数智管理的目标是推动企业哪些环节的转型",
+    options: [
+      { text: "仅生产环节", correct: false },
+      { text: "安全、生产、经营、管理、 财务共享等各环节", correct: true },
+      { text: "仅销售环节", correct: false },
+      { text: "仅人力资源管理", correct: false }
+    ]
+  }
+];
       // 当前显示的题目ID
       let currentQuestionId = 0;
       let currentSlideIndex = 0;
@@ -1408,7 +1389,7 @@
           navigator
             .share({
               title: "题目分享",
-              text: "我正在学习《中华人民共和国安全生产法》",
+              text: "月度考试题目分享",
               url: window.location.href,
             })
             .catch((err) => {
