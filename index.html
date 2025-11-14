@@ -33,7 +33,66 @@
         padding: 20px;
         position: relative;
       }
-      
+
+      /* 核心修复：允许容器内阴影显示 */
+      .container {
+        overflow: visible !important; /* 强制覆盖overflow: hidden */
+      }
+
+      /* 调整header阴影 - 与浅绿色背景融合 */
+      .header {
+        box-shadow: 0 8px 50px rgba(144, 202, 147, 0.4); /* 加深同色系阴影 */
+        position: relative;
+        z-index: 2;
+        margin-bottom: -2px; /* 消除间隙 */
+      }
+
+      /* 调整content阴影 - 与浅灰背景过渡 */
+      .content {
+        box-shadow: 0 -6px 56px rgba(144, 202, 147, 0.3); /* 同色系上阴影 */
+        position: relative;
+        z-index: 1;
+        border-top: none; /* 移除可能的边框遮挡 */
+      }
+
+      /* 确保阴影不会被父元素遮挡 */
+      body > .container {
+        overflow: visible;
+      }
+
+      /* 修复容器圆角显示 */
+      .container {
+        overflow: visible !important; /* 允许内部元素不被裁剪 */
+        border-radius: 16px; /* 确保容器本身有圆角 */
+      }
+
+      /* 修复header顶部圆角 */
+      .header {
+        border-top-left-radius: 16px; /* 顶部左圆角 */
+        border-top-right-radius: 16px; /* 顶部右圆角 */
+        overflow: hidden; /* 确保内部纹样不溢出圆角 */
+        /* 保留其他样式 */
+      }
+
+      /* 修复content底部圆角 */
+      .content {
+        border-bottom-left-radius: 16px; /* 底部左圆角 */
+        border-bottom-right-radius: 16px; /* 底部右圆角 */
+        overflow: hidden; /* 确保内容不溢出圆角 */
+        /* 保留其他样式 */
+      }
+
+      /* 确保阴影不遮挡圆角 */
+      .header {
+        box-shadow: 0 8px 20px rgba(144, 202, 147, 0.4);
+        margin-bottom: 0; /* 移除负边距，避免遮挡content顶部 */
+      }
+
+      .content {
+        box-shadow: 0 -6px 16px rgba(144, 202, 147, 0.3);
+        margin-top: -1px; /* 无缝衔接但不遮挡圆角 */
+      }
+
       /* 全屏渐变遮罩 */
       .fullscreen-gradient-mask {
         position: fixed;
@@ -41,7 +100,11 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(135deg, rgba(224, 242, 224, 0.3) 0%, rgba(255, 255, 255, 0) 100%);
+        background: linear-gradient(
+          135deg,
+          rgba(224, 242, 224, 0.3) 0%,
+          rgba(255, 255, 255, 0) 100%
+        );
         z-index: 100;
         pointer-events: none;
       }
@@ -54,6 +117,52 @@
         margin-top: 5px;
         padding: 20px 0;
         border-top: 1px dashed #eee; /* 可选的顶部分割线 */
+      }
+
+      /* 直接删除tips-container（通过样式隐藏并清除占位） */
+      .tips-container {
+        display: none !important; /* 完全隐藏区域 */
+        height: 0 !important; /* 清除高度占位 */
+        padding: 0 !important; /* 清除内边距占位 */
+        margin: 0 !important; /* 清除外边距占位 */
+      }
+
+      /* 调整相邻元素间距，确保布局紧凑 */
+      /* 若tips-container在content内，调整content内相关元素间距 */
+      .content {
+        padding-top: 20px !important; /* 保持原有顶部内边距，或根据需要微调 */
+        padding-bottom: 20px !important; /* 保留底部内边距，无需额外调整 */
+      }
+
+      /* 若tips-container在滑动容器后，调整滑动容器底部间距 */
+      .swipe-container {
+        margin-bottom: 0 !important; /* 清除原与tips-container的间距 */
+      }
+
+      /* 核心：保持按钮水平排列，同时让版权文字单独居中 */
+      /* 替换为你实际的上下题控件父容器类名（必须是包裹两个按钮的直接父容器） */
+      .navigation-buttons {
+        display: flex;
+        justify-content: center; /* 按钮水平居中排列 */
+        align-items: center;
+        gap: 15px; /* 按钮之间的间距，保留原有值 */
+        position: relative;
+        margin-bottom: 20px; /* 给版权文字留位置 */
+      }
+
+      /* 用伪元素添加版权文字，独立居中 */
+      .navigation-buttons:after {
+        content: "©2025";
+        display: block;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%); /* 强制水平居中，不受按钮影响 */
+        /*bottom: -18px; /* 位于按钮下方，调整距离 */
+        font-size: 12px;
+        color: #cccccc;
+        line-height: 1;
+        width: 100%; /* 确保文字容器全屏，居中不偏移 */
+        text-align: center;
       }
 
       /* 滑动提示弹窗样式 */
@@ -166,7 +275,20 @@
         flex-grow: 1; /* 允许增长填充剩余空间 */
         max-width: 100%; /* 最大宽度限制 */
         min-width: 200px; /* 最小宽度 */
-	justify-content: space-between;
+        justify-content: space-between;
+      }
+
+      /* 修改在原有CSS基础上修改.search-container的样式，
+      确保点击容器任意区域都能聚焦到输入框
+      */
+      .search-container {
+        /* 保持原有样式不变 */
+        cursor: text; /* 整个容器显示文本光标 */
+      }
+
+      /* 移除搜索图标的单独点击限制 */
+      .search-icon {
+        cursor: inherit; /* 继承容器的光标样式 */
       }
 
       .search-input {
@@ -270,21 +392,42 @@
         height: 100px; /* 固定高度为100px */
         overflow: hidden; /* 确保背景图片不会超出容器 */
       }
-      
-      /* 祥云背景图案 */
+
+      /* 修改header样式，移除原祥云图案，添加全局全局纹样全局书本渐隐书本书本纹样 */
+      .header {
+        background: linear-gradient(135deg, #e0f2e0 0%, #c8e6c9 100%);
+        color: #333;
+        padding: 30px 40px;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        height: 100px;
+        overflow: hidden; /* 确保背景图案不溢出 */
+      }
+
+      /* 书本纹样背景 - 全局生效且自下而上渐隐 */
       .header::after {
         content: "";
         position: absolute;
-        right: 0;
+        left: 0;
         top: 0;
-        width: 50%; /* 只显示在右半部分 */
-        height: 100%;
-        background-image: url('https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/19664068caee4cf89f4a93fc5fb4e37c~tplv-a9rns2rl98-image.image?rcl=20251114162451DE3D91D7C56234049E79&rk3s=8e244e95&rrcfp=f06b921b&x-expires=1765700707&x-signature=BjYFB2ZORJFU2gY6B26hd7DBnh0%3D');
-        background-size: contain;
+        width: 100%; /* 全局宽度 */
+        height: 100%; /* 全局高度 */
+        background-image: url("https://sns-webpic-qc.xhscdn.com/202511141931/5b93dee737c5f500477f2f6c355f3326/1040g2sg30uibcg5ql8005p662rtipdb2n2gmgpg!nd_dft_wgth_webp_3"); /* 书本纹样图片（示例图，可替换为实际书本纹样） */
+        background-size: cover; /* 覆盖整个区域 */
         background-repeat: no-repeat;
-        background-position: right center;
-        opacity: 0.15; /* 高透明度，确保氛围感 */
-        z-index: 1; /* 确保在背景之上，内容之下 */
+        background-position: center; /* 居中显示 */
+        /* 自下而上渐隐效果 */
+        mask-image: linear-gradient(to top, black 40%, transparent 100%);
+        -webkit-mask-image: linear-gradient(
+          to top,
+          black 40%,
+          transparent 100%
+        );
+        opacity: 0.12; /* 降低透明度，避免干扰内容 */
+        z-index: 1; /* 确保在内容下方 */
       }
 
       /* 标题区域样式 - 修改为垂直对齐 */
@@ -352,8 +495,6 @@
         max-width: 100%; /* 最大宽度 */
       }
 
-      
-
       /* 搜索容器 - 修改为统一高度 */
       .search-container {
         display: flex;
@@ -366,7 +507,7 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05),
           inset 0 0 10px rgba(255, 255, 255, 0.5);
         border: 1px solid rgba(255, 255, 255, 0.4);
-        height: 36px;
+        height: 46px;
         cursor: text; /* 整个搜索框区域都显示文本光标 */
       }
 
@@ -578,18 +719,18 @@
         padding: 20px 40px 40px; /* 减少顶部padding，为下移的控件留出空间 */
         background-color: #f5f7f5; /* 低饱和浅灰色背景，确保移动端用眼友好 */
       }
-      
+
       /* 控件组样式 */
       .controls-group {
         position: relative;
         margin: 0 20px 30px; /* 与搜索框和question-container保持安全外边距，调整为左右20px */
-        height: 40px; /* 固定高度，与内部控件一致 */
+        height: 10px; /* 固定高度，与内部控件一致 */
       }
 
       .question-container {
         position: relative;
-        margin-bottom: 40px;
-        padding-bottom: 25px;
+        /*margin-bottom: 40px;*/
+        padding-bottom: 10px;
       }
 
       /* 修复分割线位置 - 搜索框和controls-group之间 */
@@ -600,16 +741,16 @@
       }
 
       .question {
-        font-size: clamp(
-          16px,
-          3vw,
-          20px
-        ); /* 响应式字体大小，整体缩小一号 */
+        font-size: clamp(16px, 3vw, 20px); /* 响应式字体大小，整体缩小一号 */
         line-height: 1.6;
         color: #333;
         position: relative;
         text-indent: 0; /* 移除固定缩进 */
-        margin: 30px 22px 1rem; /* 与上方控件组保持安全外边距，左右外边距分别为22px */
+        /* 与上方控件组保持安全外边距，左右外边距分别为22px */
+        margin-top: 30px;
+        margin-right: 16px;
+        margin-bottom: 1rem;
+        margin-left: 22px;
         font-family: "AlibabaPuHuiTi", sans-serif; /* 更细的非衬线体 */
       }
 
@@ -625,12 +766,16 @@
         position: absolute;
         left: 0;
         top: 0;
-        background: linear-gradient(135deg, #e0f2e0 0%, #c8e6c9 100%); /* 与页面配色保持一致 */
+        background: linear-gradient(
+          135deg,
+          #e0f2e0 0%,
+          #c8e6c9 100%
+        ); /* 与页面配色保持一致 */
         color: #2e7d32; /* 深绿色文字 */
         padding: 0 24px; /* 垂直padding设为0，使用height控制高度 */
         border-radius: 30px;
         font-weight: bold;
-        font-size: 16px;
+        font-size: 14px;
         box-shadow: 0 6px 16px rgba(200, 230, 201, 0.5); /* 加深阴影效果 */
         font-family: "AlibabaPuHuiTi", sans-serif; /* 使用更细的非衬线体 */
         z-index: 300;
@@ -639,21 +784,48 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 40px; /* 固定高度，与控件组一致 */
+        height: 28px; /* 固定高度，与控件组一致 */
       }
-      
+
+      /* 调整question-type样式，固定高度并与question-counter水平对齐 */
+      .question-type {
+        height: 30px !important; /* 强制设置高度为32px */
+        line-height: 30px !important; /* 行高与高度一致，实现文字垂直居中 */
+        display: inline-flex !important; /* 强制弹性布局，便于对齐 */
+        align-items: center !important; /* 垂直居中对齐 */
+        vertical-align: middle !important; /* 与相邻元素水平对齐 */
+        margin: 0 !important; /* 清除默认边距干扰 */
+        padding: 0 20px !important; /* 保留左右内边距，可根据需求调整 */
+      }
+
+      /* 确保question-counter同步对齐 */
+      .question-counter {
+        display: inline-flex !important;
+        align-items: center !important;
+        vertical-align: middle !important;
+        height: 32px !important; /* 与question-type高度保持一致 */
+        line-height: 32px !important;
+      }
+
+      /* 父容器确保子元素水平对齐 */
+      .question-header {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important; /* 两个元素之间的间距，可调整 */
+      }
+
       .question-type:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 20px rgba(200, 230, 201, 0.6);
       }
-      
+
       /* 题目计数控件 */
       .question-counter {
         position: absolute;
         right: 0;
         top: 0; /* 与题型控件同一水平高度 */
         color: #999;
-        font-size: 16px;
+        font-size: 14px;
         font-family: "AlibabaPuHuiTi", sans-serif; /* 更细的非衬线体 */
         z-index: 300;
         display: flex;
@@ -678,7 +850,7 @@
 
       .option,
       .judge-option {
-        padding: 20px;
+        padding: 16px;
         border-radius: 12px;
         background-color: #f8f9fa;
         transition: all 0.3s ease;
@@ -716,7 +888,7 @@
         border-color: #4caf50; /* 绿色边框 */
         box-shadow: 0 4px 10px rgba(76, 175, 80, 0.2);
       }
-      
+
       /* 错误选项样式 - 置灰并降低透明度 */
       .option.incorrect,
       .judge-option.incorrect {
@@ -725,13 +897,13 @@
         opacity: 0.6; /* 降低透明度 */
         cursor: not-allowed; /* 鼠标指针变为禁止符号 */
       }
-      
+
       .option.incorrect .option-label,
       .judge-option.incorrect .option-label {
         background-color: #e1e5eb;
         color: #999;
       }
-      
+
       .option.incorrect .option-text,
       .judge-option.incorrect .option-text {
         color: #999; /* 文字颜色变灰 */
@@ -771,7 +943,7 @@
       }
 
       .option-text {
-        font-size: 16px;
+        font-size: 12px;
         color: #444;
         font-family: "AlibabaPuHuiTi", sans-serif; /* 更细的非衬线体 */
       }
@@ -859,13 +1031,13 @@
           width: 100%;
         }
       }
-    /* 导航按钮样式 */
+      /* 导航按钮样式 */
       .navigation-buttons {
         display: flex;
         justify-content: space-between;
         margin-top: 20px;
       }
-      
+
       .nav-btn {
         padding: 10px 20px;
         border-radius: 30px;
@@ -880,25 +1052,25 @@
         gap: 8px;
         font-family: "AlibabaPuHuiTi", sans-serif; /* 使用更细的非衬线体 */
       }
-      
+
       .prev-btn {
         background-color: #f0f9f0;
         color: #2e7d32;
         box-shadow: 0 4px 8px rgba(224, 242, 224, 0.3);
       }
-      
+
       .prev-btn:hover {
         background-color: #e0f2e0;
         transform: translateY(-2px);
         box-shadow: 0 6px 12px rgba(224, 242, 224, 0.5);
       }
-      
+
       .next-btn {
         background-color: #c8e6c9;
         color: #2e7d32;
         box-shadow: 0 4px 8px rgba(200, 230, 201, 0.3);
       }
-      
+
       .next-btn:hover {
         background-color: #b8e0b8;
         transform: translateY(-2px);
@@ -909,9 +1081,8 @@
   <body>
     <!-- 全屏渐变遮罩 -->
     <div class="fullscreen-gradient-mask"></div>
-    
+
     <div class="container">
-      
       <div class="header">
         <div class="title-container">
           <div class="home-container" id="homeIcon">
@@ -920,14 +1091,16 @@
           <div class="divider"></div>
           <div class="title-text">
             <div class="breadcrumb">宝丰人 › 企业文化践行 › 政策热点学习</div>
-            <div class="main-title">中共中央关于制定国民经济和社会发展第十五个五年规划的建议</div>
+            <div class="main-title">
+              中共中央关于制定国民经济和社会发展第十五个五年规划的建议
+            </div>
           </div>
         </div>
       </div>
 
       <div class="content" id="contentArea">
         <!-- 搜索框 -->
-        <div class="search-container" style="margin: 15px 20px;">
+        <div class="search-container" style="margin: 15px 20px">
           <input
             type="text"
             class="search-input"
@@ -936,29 +1109,29 @@
           />
           <div class="search-icon" id="searchIcon"></div>
         </div>
-        
 
-        
         <!-- 控件组 - 包含题型和题目计数 -->
-        <div class="controls-group" style="margin: 0 20px 30px;">
+        <div class="controls-group" style="margin: 0 20px 30px">
           <div class="question-type" id="questionType">单选</div>
           <!-- 题目计数控件 -->
           <div class="question-counter" id="questionCounter">第1题，共12题</div>
         </div>
-        
+
         <div class="question-container">
           <div class="question" id="currentQuestion">
             请从题目导航中选择题目
           </div>
 
-
-
           <div id="optionsContainer"></div>
-          
+
           <!-- 上一题/下一题按钮 -->
           <div class="navigation-buttons">
-            <button id="prevQuestionBtn" class="nav-btn prev-btn">上一题</button>
-            <button id="nextQuestionBtn" class="nav-btn next-btn">下一题</button>
+            <button id="prevQuestionBtn" class="nav-btn prev-btn">
+              上一题
+            </button>
+            <button id="nextQuestionBtn" class="nav-btn next-btn">
+              下一题
+            </button>
           </div>
         </div>
 
@@ -984,144 +1157,170 @@
     <script>
       // 题目数据
       const questions = [
-  {
-    id: 1,
-    type: "single",
-    question: "《中共中央关于制定国民经济和社会发展第十五个五年规划的建议》由哪次会议通过",
-    options: [
-      { text: "中国共产党第十九届中央委员会第四次全体会议", correct: false },
-      { text: "中国共产党第二十届中央委员会第四次全体会议", correct: true },
-      { text: "中国共产党第二十届中央委员会第三次全体会议", correct: false },
-      { text: "中国共产党第二十一届中央委员会第一次全体会议", correct: false }
-    ]
-  },
-  {
-    id: 2,
-    type: "single",
-    question: "“十五五”时期在基本实现社会主义现代化进程中的地位是",
-    options: [
-      { text: "起步阶段", correct: false },
-      { text: "承前启后的重要地位", correct: true },
-      { text: "收尾阶段", correct: false },
-      { text: "过渡阶段", correct: false }
-    ]
-  },
-  {
-    id: 3,
-    type: "single",
-    question: "“十五五’时期为实现碳达峰目标，实施的能源消费相关举措是",
-    options: [
-      { text: "推动能源消费高碳化", correct: false },
-      { text: "停止新能源开发利用", correct: false },
-      { text: "减少清洁能源", correct: false },
-      { text: "提高终端用能电气化水平", correct: true }
-    ]
-  },
-  {
-    id: 4,
-    type: "single",
-    question: "下列哪项不属于“十五五”时期经济社会发展主要目标中“高质量发展取得显著成效”的内容",
-    options: [
-      { text: "经济增长保持在合理区间", correct: false },
-      { text: "居民消费率明显提高", correct: false },
-      { text: "碳达峰目标如期实现", correct: true },
-      { text: "新型工业化、信息化、城镇化、农业现代化取得重大进展", correct: false }
-    ]
-  },
-  {
-    id: 5,
-    type: "single",
-    question: "现代化产业体系是中国式现代化的",
-    options: [
-      { text: "精神文化基础", correct: false },
-      { text: "物质技术基础", correct: true },
-      { text: "制度保障基础", correct: false },
-      { text: "社会治理基础", correct: false }
-    ]
-  },
-  {
-    id: 6,
-    type: "single",
-    question: "下列哪项不属于培育壮大新兴产业和未来产业的举措",
-    options: [
-      { text: "加快新能源、新材料等战略性新兴产业集群发展", correct: false },
-      { text: "推动量子科技、生物制造等成为新的经济增长点", correct: false },
-      { text: "优化提升产业、回答等传统产业", correct: true },
-      { text: "实施新技术新产品新场景大规模应用示范行动", correct: false }
-    ]
-  },
-  {
-    id: 7,
-    type: "single",
-    question: "加强原始创新和关键核心技术攻关，完善新型举国体制，全链条推动重点领域关键核心技术攻关取得决定性突破，下列哪项不属于该重点领域",
-    options: [
-      { text: "集成电路", correct: false },
-      { text: "工业母机", correct: false },
-      { text: "高端仪器", correct: false },
-      { text: "纺织机械", correct: true }
-    ]
-  },
-  {
-    id: 8,
-    type: "single",
-    question: "强大国内市场是中国式现代化的",
-    options: [
-      { text: "战略依托", correct: true },
-      { text: "根本目的", correct: false },
-      { text: "根本保障", correct: false },
-      { text: "核心动力", correct: false }
-    ]
-  },
-  {
-    id: 9,
-    type: "single",
-    question: "下列哪项不属于“加快构建高水平社会主义市场经济体制”的举措",
-    options: [
-      { text: "充分激发各类经营主体活力", correct: false },
-      { text: "加快完善要素市场化配置体制机制", correct: false },
-      { text: "提升宏观经济治理能力", correct: false },
-      { text: "推进农业农村现代化", correct: true }
-    ]
-  },
-  {
-    id: 10,
-    type: "single",
-    question: "“十五五”时期加快建设新型能源体系，需推进化石能源的何种发展方式",
-    options: [
-      { text: "全面替代退出", correct: false },
-      { text: "安全可靠有序替代", correct: true },
-      { text: "无限制扩大使用", correct: false },
-      { text: "仅保留煤炭能源使用", correct: false }
-    ]
-  },
-  {
-    id: 11,
-    type: "single",
-    question: "坚持把解决好“三农”问题作为全党工作",
-    options: [
-      { text: "重中之重", correct: true },
-      { text: "首要任务", correct: false },
-      { text: "核心工作", correct: false },
-      { text: "根本任务", correct: false }
-    ]
-  },
-  {
-    id: 12,
-    type: "single",
-    question: "绿色发展是中国式现代化的",
-    options: [
-      { text: "根本要求", correct: false },
-      { text: "鲜明底色", correct: true },
-      { text: "核心目标", correct: false },
-      { text: "关键举措", correct: false }
-    ]
-  }
-];
+        {
+          id: 1,
+          type: "single",
+          question:
+            "《中共中央关于制定国民经济和社会发展第十五个五年规划的建议》由哪次会议通过",
+          options: [
+            {
+              text: "中国共产党第十九届中央委员会第四次全体会议",
+              correct: false,
+            },
+            {
+              text: "中国共产党第二十届中央委员会第四次全体会议",
+              correct: true,
+            },
+            {
+              text: "中国共产党第二十届中央委员会第三次全体会议",
+              correct: false,
+            },
+            {
+              text: "中国共产党第二十一届中央委员会第一次全体会议",
+              correct: false,
+            },
+          ],
+        },
+        {
+          id: 2,
+          type: "single",
+          question: "“十五五”时期在基本实现社会主义现代化进程中的地位是",
+          options: [
+            { text: "起步阶段", correct: false },
+            { text: "承前启后的重要地位", correct: true },
+            { text: "收尾阶段", correct: false },
+            { text: "过渡阶段", correct: false },
+          ],
+        },
+        {
+          id: 3,
+          type: "single",
+          question: "“十五五’时期为实现碳达峰目标，实施的能源消费相关举措是",
+          options: [
+            { text: "推动能源消费高碳化", correct: false },
+            { text: "停止新能源开发利用", correct: false },
+            { text: "减少清洁能源", correct: false },
+            { text: "提高终端用能电气化水平", correct: true },
+          ],
+        },
+        {
+          id: 4,
+          type: "single",
+          question:
+            "下列哪项不属于“十五五”时期经济社会发展主要目标中“高质量发展取得显著成效”的内容",
+          options: [
+            { text: "经济增长保持在合理区间", correct: false },
+            { text: "居民消费率明显提高", correct: false },
+            { text: "碳达峰目标如期实现", correct: true },
+            {
+              text: "新型工业化、信息化、城镇化、农业现代化取得重大进展",
+              correct: false,
+            },
+          ],
+        },
+        {
+          id: 5,
+          type: "single",
+          question: "现代化产业体系是中国式现代化的",
+          options: [
+            { text: "精神文化基础", correct: false },
+            { text: "物质技术基础", correct: true },
+            { text: "制度保障基础", correct: false },
+            { text: "社会治理基础", correct: false },
+          ],
+        },
+        {
+          id: 6,
+          type: "single",
+          question: "下列哪项不属于培育壮大新兴产业和未来产业的举措",
+          options: [
+            {
+              text: "加快新能源、新材料等战略性新兴产业集群发展",
+              correct: false,
+            },
+            {
+              text: "推动量子科技、生物制造等成为新的经济增长点",
+              correct: false,
+            },
+            { text: "优化提升产业、回答等传统产业", correct: true },
+            {
+              text: "实施新技术新产品新场景大规模应用示范行动",
+              correct: false,
+            },
+          ],
+        },
+        {
+          id: 7,
+          type: "single",
+          question:
+            "加强原始创新和关键核心技术攻关，完善新型举国体制，全链条推动重点领域关键核心技术攻关取得决定性突破，下列哪项不属于该重点领域",
+          options: [
+            { text: "集成电路", correct: false },
+            { text: "工业母机", correct: false },
+            { text: "高端仪器", correct: false },
+            { text: "纺织机械", correct: true },
+          ],
+        },
+        {
+          id: 8,
+          type: "single",
+          question: "强大国内市场是中国式现代化的",
+          options: [
+            { text: "战略依托", correct: true },
+            { text: "根本目的", correct: false },
+            { text: "根本保障", correct: false },
+            { text: "核心动力", correct: false },
+          ],
+        },
+        {
+          id: 9,
+          type: "single",
+          question: "下列哪项不属于“加快构建高水平社会主义市场经济体制”的举措",
+          options: [
+            { text: "充分激发各类经营主体活力", correct: false },
+            { text: "加快完善要素市场化配置体制机制", correct: false },
+            { text: "提升宏观经济治理能力", correct: false },
+            { text: "推进农业农村现代化", correct: true },
+          ],
+        },
+        {
+          id: 10,
+          type: "single",
+          question:
+            "“十五五”时期加快建设新型能源体系，需推进化石能源的何种发展方式",
+          options: [
+            { text: "全面替代退出", correct: false },
+            { text: "安全可靠有序替代", correct: true },
+            { text: "无限制扩大使用", correct: false },
+            { text: "仅保留煤炭能源使用", correct: false },
+          ],
+        },
+        {
+          id: 11,
+          type: "single",
+          question: "坚持把解决好“三农”问题作为全党工作",
+          options: [
+            { text: "重中之重", correct: true },
+            { text: "首要任务", correct: false },
+            { text: "核心工作", correct: false },
+            { text: "根本任务", correct: false },
+          ],
+        },
+        {
+          id: 12,
+          type: "single",
+          question: "绿色发展是中国式现代化的",
+          options: [
+            { text: "根本要求", correct: false },
+            { text: "鲜明底色", correct: true },
+            { text: "核心目标", correct: false },
+            { text: "关键举措", correct: false },
+          ],
+        },
+      ];
       // 当前显示的题目ID
       let currentQuestionId = 0;
       let currentSlideIndex = 0;
-
-      
 
       // 加载题目函数
       function loadQuestion(id) {
@@ -1137,9 +1336,11 @@
         else if (question.type === "judge") typeElement.textContent = "判断";
 
         // 更新题目计数
-        const questionIndex = questions.findIndex(q => q.id === id) + 1;
+        const questionIndex = questions.findIndex((q) => q.id === id) + 1;
         const totalQuestions = questions.length;
-        document.getElementById("questionCounter").textContent = `第${questionIndex}题，共${totalQuestions}题`;
+        document.getElementById(
+          "questionCounter"
+        ).textContent = `第${questionIndex}题，共${totalQuestions}题`;
 
         // 更新题目
         document.getElementById("currentQuestion").textContent =
@@ -1158,12 +1359,12 @@
             const option = document.createElement("div");
             option.className = `judge-option`;
             option.dataset.correct = opt.correct;
-            
+
             // 为错误选项添加incorrect类
             if (!opt.correct) {
               option.classList.add("incorrect");
             }
-            
+
             option.innerHTML = `
                       <span class="option-label">${
                         index === 0 ? "√" : "×"
@@ -1199,12 +1400,12 @@
             const option = document.createElement("div");
             option.className = `option`;
             option.dataset.correct = opt.correct;
-            
+
             // 为错误选项添加incorrect类
             if (!opt.correct) {
               option.classList.add("incorrect");
             }
-            
+
             option.innerHTML = `
                       <span class="option-label">${String.fromCharCode(
                         65 + index
@@ -1246,6 +1447,13 @@
       const searchIcon = document.getElementById("searchIcon");
       const searchInput = document.getElementById("searchInput");
 
+      // 在现有script中添加搜索容器点击事件
+      document
+        .querySelector(".search-container")
+        .addEventListener("click", function () {
+          document.getElementById("searchInput").focus();
+        });
+
       // 模糊搜索题目函数
       function searchQuestions(keyword) {
         if (!keyword) {
@@ -1256,18 +1464,20 @@
           }
           return;
         }
-        
+
         keyword = keyword.toLowerCase();
         // 搜索包含关键词的题目
-        const matchedQuestions = questions.filter(question => 
+        const matchedQuestions = questions.filter((question) =>
           question.question.toLowerCase().includes(keyword)
         );
-        
+
         if (matchedQuestions.length > 0) {
           // 显示第一个匹配的题目
           loadQuestion(matchedQuestions[0].id);
-          currentSlideIndex = questions.findIndex(q => q.id === matchedQuestions[0].id);
-          
+          currentSlideIndex = questions.findIndex(
+            (q) => q.id === matchedQuestions[0].id
+          );
+
           // 如果有多个匹配结果，显示提示
           if (matchedQuestions.length > 1) {
             alert(`找到 ${matchedQuestions.length} 个匹配的题目，显示第一个`);
@@ -1289,7 +1499,7 @@
           searchQuestions(searchText);
         }
       });
-      
+
       // 支持实时搜索（可选）
       searchInput.addEventListener("input", function () {
         const searchText = this.value.trim();
@@ -1390,23 +1600,27 @@
       // ========== 新增滑动功能 END ==========
 
       // 上一题/下一题按钮功能
-      document.getElementById('prevQuestionBtn').addEventListener('click', function() {
-        if (currentSlideIndex > 0) {
-          currentSlideIndex--;
-          loadQuestion(questions[currentSlideIndex].id);
-        } else {
-          alert('已经是第一题了');
-        }
-      });
+      document
+        .getElementById("prevQuestionBtn")
+        .addEventListener("click", function () {
+          if (currentSlideIndex > 0) {
+            currentSlideIndex--;
+            loadQuestion(questions[currentSlideIndex].id);
+          } else {
+            alert("已经是第一题了");
+          }
+        });
 
-      document.getElementById('nextQuestionBtn').addEventListener('click', function() {
-        if (currentSlideIndex < questions.length - 1) {
-          currentSlideIndex++;
-          loadQuestion(questions[currentSlideIndex].id);
-        } else {
-          alert('已经是最后一题了');
-        }
-      });
+      document
+        .getElementById("nextQuestionBtn")
+        .addEventListener("click", function () {
+          if (currentSlideIndex < questions.length - 1) {
+            currentSlideIndex++;
+            loadQuestion(questions[currentSlideIndex].id);
+          } else {
+            alert("已经是最后一题了");
+          }
+        });
 
       // 默认加载第一题并显示正确答案
       if (questions.length > 0) {
