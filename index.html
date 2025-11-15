@@ -83,10 +83,10 @@
       }
 
       /* 确保阴影不遮挡圆角 */
-      .header {
+      /*.header {
         box-shadow: 0 8px 20px rgba(144, 202, 147, 0.4);
-        margin-bottom: 0; /* 移除负边距，避免遮挡content顶部 */
-      }
+        margin-bottom: 0; /* 移除负边距，避免遮挡content顶部 
+      }*/
 
       .content {
         box-shadow: 0 -6px 16px rgba(144, 202, 147, 0.3);
@@ -329,7 +329,163 @@
         flex-shrink: 0;
       }
       /* ========== 正确答案显示样式 END ========== */
+      /* 上一题/下一题按钮核心修复 */
+      .nav-btn.prev-btn,
+      .nav-btn.next-btn {
+        /* 确保点击区域完整 */
+        padding: 12px 24px;
+        min-width: 100px;
+        min-height: 44px;
 
+        /* 解决层级遮挡问题 */
+        position: relative;
+        z-index: 100; /* 高于其他元素 */
+        pointer-events: auto !important; /* 强制允许点击 */
+
+        /* 基础样式 */
+        background-color: #c8e6c9;
+        border: 2px solid #c8e6c9;
+        border-radius: 100px;
+        color: #333;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        /* 确保按钮不被父容器裁剪 */
+        overflow: visible;
+      }
+
+      /* 交互反馈（增强可点击感知） */
+      .nav-btn.prev-btn:hover,
+      .nav-btn.next-btn:hover {
+        background-color: #c8e6c9;
+        transform: translateY(-2px);
+      }
+
+      .nav-btn.prev-btn:active,
+      .nav-btn.next-btn:active {
+        transform: scale(0.98);
+      }
+
+      /* 修复导航容器可能的遮挡 */
+      .navigation-buttons {
+        position: relative;
+        z-index: 100; /* 确保容器层级足够高 */
+        overflow: visible !important; /* 关键：不裁剪按钮 */
+        margin: 20px auto; /* 居中并预留空间 */
+        padding: 10px;
+      }
+
+      /* 调整版权文字位置，避免遮挡按钮点击区域 */
+      .navigation-buttons:after {
+        bottom: -20px !important; /* 移到按钮下方更远位置 */
+        z-index: 1; /* 版权文字在按钮下方 */
+      }
+
+      /* 按钮图标样式 */
+      .btn-icon {
+        width: 18px;
+        height: 18px;
+        transition: all 0.2s;
+      }
+
+      /* 上一题按钮布局 */
+      .prev-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px; /* 图标与文字间距 */
+      }
+
+      /* 下一题按钮布局 */
+      .next-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px; /* 文字与图标间距 */
+      }
+
+      /* 鼠标悬停时图标颜色变化 */
+      .prev-btn:hover .prev-icon,
+      .next-btn:hover .next-icon {
+        fill: #5daf34; /* 与按钮hover背景色呼应 */
+        transform: scale(1.1);
+      }
+
+      /* 确保按钮点击区域完整覆盖图标和文字 */
+      .nav-btn.prev-btn,
+      .nav-btn.next-btn {
+        padding: 12px 18px; /* 调整内边距，适配图标 */
+        display: inline-flex; /* 保持图标与文字在同一行 */
+        align-items: center;
+        justify-content: center;
+      }
+      /* 毛玻璃按钮核心样式 */
+      .nav-btn.prev-btn,
+      .nav-btn.next-btn {
+        /* 清透毛玻璃效果 */
+        backdrop-filter: blur(12px) saturate(120%);
+        -webkit-backdrop-filter: blur(12px) saturate(120%);
+        background-color: rgba(255, 255, 255, 0.35); /* 低透明度白色 */
+        border: 1px solid rgba(255, 255, 255, 0.6); /* 半透明白色边框 */
+
+        /* 增强清透感的阴影 */
+        box-shadow: 0 4px 12px rgba(103, 194, 58, 0.12),
+          /* 主阴影 */ inset 0 0 10px rgba(255, 255, 255, 0.6); /* 内发光增强通透感 */
+
+        /* 保持原有交互区域 */
+        padding: 12px 18px;
+        min-width: 120px;
+        min-height: 48px;
+        border-radius: 12px; /* 圆润边角增强柔和感 */
+
+        /* 图标与文字布局 */
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 16px;
+        color: #333; /* 深色文字确保可读性 */
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 100;
+        overflow: visible;
+      }
+
+      /* 悬停效果（增强清透感的同时保持交互反馈） */
+      .nav-btn.prev-btn:hover,
+      .nav-btn.next-btn:hover {
+        background-color: rgba(255, 255, 255, 0.5); /* 略提高透明度 */
+        box-shadow: 0 6px 16px rgba(103, 194, 58, 0.18),
+          inset 0 0 12px rgba(255, 255, 255, 0.8);
+        transform: translateY(-2px); /* 轻微上浮增强交互感 */
+      }
+
+      /* 点击效果 */
+      .nav-btn.prev-btn:active,
+      .nav-btn.next-btn:active {
+        transform: translateY(0);
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+
+      /* 图标样式优化（与毛玻璃效果协调） */
+      .btn-icon {
+        width: 18px;
+        height: 18px;
+        transition: all 0.3s;
+        fill: #555; /* 稍浅的图标颜色增强清透感 */
+      }
+
+      .nav-btn.prev-btn:hover .prev-icon,
+      .nav-btn.next-btn:hover .next-icon {
+        fill: #333; /* 悬停时图标加深 */
+        transform: scale(1.1);
+      }
+
+      /* 调整按钮容器样式，避免影响毛玻璃效果 */
+      .navigation-buttons {
+        gap: 20px; /* 增加按钮间距，避免毛玻璃重叠 */
+        padding: 15px 0;
+        background: transparent; /* 确保容器背景透明 */
+      }
       @media (max-width: 600px) {
         .header {
           padding: 15px;
@@ -415,7 +571,7 @@
         top: 0;
         width: 100%; /* 全局宽度 */
         height: 100%; /* 全局高度 */
-        background-image: url("./img.jpg"); /* 书本纹样图片（示例图，可替换为实际书本纹样） */
+        background-image: url("https://sns-webpic-qc.xhscdn.com/202511141931/5b93dee737c5f500477f2f6c355f3326/1040g2sg30uibcg5ql8005p662rtipdb2n2gmgpg!nd_dft_wgth_webp_3"); /* 书本纹样图片（示例图，可替换为实际书本纹样） */
         background-size: cover; /* 覆盖整个区域 */
         background-repeat: no-repeat;
         background-position: center; /* 居中显示 */
@@ -775,7 +931,7 @@
         padding: 0 24px; /* 垂直padding设为0，使用height控制高度 */
         border-radius: 30px;
         font-weight: bold;
-        font-size: 14px;
+        font-size: 12px;
         box-shadow: 0 6px 16px rgba(200, 230, 201, 0.5); /* 加深阴影效果 */
         font-family: "AlibabaPuHuiTi", sans-serif; /* 使用更细的非衬线体 */
         z-index: 300;
@@ -784,7 +940,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 28px; /* 固定高度，与控件组一致 */
+        height: 30px; /* 固定高度，与控件组一致 */
       }
 
       /* 调整question-type样式，固定高度并与question-counter水平对齐 */
@@ -795,7 +951,7 @@
         align-items: center !important; /* 垂直居中对齐 */
         vertical-align: middle !important; /* 与相邻元素水平对齐 */
         margin: 0 !important; /* 清除默认边距干扰 */
-        padding: 0 20px !important; /* 保留左右内边距，可根据需求调整 */
+        padding: 0 30px !important; /* 保留左右内边距，可根据需求调整 */
       }
 
       /* 确保question-counter同步对齐 */
@@ -803,8 +959,8 @@
         display: inline-flex !important;
         align-items: center !important;
         vertical-align: middle !important;
-        height: 32px !important; /* 与question-type高度保持一致 */
-        line-height: 32px !important;
+        height: 30px !important; /* 与question-type高度保持一致 */
+        line-height: 30px !important;
       }
 
       /* 父容器确保子元素水平对齐 */
@@ -825,7 +981,7 @@
         right: 0;
         top: 0; /* 与题型控件同一水平高度 */
         color: #999;
-        font-size: 14px;
+        font-size: 12px;
         font-family: "AlibabaPuHuiTi", sans-serif; /* 更细的非衬线体 */
         z-index: 300;
         display: flex;
@@ -836,7 +992,7 @@
       .options {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 20px;
+        gap: 14px;
         margin-bottom: 30px; /* 添加底部边距，为上下题按钮留出空间 */
       }
 
@@ -850,7 +1006,7 @@
 
       .option,
       .judge-option {
-        padding: 16px;
+        padding: 14px;
         border-radius: 12px;
         background-color: #f8f9fa;
         transition: all 0.3s ease;
@@ -932,8 +1088,8 @@
         display: inline-flex;
         justify-content: center;
         align-items: center;
-        width: 36px;
-        height: 36px;
+        width: 24px;
+        height: 24px;
         background-color: #e1e5eb;
         border-radius: 50%;
         font-weight: bold;
@@ -943,7 +1099,7 @@
       }
 
       .option-text {
-        font-size: 12px;
+        font-size: 14px;
         color: #444;
         font-family: "AlibabaPuHuiTi", sans-serif; /* 更细的非衬线体 */
       }
@@ -1076,6 +1232,144 @@
         transform: translateY(-2px);
         box-shadow: 0 6px 12px rgba(200, 230, 201, 0.5);
       }
+      /* 深色模式适配 - 强行覆盖样式 */
+      @media (prefers-color-scheme: dark) {
+        /* 基础背景覆盖 */
+        body {
+          background: linear-gradient(
+            135deg,
+            #1e293b 0%,
+            #0f172a 100%
+          ) !important;
+          color: #f8fafc !important;
+        }
+
+        .container {
+          background-color: #1e293b !important;
+        }
+
+        /* 头部样式覆盖 */
+        .header {
+          background: linear-gradient(
+            135deg,
+            #27374d 0%,
+            #334155 100%
+          ) !important;
+          color: #f8fafc !important;
+        }
+
+        .header::after {
+          opacity: 0.15 !important;
+          filter: invert(1) !important;
+        }
+
+        .main-title,
+        .breadcrumb {
+          color: #f8fafc !important;
+        }
+
+        .breadcrumb {
+          color: #cbd5e1 !important;
+        }
+
+        /* 毛玻璃元素覆盖 */
+        .nav-dropdown,
+        .search-container,
+        .home-container,
+        .share-container {
+          background-color: rgba(30, 41, 59, 0.6) !important;
+          border-color: rgba(255, 255, 255, 0.1) !important;
+          backdrop-filter: blur(12px) !important;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2),
+            inset 0 0 10px rgba(255, 255, 255, 0.05) !important;
+        }
+
+        .search-input {
+          color: #f8fafc !important;
+        }
+
+        .search-input::placeholder {
+          color: rgba(203, 213, 225, 0.6) !important;
+        }
+
+        /* 图标颜色覆盖 */
+        .home-icon,
+        .search-icon,
+        .share-icon,
+        .btn-icon,
+        .prev-icon,
+        .next-icon {
+          filter: invert(0.8) !important;
+        }
+
+        /* 按钮样式覆盖 */
+        .nav-btn.prev-btn,
+        .nav-btn.next-btn {
+          background-color: rgba(30, 41, 59, 0.6) !important;
+          border-color: rgba(255, 255, 255, 0.1) !important;
+          color: #f8fafc !important;
+        }
+
+        /* 模态框样式覆盖 */
+        .swipe-tip-card,
+        .share-card {
+          background-color: #1e293b !important;
+        }
+
+        .swipe-tip-content,
+        .share-title,
+        .share-question {
+          color: #f8fafc !important;
+        }
+
+        .share-answer {
+          color: #cbd5e1 !important;
+        }
+
+        /* 阴影覆盖 */
+        .header {
+          box-shadow: 0 8px 50px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        .content {
+          box-shadow: 0 -6px 56px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        /* 版权文字 */
+        .navigation-buttons:after {
+          color: #64748b !important;
+        }
+      }
+
+      /* 毛玻璃按钮样式 - 强行覆盖 */
+      .nav-btn.prev-btn,
+      .nav-btn.next-btn {
+        backdrop-filter: blur(12px) saturate(120%) !important;
+        -webkit-backdrop-filter: blur(12px) saturate(120%) !important;
+        background-color: rgba(255, 255, 255, 0.35) !important;
+        border: 1px solid rgba(255, 255, 255, 0.6) !important;
+        box-shadow: 0 4px 12px rgba(103, 194, 58, 0.12),
+          inset 0 0 10px rgba(255, 255, 255, 0.6) !important;
+        border-radius: 12px !important;
+        padding: 12px 18px !important;
+        min-width: 120px !important;
+        min-height: 48px !important;
+        transition: all 0.3s ease !important;
+      }
+
+      .nav-btn.prev-btn:hover,
+      .nav-btn.next-btn:hover {
+        background-color: rgba(255, 255, 255, 0.5) !important;
+        box-shadow: 0 6px 16px rgba(103, 194, 58, 0.18),
+          inset 0 0 12px rgba(255, 255, 255, 0.8) !important;
+        transform: translateY(-2px) !important;
+      }
+
+      .nav-btn.prev-btn:active,
+      .nav-btn.next-btn:active {
+        transform: translateY(0) !important;
+        background-color: rgba(255, 255, 255, 0.3) !important;
+      }
     </style>
   </head>
   <body>
@@ -1124,19 +1418,31 @@
 
           <div id="optionsContainer"></div>
 
-          <!-- 上一题/下一题按钮 -->
+          <!-- 上一题/下一题按钮（更新后） -->
           <div class="navigation-buttons">
             <button id="prevQuestionBtn" class="nav-btn prev-btn">
-              上一题
+              <svg
+                class="btn-icon prev-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="#333"
+              >
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+              </svg>
+              <span>上一题</span>
             </button>
             <button id="nextQuestionBtn" class="nav-btn next-btn">
-              下一题
+              <span>下一题</span>
+              <svg
+                class="btn-icon next-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="#333"
+              >
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+              </svg>
             </button>
           </div>
-        </div>
-
-        <div class="tips-container">
-          Tips：遇题目导航点击无效时，点按页面任意空白区域即可恢复正常
         </div>
       </div>
     </div>
