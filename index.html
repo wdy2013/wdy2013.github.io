@@ -39,17 +39,17 @@
         overflow: visible !important; /* 强制覆盖overflow: hidden */
       }
 
-      /* 调整header阴影 - 与浅绿色背景融合 */
+      /* 调整header阴影 - 改为柔和浅灰色阴影 */
       .header {
-        box-shadow: 0 8px 50px rgba(144, 202, 147, 0.4); /* 加深同色系阴影 */
+        box-shadow: 0 8px 50px rgba(200, 200, 200, 0.2); /* 柔和浅灰色阴影 */
         position: relative;
         z-index: 2;
         margin-bottom: -2px; /* 消除间隙 */
       }
 
-      /* 调整content阴影 - 与浅灰背景过渡 */
+      /* 调整content阴影 - 改为柔和浅灰色阴影 */
       .content {
-        box-shadow: 0 -6px 56px rgba(144, 202, 147, 0.3); /* 同色系上阴影 */
+        box-shadow: 0 -6px 56px rgba(200, 200, 200, 0.15); /* 柔和浅灰色阴影 */
         position: relative;
         z-index: 1;
         border-top: none; /* 移除可能的边框遮挡 */
@@ -83,13 +83,8 @@
       }
 
       /* 确保阴影不遮挡圆角 */
-      /*.header {
-        box-shadow: 0 8px 20px rgba(144, 202, 147, 0.4);
-        margin-bottom: 0; /* 移除负边距，避免遮挡content顶部 
-      }*/
-
       .content {
-        box-shadow: 0 -6px 16px rgba(144, 202, 147, 0.3);
+        box-shadow: 0 -6px 16px rgba(200, 200, 200, 0.15); /* 柔和浅灰色阴影 */
         margin-top: -1px; /* 无缝衔接但不遮挡圆角 */
       }
 
@@ -194,7 +189,7 @@
         width: 80%;
         max-width: 100%;
         text-align: center;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 15px rgba(200, 200, 200, 0.2); /* 柔和浅灰色阴影 */
       }
 
       .swipe-tip-content {
@@ -244,13 +239,13 @@
 
       .nav-dropdown {
         backdrop-filter: blur(8px);
-        background-color: rgba(255, 255, 255, 0.45);
+        background-color: rgba(255, 255, 255, 0.45); /* 白色半透明 */
         border-radius: 999px;
         padding: 8px 15px;
         display: flex;
         align-items: center;
         gap: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 2px 4px rgba(200, 200, 200, 0.1); /* 柔和浅灰色阴影 */
         border: 1px solid rgba(255, 255, 255, 0.4);
         cursor: pointer;
         position: relative;
@@ -266,10 +261,10 @@
         align-items: center;
         gap: 8px;
         backdrop-filter: blur(8px);
-        background-color: rgba(255, 255, 255, 0.45);
+        background-color: rgba(255, 255, 255, 0.45); /* 白色半透明 */
         border-radius: 999px;
         padding: 0 15px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 2px 4px rgba(200, 200, 200, 0.1); /* 柔和浅灰色阴影 */
         border: 1px solid rgba(255, 255, 255, 0.4);
         height: 36px;
         flex-grow: 1; /* 允许增长填充剩余空间 */
@@ -421,15 +416,15 @@
       /* 毛玻璃按钮核心样式 */
       .nav-btn.prev-btn,
       .nav-btn.next-btn {
-        /* 清透毛玻璃效果 */
+        /* 清透毛玻璃效果 - 白色半透明基底 */
         backdrop-filter: blur(12px) saturate(120%);
         -webkit-backdrop-filter: blur(12px) saturate(120%);
-        background-color: rgba(255, 255, 255, 0.35); /* 低透明度白色 */
-        border: 1px solid rgba(255, 255, 255, 0.6); /* 半透明白色边框 */
+        background-color: rgba(255, 255, 255, 0.8); /* 高透明白色 */
+        border: 1px solid rgba(255, 255, 255, 0.9); /* 接近纯白的边框 */
 
-        /* 增强清透感的阴影 */
-        box-shadow: 0 4px 12px rgba(103, 194, 58, 0.12),
-          /* 主阴影 */ inset 0 0 10px rgba(255, 255, 255, 0.6); /* 内发光增强通透感 */
+        /* 柔和浅灰色阴影 */
+        box-shadow: 0 4px 12px rgba(200, 200, 200, 0.15),
+          inset 0 0 10px rgba(255, 255, 255, 0.8);
 
         /* 保持原有交互区域 */
         padding: 12px 18px;
@@ -453,9 +448,9 @@
       /* 悬停效果（增强清透感的同时保持交互反馈） */
       .nav-btn.prev-btn:hover,
       .nav-btn.next-btn:hover {
-        background-color: rgba(255, 255, 255, 0.5); /* 略提高透明度 */
-        box-shadow: 0 6px 16px rgba(103, 194, 58, 0.18),
-          inset 0 0 12px rgba(255, 255, 255, 0.8);
+        background-color: rgba(255, 255, 255, 0.9); /* 略提高不透明度 */
+        box-shadow: 0 6px 16px rgba(200, 200, 200, 0.2),
+          inset 0 0 12px rgba(255, 255, 255, 0.9);
         transform: translateY(-2px); /* 轻微上浮增强交互感 */
       }
 
@@ -463,7 +458,7 @@
       .nav-btn.prev-btn:active,
       .nav-btn.next-btn:active {
         transform: translateY(0);
-        background-color: rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.7);
       }
 
       /* 图标样式优化（与毛玻璃效果协调） */
@@ -529,29 +524,19 @@
         max-width: 800px;
         background-color: white;
         border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 10px 30px rgba(200, 200, 200, 0.15); /* 柔和浅灰色阴影 */
         overflow: hidden;
         position: relative;
         z-index: 200;
       }
 
-      /* 修改header背景为浅绿色渐变 */
+      /* 修改header样式，移除原祥云图案，添加90度垂直渐变的白色半透明书本纹样遮罩 */
       .header {
-        background: linear-gradient(135deg, #e0f2e0 0%, #c8e6c9 100%);
-        color: #333;
-        padding: 30px 40px;
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap; /* 允许换行 */
-        height: 100px; /* 固定高度为100px */
-        overflow: hidden; /* 确保背景图片不会超出容器 */
-      }
-
-      /* 修改header样式，移除原祥云图案，添加全局全局纹样全局书本渐隐书本书本纹样 */
-      .header {
-        background: linear-gradient(135deg, #e0f2e0 0%, #c8e6c9 100%);
+        background: linear-gradient(
+          90deg,
+          rgba(243, 232, 220, 0.95) 0%,
+          rgba(243, 232, 220, 0.6) 100%
+        ); /* 90度垂直渐变基底 */
         color: #333;
         padding: 30px 40px;
         position: relative;
@@ -563,7 +548,8 @@
         overflow: hidden; /* 确保背景图案不溢出 */
       }
 
-      /* 书本纹样背景 - 全局生效且自下而上渐隐 */
+      /* 书本纹样背景 - 90度垂直渐变遮罩（顶部透明度低，底部透明度高） */
+      /* 书本纹样背景 - 仅修改mask-image实现底部到顶部的线性渐变 */
       .header::after {
         content: "";
         position: absolute;
@@ -571,20 +557,22 @@
         top: 0;
         width: 100%; /* 全局宽度 */
         height: 100%; /* 全局高度 */
-        background-image: url("./img.jpg");
+        background-image: url("./img1.jpg");
         background-size: cover; /* 覆盖整个区域 */
         background-repeat: no-repeat;
         background-position: center; /* 居中显示 */
-        /* 自下而上渐隐效果 */
-        mask-image: linear-gradient(to top, black 40%, transparent 100%);
+        /* 核心修改：180deg实现从底部到顶部的垂直渐变，80%高度前保留图案，之后渐隐 */
         -webkit-mask-image: linear-gradient(
-          to top,
-          black 40%,
-          transparent 100%
+          180deg,
+          /* 180度 = 垂直向上（从底部到顶部） */ rgb(255, 255, 255) -50%,
+          /* 底部80%区域完全显示图案 */ transparent 100%
+            /* 顶部20%区域渐变为透明 */
         );
-        opacity: 0.32; /* 降低透明度，避免干扰内容 */
+        /*opacity: 0.15; /* 降低透明度，渐变基底更柔和 */
         z-index: 1; /* 确保在内容下方 */
       }
+
+      /* question-type的渐变也同步调整为90度垂直方向 */
 
       /* 标题区域样式 - 修改为垂直对齐 */
       .title-container {
@@ -596,18 +584,18 @@
         min-width: 0; /* 允许内容收缩 */
       }
 
-      /* 主页图标容器 - 新增毛玻璃效果 */
+      /* 主页图标容器 - 白色半透明毛玻璃 */
       .home-container {
         backdrop-filter: blur(8px);
-        background-color: rgba(255, 255, 255, 0.45);
+        background-color: rgba(255, 255, 255, 0.8); /* 白色半透明 */
         border-radius: 999px;
         padding: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05),
-          inset 0 0 10px rgba(255, 255, 255, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 2px 4px rgba(200, 200, 200, 0.1),
+          inset 0 0 10px rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.9);
         width: 36px;
         height: 36px;
         cursor: pointer;
@@ -616,9 +604,11 @@
       .home-icon {
         width: 20px;
         height: 20px;
-        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>')
+        /* 替换为新的双色SVG图标（URL编码适配） */
+        background: url('data:image/svg+xml;utf8,<svg t="1770521313273" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="12213" width="200" height="200"><path d="M883.2 84.8C828.8 48 761.6 35.2 692.8 48c-65.6 12.8-123.2 49.6-156.8 99.2-9.6 14.4-6.4 35.2 8 44.8 14.4 9.6 35.2 6.4 44.8-8 25.6-36.8 67.2-64 116.8-73.6 51.2-9.6 102.4 0 142.4 27.2 84.8 59.2 113.6 166.4 62.4 241.6L588.8 851.2c-38.4 56-97.6 92.8-168 102.4-70.4 11.2-144-6.4-206.4-49.6-60.8-43.2-104-104-120-174.4-14.4-64-4.8-126.4 25.6-179.2l256-376c9.6-14.4 6.4-35.2-8-44.8-14.4-9.6-35.2-6.4-44.8 8L80 494.4l-4.8 4.8c-3.2 4.8-4.8 9.6-8 14.4l-6.4 9.6c-1.6 3.2-3.2 6.4-3.2 8-33.6 64-43.2 137.6-25.6 212.8 19.2 86.4 72 161.6 147.2 212.8 60.8 41.6 131.2 64 201.6 64 16 0 33.6-1.6 49.6-3.2 88-12.8 163.2-59.2 211.2-129.6l326.4-476.8c1.6-1.6 1.6-4.8 3.2-6.4 59.2-104 22.4-244.8-88-320z" fill="%2343484D" p-id="12214"></path><path d="M731.2 377.6c-14.4-9.6-35.2-6.4-44.8 8l-219.2 320c-14.4 20.8-36.8 35.2-62.4 40-25.6 4.8-51.2 0-73.6-16-20.8-14.4-35.2-36.8-40-62.4-4.8-25.6 0-51.2 16-73.6l281.6-412.8c9.6-14.4 6.4-35.2-8-44.8-14.4-9.6-35.2-6.4-44.8 8L254.4 561.6c-24 35.2-33.6 78.4-25.6 120 8 41.6 32 78.4 67.2 104 27.2 19.2 59.2 28.8 91.2 28.8 9.6 0 20.8-1.6 30.4-3.2 41.6-8 78.4-32 104-67.2l219.2-320c8-16 4.8-35.2-9.6-46.4z" fill="%23229BFF" p-id="12215"></path></svg>')
           no-repeat center;
-        opacity: 0.7;
+        background-size: contain; /* 自适应容器大小，避免变形 */
+        opacity: 0.7; /* 保留原有透明度，可根据需要调整为1（不透明） */
       }
 
       .divider {
@@ -651,18 +641,18 @@
         max-width: 100%; /* 最大宽度 */
       }
 
-      /* 搜索容器 - 修改为统一高度 */
+      /* 搜索容器 - 白色半透明 + 柔和浅灰色阴影 */
       .search-container {
         display: flex;
         align-items: center;
         gap: 8px;
         backdrop-filter: blur(8px);
-        background-color: rgba(255, 255, 255, 0.45);
+        background-color: rgba(255, 255, 255, 0.8); /* 白色半透明 */
         border-radius: 999px;
         padding: 0 15px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05),
-          inset 0 0 10px rgba(255, 255, 255, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 2px 4px rgba(200, 200, 200, 0.1),
+          inset 0 0 10px rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.9);
         height: 46px;
         cursor: text; /* 整个搜索框区域都显示文本光标 */
       }
@@ -694,18 +684,18 @@
         width: 180px;
       }
 
-      /* 分享按钮样式 - 统一高度 */
+      /* 分享按钮样式 - 白色半透明 + 柔和浅灰色阴影 */
       .share-container {
         backdrop-filter: blur(8px);
-        background-color: rgba(255, 255, 255, 0.45);
+        background-color: rgba(255, 255, 255, 0.8); /* 白色半透明 */
         border-radius: 999px;
         padding: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05),
-          inset 0 0 10px rgba(255, 255, 255, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 2px 4px rgba(200, 200, 200, 0.1),
+          inset 0 0 10px rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.9);
         cursor: pointer;
         width: 36px;
         height: 36px;
@@ -748,7 +738,7 @@
         padding: 30px;
         width: 90%;
         max-width: 500px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 10px 30px rgba(200, 200, 200, 0.2); /* 柔和浅灰色阴影 */
         position: relative;
       }
 
@@ -808,11 +798,12 @@
         transition: all 0.3s;
         min-width: 100px;
         justify-content: center;
+        box-shadow: 0 4px 8px rgba(200, 200, 200, 0.15); /* 柔和浅灰色阴影 */
       }
 
       .share-btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 6px 12px rgba(200, 200, 200, 0.2); /* hover时增强浅灰色阴影 */
       }
 
       .share-copy {
@@ -872,8 +863,45 @@
       }
 
       .content {
-        padding: 20px 40px 40px; /* 减少顶部padding，为下移的控件留出空间 */
-        background-color: #f5f7f5; /* 低饱和浅灰色背景，确保移动端用眼友好 */
+        padding: 20px 40px 40px; /* 保留原有内边距 */
+        position: relative; /* 保留定位，用于伪元素 */
+        /* 移除原有单独的background-size/position/repeat，统一用background设置 */
+      }
+
+      /* 通过伪元素添加底部背景纹样，原有背景色作为遮罩层 */
+      .content::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("./img0.jpg"); /* 底部背景纹样 */
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: -2; /* 放在最底层 */
+        opacity: 0.3; /* 纹样本身不透明，通过顶层遮罩控制透明度 */
+      }
+
+      /* 原有背景色作为遮罩层（覆盖在纹样之上） */
+      .content::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #f3e8dc; /* 原有背景色 */
+        z-index: -1; /* 放在纹样之上、内容之下 */
+        opacity: 0.8; /* 遮罩透明度，可调整（0-1），值越小纹样越明显 */
+        pointer-events: none; /* 不影响内容交互 */
+      }
+
+      /* 确保content内的内容在遮罩之上 */
+      .content > * {
+        position: relative;
+        z-index: 2;
       }
 
       /* 控件组样式 */
@@ -924,18 +952,18 @@
         top: 0;
         background: linear-gradient(
           135deg,
-          #e0f2e0 0%,
-          #c8e6c9 100%
-        ); /* 与页面配色保持一致 */
-        color: #2e7d32; /* 深绿色文字 */
+          rgba(216, 185, 185, 0.9) 0%,
+          rgba(163, 112, 112, 0.8) 100%
+        ); /* 白色半透明渐变 */
+        color: #ffffff; /* 文字更协调 */
         padding: 0 24px; /* 垂直padding设为0，使用height控制高度 */
         border-radius: 30px;
         font-weight: bold;
         font-size: 12px;
-        box-shadow: 0 6px 16px rgba(200, 230, 201, 0.5); /* 加深阴影效果 */
+        box-shadow: 0 6px 16px rgba(200, 200, 200, 0.15); /* 柔和浅灰色阴影 */
         font-family: "AlibabaPuHuiTi", sans-serif; /* 使用更细的非衬线体 */
         z-index: 300;
-        border: 1px solid rgba(255, 255, 255, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.9);
         transition: all 0.3s ease;
         display: flex;
         align-items: center;
@@ -972,7 +1000,7 @@
 
       .question-type:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(200, 230, 201, 0.6);
+        box-shadow: 0 8px 20px rgba(200, 200, 200, 0.2); /* hover增强浅灰色阴影 */
       }
 
       /* 题目计数控件 */
@@ -980,7 +1008,7 @@
         position: absolute;
         right: 0;
         top: 0; /* 与题型控件同一水平高度 */
-        color: #999;
+        color: #a37070;
         font-size: 12px;
         font-family: "AlibabaPuHuiTi", sans-serif; /* 更细的非衬线体 */
         z-index: 300;
@@ -1015,6 +1043,7 @@
         align-items: center;
         border: 1px solid #e1e5eb;
         position: relative;
+        box-shadow: 0 2px 4px rgba(200, 200, 200, 0.05); /* 极浅的灰色阴影 */
       }
 
       .judge-option {
@@ -1023,26 +1052,26 @@
         font-size: 20px;
       }
 
-      /* 悬浮态样式调整 - 与整体配色保持一致 */
+      /* 悬浮态样式调整 - 柔和浅灰色阴影 */
       .option:hover,
       .judge-option:hover {
         transform: translateY(-3px);
-        background-color: #e8f5e9; /* 浅绿色背景 */
-        box-shadow: 0 5px 15px rgba(224, 242, 224, 0.3);
+        background-color: #ffffff; /* 纯白背景更干净 */
+        box-shadow: 0 5px 15px rgba(200, 200, 200, 0.1); /* 柔和浅灰色阴影 */
       }
 
       .option:hover .option-label,
       .judge-option:hover .option-label {
-        background-color: #4caf50; /* 绿色标签 */
-        color: white;
+        background-color: #e0e0e0; /* 浅灰色标签 */
+        color: #333;
       }
 
-      /* 选中态样式调整 - 与整体配色保持一致 */
+      /* 选中态样式调整 - 保持绿色但阴影改为浅灰色 */
       .option.correct,
       .judge-option.correct {
-        background-color: #e8f5e9; /* 浅绿色背景 */
-        border-color: #4caf50; /* 绿色边框 */
-        box-shadow: 0 4px 10px rgba(76, 175, 80, 0.2);
+        background-color: #ffffff; /* 纯白背景 */
+        border-color: #e0e0e0; /* 浅灰色边框 */
+        box-shadow: 0 4px 10px rgba(200, 200, 200, 0.15); /* 柔和浅灰色阴影 */
       }
 
       /* 错误选项样式 - 置灰并降低透明度 */
@@ -1052,6 +1081,7 @@
         border-color: #e1e5eb;
         opacity: 0.6; /* 降低透明度 */
         cursor: not-allowed; /* 鼠标指针变为禁止符号 */
+        box-shadow: none; /* 移除阴影更弱化 */
       }
 
       .option.incorrect .option-label,
@@ -1067,7 +1097,7 @@
 
       .option.correct .option-label,
       .judge-option.correct .option-label {
-        background-color: #67c23a;
+        background-color: #a37070;
         color: white;
       }
 
@@ -1164,6 +1194,7 @@
 
         .share-card {
           padding: 20px;
+          box-shadow: 0 8px 20px rgba(200, 200, 200, 0.15); /* 移动端更柔和的阴影 */
         }
 
         .share-title {
@@ -1185,6 +1216,7 @@
 
         .share-btn {
           width: 100%;
+          box-shadow: 0 3px 6px rgba(200, 200, 200, 0.1); /* 移动端更浅的阴影 */
         }
       }
       /* 导航按钮样式 */
@@ -1206,169 +1238,6 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
-        font-family: "AlibabaPuHuiTi", sans-serif; /* 使用更细的非衬线体 */
-      }
-
-      .prev-btn {
-        background-color: #f0f9f0;
-        color: #2e7d32;
-        box-shadow: 0 4px 8px rgba(224, 242, 224, 0.3);
-      }
-
-      .prev-btn:hover {
-        background-color: #e0f2e0;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(224, 242, 224, 0.5);
-      }
-
-      .next-btn {
-        background-color: #c8e6c9;
-        color: #2e7d32;
-        box-shadow: 0 4px 8px rgba(200, 230, 201, 0.3);
-      }
-
-      .next-btn:hover {
-        background-color: #b8e0b8;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(200, 230, 201, 0.5);
-      }
-      /* 深色模式适配 - 强行覆盖样式 */
-      @media (prefers-color-scheme: dark) {
-        /* 基础背景覆盖 */
-        body {
-          background: linear-gradient(
-            135deg,
-            #1e293b 0%,
-            #0f172a 100%
-          ) !important;
-          color: #f8fafc !important;
-        }
-
-        .container {
-          background-color: #1e293b !important;
-        }
-
-        /* 头部样式覆盖 */
-        .header {
-          background: linear-gradient(
-            135deg,
-            #27374d 0%,
-            #334155 100%
-          ) !important;
-          color: #f8fafc !important;
-        }
-
-        .header::after {
-          opacity: 0.15 !important;
-          filter: invert(1) !important;
-        }
-
-        .main-title,
-        .breadcrumb {
-          color: #f8fafc !important;
-        }
-
-        .breadcrumb {
-          color: #cbd5e1 !important;
-        }
-
-        /* 毛玻璃元素覆盖 */
-        .nav-dropdown,
-        .search-container,
-        .home-container,
-        .share-container {
-          background-color: rgba(30, 41, 59, 0.6) !important;
-          border-color: rgba(255, 255, 255, 0.1) !important;
-          backdrop-filter: blur(12px) !important;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2),
-            inset 0 0 10px rgba(255, 255, 255, 0.05) !important;
-        }
-
-        .search-input {
-          color: #f8fafc !important;
-        }
-
-        .search-input::placeholder {
-          color: rgba(203, 213, 225, 0.6) !important;
-        }
-
-        /* 图标颜色覆盖 */
-        .home-icon,
-        .search-icon,
-        .share-icon,
-        .btn-icon,
-        .prev-icon,
-        .next-icon {
-          filter: invert(0.8) !important;
-        }
-
-        /* 按钮样式覆盖 */
-        .nav-btn.prev-btn,
-        .nav-btn.next-btn {
-          background-color: rgba(30, 41, 59, 0.6) !important;
-          border-color: rgba(255, 255, 255, 0.1) !important;
-          color: #f8fafc !important;
-        }
-
-        /* 模态框样式覆盖 */
-        .swipe-tip-card,
-        .share-card {
-          background-color: #1e293b !important;
-        }
-
-        .swipe-tip-content,
-        .share-title,
-        .share-question {
-          color: #f8fafc !important;
-        }
-
-        .share-answer {
-          color: #cbd5e1 !important;
-        }
-
-        /* 阴影覆盖 */
-        .header {
-          box-shadow: 0 8px 50px rgba(0, 0, 0, 0.3) !important;
-        }
-
-        .content {
-          box-shadow: 0 -6px 56px rgba(0, 0, 0, 0.3) !important;
-        }
-
-        /* 版权文字 */
-        .navigation-buttons:after {
-          color: #64748b !important;
-        }
-      }
-
-      /* 毛玻璃按钮样式 - 强行覆盖 */
-      .nav-btn.prev-btn,
-      .nav-btn.next-btn {
-        backdrop-filter: blur(12px) saturate(120%) !important;
-        -webkit-backdrop-filter: blur(12px) saturate(120%) !important;
-        background-color: rgba(255, 255, 255, 0.35) !important;
-        border: 1px solid rgba(255, 255, 255, 0.6) !important;
-        box-shadow: 0 4px 12px rgba(103, 194, 58, 0.12),
-          inset 0 0 10px rgba(255, 255, 255, 0.6) !important;
-        border-radius: 12px !important;
-        padding: 12px 18px !important;
-        min-width: 120px !important;
-        min-height: 48px !important;
-        transition: all 0.3s ease !important;
-      }
-
-      .nav-btn.prev-btn:hover,
-      .nav-btn.next-btn:hover {
-        background-color: rgba(255, 255, 255, 0.5) !important;
-        box-shadow: 0 6px 16px rgba(103, 194, 58, 0.18),
-          inset 0 0 12px rgba(255, 255, 255, 0.8) !important;
-        transform: translateY(-2px) !important;
-      }
-
-      .nav-btn.prev-btn:active,
-      .nav-btn.next-btn:active {
-        transform: translateY(0) !important;
-        background-color: rgba(255, 255, 255, 0.3) !important;
       }
     </style>
   </head>
@@ -1385,9 +1254,7 @@
           <div class="divider"></div>
           <div class="title-text">
             <div class="breadcrumb">宝丰人 › 企业文化践行 › 政策热点学习</div>
-            <div class="main-title">
-              2026年02月政策热点学习试题分享
-            </div>
+            <div class="main-title">2026年02月政策热点学习试题分享</div>
           </div>
         </div>
       </div>
@@ -1462,184 +1329,185 @@
 
     <script>
       // 题目数据
-const questions = [
-  {
-    id: 1,
-    type: "single",
-    question: "1.宝丰集团始终坚守的安全环保核心理念是()",
-    options: [
-      { text: "预防为主、综合治理", correct: false },
-      { text: "安全环保永远是我们的生命线", correct: true },
-      { text: "层层压实", correct: false },
-      { text: "敬畏生命、敬畏规章", correct: false }
-    ]
-  },
-  {
-    id: 2,
-    type: "single",
-    question: "2.监察部通报宝丰集团一年有多少项\"三违\"问题()",
-    options: [
-      { text: "1000多项", correct: false },
-      { text: "2000多项", correct: false },
-      { text: "3000多项", correct: true },
-      { text: "4000多项", correct: false }
-    ]
-  },
-  {
-    id: 3,
-    type: "single",
-    question: "3.宝丰集团每年召开几次重要会议解决经营管理问题()",
-    options: [
-      { text: "1次", correct: false },
-      { text: "2次", correct: true },
-      { text: "3次", correct: false },
-      { text: "4次", correct: false }
-    ]
-  },
-  {
-    id: 4,
-    type: "single",
-    question: "4.2026年宝丰集团计划搭建的管理平台是()",
-    options: [
-      { text: "一卡通管理平台", correct: false },
-      { text: "钉钉办公平台", correct: false },
-      { text: "智慧共享管理平台", correct: true },
-      { text: "人财物管控一体化平台", correct: false }
-    ]
-  },
-  {
-    id: 5,
-    type: "single",
-    question: "5.2026年宝丰集团实施现金采购的核心目标是至少降低多少成本()",
-    options: [
-      { text: "5%", correct: false },
-      { text: "10%", correct: true },
-      { text: "15%", correct: false },
-      { text: "20%", correct: false }
-    ]
-  },
-  {
-    id: 6,
-    type: "single",
-    question: "6.宝丰集团财务管理的核心要求是()",
-    options: [
-      { text: "控制风险,把每一分钱都要花在刀刃上", correct: true },
-      { text: "扩大融资、增加资金储备", correct: false },
-      { text: "简化流程、提高效率", correct: false },
-      { text: "加大投入、推动创新", correct: false }
-    ]
-  },
-  {
-    id: 7,
-    type: "single",
-    question: "7.宝丰集团对监察部的工作要求是()",
-    options: [
-      { text: "重点监管、事后问责", correct: false },
-      { text: "全覆盖、无盲区,从源头控制风险", correct: true },
-      { text: "宽松管理、以人为本", correct: false },
-      { text: "只监管关键岗位、简化流程", correct: false }
-    ]
-  },
-  {
-    id: 8,
-    type: "single",
-    question: "8.宝丰集团采购工作的核心理念可概括为哪八个字()",
-    options: [
-      { text: "质量优先、成本可控", correct: false },
-      { text: "质量、成本、诚信、共赢", correct: true },
-      { text: "诚信为本", correct: false },
-      { text: "降本增效、合规采购", correct: false }
-    ]
-  },
-  {
-    id: 9,
-    type: "single",
-    question: "9.宝丰集团现金采购需坚决杜绝的行为是()",
-    options: [
-      { text: "技术人员全程参与质量把控", correct: false },
-      { text: "乱付预付款", correct: true },
-      { text: "推行数据化、透明化管理", correct: false },
-      { text: "对比分析采购数据", correct: false }
-    ]
-  },
-  {
-    id: 10,
-    type: "single",
-    question: "10.宝丰集团造价管理创新的核心方向是()",
-    options: [
-      { text: "简化造价流程,降低精准度", correct: false },
-      { text: "把造价工作标准化,建立完善造价模型", correct: true },
-      { text: "完全依赖施工单位报价", correct: false },
-      { text: "无需建立标准,按需核算", correct: false }
-    ]
-  },
-  {
-    id: 11,
-    type: "single",
-    question: "11.今年企管部重新改变的核心是()",
-    options: [
-      { text: "扩大组织架构、增加人员编制", correct: false },
-      { text: "优化、合理、高效运行", correct: true },
-      { text: "维持现有制度、无需调整", correct: false },
-      { text: "仅负责制度制定,不参与流程优化", correct: false }
-    ]
-  },
-  {
-    id: 12,
-    type: "single",
-    question: "12.行政管理中,会议管理要求坚决不开的会议类型是()",
-    options: [
-      { text: "专题会", correct: false },
-      { text: "解决具体问题的会", correct: false },
-      { text: "废会、闲会、无用的会", correct: true },
-      { text: "能拍板决策的会", correct: false }
-    ]
-  },
-  {
-    id: 13,
-    type: "multi",
-    question: "13.宝丰集团审计管理工作必须做到的要求包括()",
-    options: [
-      { text: "全流程、穿透式审计", correct: true },
-      { text: "走过场、搞应付", correct: false },
-      { text: "开展前瞻性审计", correct: true },
-      { text: "以发现问题、优化制度体现成效", correct: true }
-    ]
-  },
-  {
-    id: 14,
-    type: "multi",
-    question: "14. 宝丰集团行政管理重点抓好的工作有（）",
-    options: [
-      { text: "运行管理与效能管理", correct: true },
-      { text: "会议实效与干部履职", correct: true },
-      { text: "后勤保障与对外关系", correct: true },
-      { text: "仅负责日常考勤与文件收发", correct: false }
-    ]
-  },
-  {
-    id: 15,
-    type: "multi",
-    question: "15. 宝丰集团企管部今年工作的核心要求有（）",
-    options: [
-      { text: "优化制度、流程、架构", correct: true },
-      { text: "实现管理合理、高效运行", correct: true },
-      { text: "支撑扁平化管理", correct: true },
-      { text: "维持现有管理模式不变", correct: false }
-    ]
-  },
-  {
-    id: 16,
-    type: "multi",
-    question: "16. 宝丰集团企业文化建设的目标包括（）",
-    options: [
-      { text: "全面提炼、总结优秀企业文化", correct: true },
-      { text: "让内部员工认可、认同企业文化", correct: true },
-      { text: "提升宝丰社会影响力和美誉度", correct: true },
-      { text: "仅做好内部文化活动宣传", correct: false }
-    ]
-  }
-];
+      const questions = [
+        {
+          id: 1,
+          type: "single",
+          question: "1.宝丰集团始终坚守的安全环保核心理念是()",
+          options: [
+            { text: "预防为主、综合治理", correct: false },
+            { text: "安全环保永远是我们的生命线", correct: true },
+            { text: "层层压实", correct: false },
+            { text: "敬畏生命、敬畏规章", correct: false },
+          ],
+        },
+        {
+          id: 2,
+          type: "single",
+          question: '2.监察部通报宝丰集团一年有多少项"三违"问题()',
+          options: [
+            { text: "1000多项", correct: false },
+            { text: "2000多项", correct: false },
+            { text: "3000多项", correct: true },
+            { text: "4000多项", correct: false },
+          ],
+        },
+        {
+          id: 3,
+          type: "single",
+          question: "3.宝丰集团每年召开几次重要会议解决经营管理问题()",
+          options: [
+            { text: "1次", correct: false },
+            { text: "2次", correct: true },
+            { text: "3次", correct: false },
+            { text: "4次", correct: false },
+          ],
+        },
+        {
+          id: 4,
+          type: "single",
+          question: "4.2026年宝丰集团计划搭建的管理平台是()",
+          options: [
+            { text: "一卡通管理平台", correct: false },
+            { text: "钉钉办公平台", correct: false },
+            { text: "智慧共享管理平台", correct: true },
+            { text: "人财物管控一体化平台", correct: false },
+          ],
+        },
+        {
+          id: 5,
+          type: "single",
+          question:
+            "5.2026年宝丰集团实施现金采购的核心目标是至少降低多少成本()",
+          options: [
+            { text: "5%", correct: false },
+            { text: "10%", correct: true },
+            { text: "15%", correct: false },
+            { text: "20%", correct: false },
+          ],
+        },
+        {
+          id: 6,
+          type: "single",
+          question: "6.宝丰集团财务管理的核心要求是()",
+          options: [
+            { text: "控制风险,把每一分钱都要花在刀刃上", correct: true },
+            { text: "扩大融资、增加资金储备", correct: false },
+            { text: "简化流程、提高效率", correct: false },
+            { text: "加大投入、推动创新", correct: false },
+          ],
+        },
+        {
+          id: 7,
+          type: "single",
+          question: "7.宝丰集团对监察部的工作要求是()",
+          options: [
+            { text: "重点监管、事后问责", correct: false },
+            { text: "全覆盖、无盲区,从源头控制风险", correct: true },
+            { text: "宽松管理、以人为本", correct: false },
+            { text: "只监管关键岗位、简化流程", correct: false },
+          ],
+        },
+        {
+          id: 8,
+          type: "single",
+          question: "8.宝丰集团采购工作的核心理念可概括为哪八个字()",
+          options: [
+            { text: "质量优先、成本可控", correct: false },
+            { text: "质量、成本、诚信、共赢", correct: true },
+            { text: "诚信为本", correct: false },
+            { text: "降本增效、合规采购", correct: false },
+          ],
+        },
+        {
+          id: 9,
+          type: "single",
+          question: "9.宝丰集团现金采购需坚决杜绝的行为是()",
+          options: [
+            { text: "技术人员全程参与质量把控", correct: false },
+            { text: "乱付预付款", correct: true },
+            { text: "推行数据化、透明化管理", correct: false },
+            { text: "对比分析采购数据", correct: false },
+          ],
+        },
+        {
+          id: 10,
+          type: "single",
+          question: "10.宝丰集团造价管理创新的核心方向是()",
+          options: [
+            { text: "简化造价流程,降低精准度", correct: false },
+            { text: "把造价工作标准化,建立完善造价模型", correct: true },
+            { text: "完全依赖施工单位报价", correct: false },
+            { text: "无需建立标准,按需核算", correct: false },
+          ],
+        },
+        {
+          id: 11,
+          type: "single",
+          question: "11.今年企管部重新改变的核心是()",
+          options: [
+            { text: "扩大组织架构、增加人员编制", correct: false },
+            { text: "优化、合理、高效运行", correct: true },
+            { text: "维持现有制度、无需调整", correct: false },
+            { text: "仅负责制度制定,不参与流程优化", correct: false },
+          ],
+        },
+        {
+          id: 12,
+          type: "single",
+          question: "12.行政管理中,会议管理要求坚决不开的会议类型是()",
+          options: [
+            { text: "专题会", correct: false },
+            { text: "解决具体问题的会", correct: false },
+            { text: "废会、闲会、无用的会", correct: true },
+            { text: "能拍板决策的会", correct: false },
+          ],
+        },
+        {
+          id: 13,
+          type: "multi",
+          question: "13.宝丰集团审计管理工作必须做到的要求包括()",
+          options: [
+            { text: "全流程、穿透式审计", correct: true },
+            { text: "走过场、搞应付", correct: false },
+            { text: "开展前瞻性审计", correct: true },
+            { text: "以发现问题、优化制度体现成效", correct: true },
+          ],
+        },
+        {
+          id: 14,
+          type: "multi",
+          question: "14. 宝丰集团行政管理重点抓好的工作有（）",
+          options: [
+            { text: "运行管理与效能管理", correct: true },
+            { text: "会议实效与干部履职", correct: true },
+            { text: "后勤保障与对外关系", correct: true },
+            { text: "仅负责日常考勤与文件收发", correct: false },
+          ],
+        },
+        {
+          id: 15,
+          type: "multi",
+          question: "15. 宝丰集团企管部今年工作的核心要求有（）",
+          options: [
+            { text: "优化制度、流程、架构", correct: true },
+            { text: "实现管理合理、高效运行", correct: true },
+            { text: "支撑扁平化管理", correct: true },
+            { text: "维持现有管理模式不变", correct: false },
+          ],
+        },
+        {
+          id: 16,
+          type: "multi",
+          question: "16. 宝丰集团企业文化建设的目标包括（）",
+          options: [
+            { text: "全面提炼、总结优秀企业文化", correct: true },
+            { text: "让内部员工认可、认同企业文化", correct: true },
+            { text: "提升宝丰社会影响力和美誉度", correct: true },
+            { text: "仅做好内部文化活动宣传", correct: false },
+          ],
+        },
+      ];
       // 当前显示的题目ID
       let currentQuestionId = 0;
       let currentSlideIndex = 0;
