@@ -1320,184 +1320,139 @@
     <script>
       // 题目数据
       const questions = [
-        {
-          id: 1,
-          type: "single",
-          question: "1.“十五五”时期是我国进程中承前启后的关键时期。",
-          options: [
-            { text: "全面建成小康社会", correct: false },
-            { text: "基本实现社会主义现代化", correct: true },
-            { text: "实现共产主义", correct: false },
-            { text: "建成社会主义现代化强国", correct: false },
-          ],
-        },
-        {
-          id: 2,
-          type: "single",
-          question: "2.“十五五”时期，全社会研发经费投入年均增长以上。",
-          options: [
-            { text: "6%", correct: false },
-            { text: "7%", correct: true },
-            { text: "8%", correct: false },
-            { text: "9%", correct: false },
-          ],
-        },
-        {
-          id: 3,
-          type: "single",
-          question: "3.“十五五”期间我国实施非化石能源倍增行动。",
-          options: [
-            { text: "五年", correct: false },
-            { text: "十年", correct: true },
-            { text: "十五年", correct: false },
-            { text: "二十年", correct: false },
-          ],
-        },
-        {
-          id: 4,
-          type: "single",
-          question: "4.数字中国建设中，全方位推进数智技术赋能的核心行动是",
-          options: [
-            { text: "“互联网+”行动", correct: false },
-            { text: "“人工智能+”行动", correct: true },
-            { text: "“大数据+”行动", correct: false },
-            { text: "“区块链+”行动", correct: false },
-          ],
-        },
-        {
-          id: 5,
-          type: "single",
-          question: "5.我国现代化产业体系建设的骨干是",
-          options: [
-            { text: "现代农业", correct: false },
-            { text: "先进制造业", correct: true },
-            { text: "现代服务业", correct: false },
-            { text: "战略性新兴产业", correct: false },
-          ],
-        },
-        {
-          id: 6,
-          type: "single",
-          question: "6.“十五五”时期，单位GDP二氧化碳排放五年累计降低",
-          options: [
-            { text: "15%", correct: false },
-            { text: "17%", correct: true },
-            { text: "19%", correct: false },
-            { text: "20%", correct: false },
-          ],
-        },
-        {
-          id: 7,
-          type: "single",
-          question: "7.“十五五”期间，我国能源综合生产能力目标达到亿吨标准煤。",
-          options: [
-            { text: "55", correct: false },
-            { text: "56", correct: false },
-            { text: "57", correct: false },
-            { text: "58", correct: true },
-          ],
-        },
-        {
-          id: 8,
-          type: "single",
-          question: "8.强化企业科技创新主体地位，需推动创新资源向集聚。",
-          options: [
-            { text: "高校", correct: false },
-            { text: "科研院所", correct: false },
-            { text: "企业", correct: true },
-            { text: "政府机构", correct: false },
-          ],
-        },
-        {
-          id: 9,
-          type: "single",
-          question:
-            "9.“十五五”时期我国将深入实施能源安全新战略，加快构建的新型能源体系特征是",
-          options: [
-            { text: "绿色、高效、智能、持续", correct: false },
-            { text: "清洁低碳、安全高效", correct: true },
-            { text: "多元互补", correct: false },
-            { text: "自主可控、绿色低碳", correct: false },
-          ],
-        },
-        {
-          id: 10,
-          type: "single",
-          question: "10.“十五五”期间，我国粮食综合生产能力目标稳定在左右。",
-          options: [
-            { text: "1.3万亿斤", correct: false },
-            { text: "1.4万亿斤", correct: false },
-            { text: "1.45万亿斤", correct: true },
-            { text: "1.5万亿斤", correct: false },
-          ],
-        },
-        {
-          id: 11,
-          type: "single",
-          question: "11.到2030年，我国非化石能源占能源消费总量比重目标达到",
-          options: [
-            { text: "20%", correct: false },
-            { text: "23%", correct: false },
-            { text: "25%", correct: true },
-            { text: "28%", correct: false },
-          ],
-        },
-        {
-          id: 12,
-          type: "single",
-          question: '12.我国"沙戈荒"大型风电光伏基地建设重点区域不包括',
-          options: [
-            { text: "库布齐沙漠", correct: false },
-            { text: "乌兰布和沙漠", correct: false },
-            { text: "腾格里沙漠", correct: false },
-            { text: "塔克拉玛干沙漠全域", correct: true },
-          ],
-        },
-        {
-          id: 13,
-          type: "multi",
-          question: '13."十五五"期间我国重点建设的清洁能源基地包括',
-          options: [
-            { text: '"三北"风电光伏基地', correct: true },
-            { text: "西南水风光一体化基地", correct: true },
-            { text: "沿海核电基地", correct: true },
-            { text: "海上风电基地", correct: true },
-          ],
-        },
-        {
-          id: 14,
-          type: "multi",
-          question: "14.新型电力系统建设重点任务包括",
-          options: [
-            { text: "智能电网建设", correct: true },
-            { text: "完善城乡配电网", correct: true },
-            { text: "科学布局抽水蓄能", correct: true },
-            { text: "大力发展新型储能", correct: true },
-          ],
-        },
-        {
-          id: 15,
-          type: "multi",
-          question: '15."十五五"规划提出的能源领域重点工程有',
-          options: [
-            { text: "雅鲁藏布江下游水电工程", correct: true },
-            { text: "三峡水运新通道", correct: false },
-            { text: "中俄远东天然气管道", correct: true },
-            { text: "川气东送二线", correct: true },
-          ],
-        },
-        {
-          id: 16,
-          type: "multi",
-          question: "16.我国推动重点领域节能降碳，能源消费管控重点包括",
-          options: [
-            { text: "煤炭消费达峰", correct: true },
-            { text: "石油消费达峰", correct: true },
-            { text: "新增用电量由新能源提供", correct: true },
-            { text: "高耗能行业节能改造", correct: true },
-          ],
-        },
-      ];
+  {
+    id: 1,
+    type: "single",
+    question: "1. 宁夏“十五五”时期地区生产总值年均增长预期目标是",
+    options: [
+      { text: "5%左右", correct: true },
+      { text: "5.5%左右", correct: false },
+      { text: "6%左右", correct: false },
+      { text: "6.5%左右", correct: false }
+    ]
+  },
+  {
+    id: 2,
+    type: "single",
+    question: "2. 宁夏“十五五”期间力争新能源装机规模突破",
+    options: [
+      { text: "8000万千瓦", correct: false },
+      { text: "1亿千瓦", correct: true },
+      { text: "1.2亿千瓦", correct: false },
+      { text: "1.5亿千瓦", correct: false }
+    ]
+  },
+  {
+    id: 3,
+    type: "single",
+    question: "3. 宁夏“十五五”粮食综合生产能力约束性目标为",
+    options: [
+      { text: "76亿斤", correct: false },
+      { text: "79亿斤", correct: true },
+      { text: "82亿斤", correct: false },
+      { text: "85亿斤", correct: false }
+    ]
+  },
+  {
+    id: 4,
+    type: "single",
+    question: "4. 宁夏“十五五”深入打好污染防治攻坚战，重点实施黄河（）攻坚战",
+    options: [
+      { text: "流域治理", correct: false },
+      { text: "几字弯", correct: true },
+      { text: "生态修复", correct: false },
+      { text: "防洪保安", correct: false }
+    ]
+  },
+  {
+    id: 5,
+    type: "single",
+    question: "5. 宁夏“十五五”数字经济核心产业增加值占GDP比重目标达到",
+    options: [
+      { text: "6.5%", correct: true },
+      { text: "7%", correct: false },
+      { text: "9%", correct: false },
+      { text: "10%", correct: false }
+    ]
+  },
+  {
+    id: 6,
+    type: "single",
+    question: "6. 宁夏“十五五”常住人口城镇化率预期目标是",
+    options: [
+      { text: "68%", correct: false },
+      { text: "大于71%", correct: true },
+      { text: "75%", correct: false },
+      { text: "80%", correct: false }
+    ]
+  },
+  {
+    id: 7,
+    type: "single",
+    question: "7. 宁夏“十五五”全社会研发经费投入年均增长预期目标是",
+    options: [
+      { text: "8%左右", correct: false },
+      { text: "10%左右", correct: true },
+      { text: "12%左右", correct: false },
+      { text: "15%左右", correct: false }
+    ]
+  },
+  {
+    id: 8,
+    type: "single",
+    question: "8. 宁夏“十五五”高水平建设的国家枢纽是",
+    options: [
+      { text: "全国一体化算力网络宁夏枢纽", correct: true },
+      { text: "国家物流枢纽", correct: false },
+      { text: "国家能源枢纽", correct: false },
+      { text: "国家数据枢纽", correct: false }
+    ]
+  },
+  {
+    id: 9,
+    type: "single",
+    question: "9. 宁夏“十五五”促进服务业优质高效发展，到2030年服务业增加值占GDP比重达到（）以上",
+    options: [
+      { text: "45%", correct: false },
+      { text: "50%", correct: true },
+      { text: "55%", correct: false },
+      { text: "60%", correct: false }
+    ]
+  },
+  {
+    id: 10,
+    type: "single",
+    question: "10. 宁夏“十五五”能源综合生产能力目标达到",
+    options: [
+      { text: "1.36亿吨标准煤", correct: false },
+      { text: "1.45亿吨标准煤", correct: true },
+      { text: "1.5亿吨标准煤", correct: false },
+      { text: "1.6亿吨标准煤", correct: false }
+    ]
+  },
+  {
+    id: 11,
+    type: "single",
+    question: "11. 宁夏“十五五”森林覆盖率约束性目标是",
+    options: [
+      { text: "13.18%", correct: false },
+      { text: "14%", correct: true },
+      { text: "15%", correct: false },
+      { text: "16%", correct: false }
+    ]
+  },
+  {
+    id: 12,
+    type: "single",
+    question: "12. 宁夏“十五五”推进乡村全面振兴，学习运用的核心经验是",
+    options: [
+      { text: "浦江经验", correct: false },
+      { text: "千万工程经验", correct: true },
+      { text: "枫桥经验", correct: false },
+      { text: "晋江经验", correct: false }
+    ]
+  }
+];
       // 当前显示的题目ID
       let currentQuestionId = 0;
       let currentSlideIndex = 0;
