@@ -5,1230 +5,1228 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>月度考试题目分享</title>
     <style>
-      @font-face {
-        font-family: "AlibabaPuHuiTi";
-        src: url("https://puhuiti.oss-cn-hangzhou.aliyuncs.com/AlibabaPuHuiTi-3/AlibabaPuHuiTi-3-45-Light/AlibabaPuHuiTi-3-45-Light.woff2")
-          format("woff2");
-        font-weight: 300;
-        font-style: normal;
-      }
-      body {
-        font-family: "AlibabaPuHuiTi", sans-serif;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
-      }
-
-      /* 修改为一体式渐变过渡背景 */
-      body {
-        background: linear-gradient(135deg, #f0f9f0 0%, #ffffff 100%);
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-        position: relative;
-      }
-
-      /* 核心修复：允许容器内阴影显示 */
-      .container {
-        overflow: visible !important; /* 强制覆盖overflow: hidden */
-      }
-
-      /* 调整header阴影 - 改为柔和浅灰色阴影 */
-      .header {
-        box-shadow: 0 8px 50px rgba(200, 200, 200, 0.2); /* 柔和浅灰色阴影 */
-        position: relative;
-        z-index: 2;
-        margin-bottom: -2px; /* 消除间隙 */
-      }
-
-      /* 调整content阴影 - 改为柔和浅灰色阴影 */
-      .content {
-        box-shadow: 0 -6px 56px rgba(200, 200, 200, 0.15); /* 柔和浅灰色阴影 */
-        position: relative;
-        z-index: 1;
-        border-top: none; /* 移除可能的边框遮挡 */
-      }
-
-      /* 确保阴影不会被父元素遮挡 */
-      body > .container {
-        overflow: visible;
-      }
-
-      /* 修复容器圆角显示 */
-      .container {
-        overflow: visible !important; /* 允许内部元素不被裁剪 */
-        border-radius: 16px; /* 确保容器本身有圆角 */
-      }
-
-      /* 修复header顶部圆角 */
-      .header {
-        border-top-left-radius: 16px; /* 顶部左圆角 */
-        border-top-right-radius: 16px; /* 顶部右圆角 */
-        overflow: hidden; /* 确保内部纹样不溢出圆角 */
-        /* 保留其他样式 */
-      }
-
-      /* 修复content底部圆角 */
-      .content {
-        border-bottom-left-radius: 16px; /* 底部左圆角 */
-        border-bottom-right-radius: 16px; /* 底部右圆角 */
-        overflow: hidden; /* 确保内容不溢出圆角 */
-        /* 保留其他样式 */
-      }
-
-      /* 确保阴影不遮挡圆角 */
-      .content {
-        box-shadow: 0 -6px 16px rgba(200, 200, 200, 0.15); /* 柔和浅灰色阴影 */
-        margin-top: -1px; /* 无缝衔接但不遮挡圆角 */
-      }
-
-      /* 全屏渐变遮罩 */
-      .fullscreen-gradient-mask {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          135deg,
-          rgba(224, 242, 224, 0.3) 0%,
-          rgba(255, 255, 255, 0) 100%
-        );
-        z-index: 100;
-        pointer-events: none;
-      }
-
-      /* 修改tips容器的样式 */
-      .tips-container {
-        text-align: center;
-        font-size: 12px;
-        color: #666;
-        margin-top: 5px;
-        padding: 20px 0;
-        border-top: 1px dashed #eee; /* 可选的顶部分割线 */
-      }
-
-      /* 直接删除tips-container（通过样式隐藏并清除占位） */
-      .tips-container {
-        display: none !important; /* 完全隐藏区域 */
-        height: 0 !important; /* 清除高度占位 */
-        padding: 0 !important; /* 清除内边距占位 */
-        margin: 0 !important; /* 清除外边距占位 */
-      }
-
-      /* 调整相邻元素间距，确保布局紧凑 */
-      /* 若tips-container在content内，调整content内相关元素间距 */
-      .content {
-        padding-top: 20px !important; /* 保持原有顶部内边距，或根据需要微调 */
-        padding-bottom: 20px !important; /* 保留底部内边距，无需额外调整 */
-      }
-
-      /* 若tips-container在滑动容器后，调整滑动容器底部间距 */
-      .swipe-container {
-        margin-bottom: 0 !important; /* 清除原与tips-container的间距 */
-      }
-
-      /* 核心：保持按钮水平排列，同时让版权文字单独居中 */
-      /* 替换为你实际的上下题控件父容器类名（必须是包裹两个按钮的直接父容器） */
-      .navigation-buttons {
-        display: flex;
-        justify-content: center; /* 按钮水平居中排列 */
-        align-items: center;
-        gap: 15px; /* 按钮之间的间距，保留原有值 */
-        position: relative;
-        margin-bottom: 20px; /* 给版权文字留位置 */
-      }
-
-      /* 用伪元素添加版权文字，独立居中 */
-      .navigation-buttons:after {
-        content: "©2026 Fgyc Copyright.";
-        display: block;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%); /* 强制水平居中，不受按钮影响 */
-        /*bottom: -18px; /* 位于按钮下方，调整距离 */
-        font-size: 12px;
-        color: #ffffff;
-
-        line-height: 1;
-        width: 100%; /* 确保文字容器全屏，居中不偏移 */
-        text-align: center;
-      }
-
-      /* 滑动提示弹窗样式 */
-      .swipe-tip-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 3000;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-      }
-
-      .swipe-tip-modal.active {
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .swipe-tip-card {
-        background-color: white;
-        border-radius: 16px;
-        padding: 20px;
-        width: 80%;
-        max-width: 100%;
-        text-align: center;
-        box-shadow: 0 5px 15px rgba(200, 200, 200, 0.2); /* 柔和浅灰色阴影 */
-      }
-
-      .swipe-tip-content {
-        font-size: 16px;
-        margin-bottom: 20px;
-        color: #333;
-      }
-
-      .swipe-tip-confirm {
-        padding: 10px 20px;
-        background-color: #f5a623;
-        color: white;
-        border-radius: 30px;
-        border: none;
-        cursor: pointer;
-        font-size: 16px;
-      }
-
-      /* 滑动容器样式 */
-      .swipe-container {
-        width: 100%;
-        overflow: hidden;
-        position: relative;
-      }
-
-      .swipe-wrapper {
-        display: flex;
-        transition: transform 0.3s ease;
-        width: 100%;
-      }
-
-      .swipe-slide {
-        flex: 0 0 100%;
-        width: 100%;
-      }
-
-      /* ========== 修改导航容器样式 START ========== */
-      .nav-container {
-        position: relative;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        z-index: 1000;
-        flex-wrap: nowrap; /* 确保不换行 */
-        min-width: 0; /* 允许内容收缩 */
-      }
-
-      .nav-dropdown {
-        backdrop-filter: blur(8px);
-        background-color: rgba(255, 255, 255, 0.45); /* 白色半透明 */
-        border-radius: 999px;
-        padding: 8px 15px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        box-shadow: 0 2px 4px rgba(200, 200, 200, 0.1); /* 柔和浅灰色阴影 */
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        cursor: pointer;
-        position: relative;
-        font-size: 14px;
-        height: 36px;
-        min-width: 80px; /* 最小宽度 */
-        flex-shrink: 1; /* 允许收缩 */
-        white-space: nowrap; /* 防止文字换行 */
-      }
-
-      .search-container {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        backdrop-filter: blur(8px);
-        background-color: rgba(255, 255, 255, 0.45); /* 白色半透明 */
-        border-radius: 999px;
-        padding: 0 15px;
-        box-shadow: 0 2px 4px rgba(200, 200, 200, 0.1); /* 柔和浅灰色阴影 */
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        height: 36px;
-        flex-grow: 1; /* 允许增长填充剩余空间 */
-        max-width: 100%; /* 最大宽度限制 */
-        min-width: 200px; /* 最小宽度 */
-        justify-content: space-between;
-      }
-
-      /* 修改在原有CSS基础上修改.search-container的样式，
-      确保点击容器任意区域都能聚焦到输入框
-      */
-      .search-container {
-        /* 保持原有样式不变 */
-        cursor: text; /* 整个容器显示文本光标 */
-      }
-
-      /* 移除搜索图标的单独点击限制 */
-      .search-icon {
-        cursor: inherit; /* 继承容器的光标样式 */
-      }
-
-      .search-input {
-        border: none;
-        background: transparent;
-        outline: none;
-        width: 100%; /* 填充容器宽度 */
-        font-size: 14px;
-        color: #333;
-        padding: 4px 8px;
-        transition: all 0.3s;
-        border-bottom: none !important;
-      }
-
-      .share-container {
-        flex-shrink: 0; /* 禁止收缩 */
-        /* 其他原有样式保持不变 */
-      }
-      /* ========== 修改导航容器样式 END ========== */
-
-      /* ========== 移动端适配调整 START ========== */
-
-      /* ========== 正确答案显示样式 START ========== */
-      .share-answer-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-        line-height: 1.6;
-      }
-
-      .correct-dot {
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        background-color: #b9dbb2;
-        border-radius: 50%;
-        margin-right: 10px;
-        flex-shrink: 0;
-      }
-      /* ========== 正确答案显示样式 END ========== */
-      /* 上一题/下一题按钮核心修复 */
-      .nav-btn.prev-btn,
-      .nav-btn.next-btn {
-        /* 确保点击区域完整 */
-        padding: 12px 24px;
-        min-width: 100px;
-        min-height: 44px;
-
-        /* 解决层级遮挡问题 */
-        position: relative;
-        z-index: 100; /* 高于其他元素 */
-        pointer-events: auto !important; /* 强制允许点击 */
-
-        /* 基础样式 */
-        background-color: #b9dbb2;
-        border: 2px solid #b9dbb2;
-        border-radius: 100px;
-        color: #333;
-        font-size: 16px;
-        cursor: pointer;
-        transition: all 0.2s;
-
-        /* 确保按钮不被父容器裁剪 */
-        overflow: visible;
-      }
-
-      /* 交互反馈（增强可点击感知） */
-      .nav-btn.prev-btn:hover,
-      .nav-btn.next-btn:hover {
-        background-color: #b9dbb2;
-        transform: translateY(-2px);
-      }
-
-      .nav-btn.prev-btn:active,
-      .nav-btn.next-btn:active {
-        transform: scale(0.98);
-      }
-
-      /* 修复导航容器可能的遮挡 */
-      .navigation-buttons {
-        position: relative;
-        z-index: 100; /* 确保容器层级足够高 */
-        overflow: visible !important; /* 关键：不裁剪按钮 */
-        margin: 20px auto; /* 居中并预留空间 */
-        padding: 10px;
-      }
-
-      /* 调整版权文字位置，避免遮挡按钮点击区域 */
-      .navigation-buttons:after {
-        bottom: -20px !important; /* 移到按钮下方更远位置 */
-        z-index: 1; /* 版权文字在按钮下方 */
-      }
-
-      /* 按钮图标样式 */
-      .btn-icon {
-        width: 18px;
-        height: 18px;
-        transition: all 0.2s;
-      }
-
-      /* 上一题按钮布局 */
-      .prev-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px; /* 图标与文字间距 */
-      }
-
-      /* 下一题按钮布局 */
-      .next-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px; /* 文字与图标间距 */
-      }
-
-      /* 鼠标悬停时图标颜色变化 */
-      .prev-btn:hover .prev-icon,
-      .next-btn:hover .next-icon {
-        fill: #5daf34; /* 与按钮hover背景色呼应 */
-        transform: scale(1.1);
-      }
-
-      /* 确保按钮点击区域完整覆盖图标和文字 */
-      .nav-btn.prev-btn,
-      .nav-btn.next-btn {
-        padding: 12px 18px; /* 调整内边距，适配图标 */
-        display: inline-flex; /* 保持图标与文字在同一行 */
-        align-items: center;
-        justify-content: center;
-      }
-      /* 毛玻璃按钮核心样式 */
-      .nav-btn.prev-btn,
-      .nav-btn.next-btn {
-        /* 清透毛玻璃效果 - 白色半透明基底 */
-        backdrop-filter: blur(12px) saturate(120%);
-        -webkit-backdrop-filter: blur(12px) saturate(120%);
-        background-color: rgba(255, 255, 255, 0.8); /* 高透明白色 */
-        border: 1px solid rgba(255, 255, 255, 0.9); /* 接近纯白的边框 */
-
-        /* 柔和浅灰色阴影 */
-        box-shadow:
-          0 4px 12px rgba(200, 200, 200, 0.15),
-          inset 0 0 10px rgba(255, 255, 255, 0.8);
-
-        /* 保持原有交互区域 */
-        padding: 12px 18px;
-        min-width: 120px;
-        min-height: 48px;
-        border-radius: 12px; /* 圆润边角增强柔和感 */
-
-        /* 图标与文字布局 */
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 16px;
-        color: #333; /* 深色文字确保可读性 */
-        cursor: pointer;
-        transition: all 0.3s ease;
-        position: relative;
-        z-index: 100;
-        overflow: visible;
-      }
-
-      /* 悬停效果（增强清透感的同时保持交互反馈） */
-      .nav-btn.prev-btn:hover,
-      .nav-btn.next-btn:hover {
-        background-color: rgba(255, 255, 255, 0.9); /* 略提高不透明度 */
-        box-shadow:
-          0 6px 16px rgba(200, 200, 200, 0.2),
-          inset 0 0 12px rgba(255, 255, 255, 0.9);
-        transform: translateY(-2px); /* 轻微上浮增强交互感 */
-      }
-
-      /* 点击效果 */
-      .nav-btn.prev-btn:active,
-      .nav-btn.next-btn:active {
-        transform: translateY(0);
-        background-color: rgba(255, 255, 255, 0.7);
-      }
-
-      /* 图标样式优化（与毛玻璃效果协调） */
-      .btn-icon {
-        width: 18px;
-        height: 18px;
-        transition: all 0.3s;
-        fill: #555; /* 稍浅的图标颜色增强清透感 */
-      }
-
-      .nav-btn.prev-btn:hover .prev-icon,
-      .nav-btn.next-btn:hover .next-icon {
-        fill: #333; /* 悬停时图标加深 */
-        transform: scale(1.1);
-      }
-
-      /* 调整按钮容器样式，避免影响毛玻璃效果 */
-      .navigation-buttons {
-        gap: 20px; /* 增加按钮间距，避免毛玻璃重叠 */
-        padding: 15px 0;
-        background: transparent; /* 确保容器背景透明 */
-      }
-      @media (max-width: 600px) {
-        .header {
-          padding: 15px;
+        @font-face {
+          font-family: "AlibabaPuHuiTi";
+          src: url("https://puhuiti.oss-cn-hangzhou.aliyuncs.com/AlibabaPuHuiTi-3/AlibabaPuHuiTi-3-45-Light/AlibabaPuHuiTi-3-45-Light.woff2")
+            format("woff2");
+          font-weight: 300;
+          font-style: normal;
+        }
+        body {
+          font-family: "AlibabaPuHuiTi", sans-serif;
         }
 
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+
+        /* 修改为一体式渐变过渡背景 */
+        body {
+          background: linear-gradient(135deg, #f0f9f0 0%, #ffffff 100%);
+          min-height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 20px;
+          position: relative;
+        }
+
+        /* 核心修复：允许容器内阴影显示 */
+        .container {
+          overflow: visible !important; /* 强制覆盖overflow: hidden */
+        }
+
+        /* 调整header阴影 - 改为柔和浅灰色阴影 */
+        .header {
+          box-shadow: 0 8px 50px rgba(200, 200, 200, 0.2); /* 柔和浅灰色阴影 */
+          position: relative;
+          z-index: 2;
+          margin-bottom: -2px; /* 消除间隙 */
+        }
+
+        /* 调整content阴影 - 改为柔和浅灰色阴影 */
+        .content {
+          box-shadow: 0 -6px 56px rgba(200, 200, 200, 0.15); /* 柔和浅灰色阴影 */
+          position: relative;
+          z-index: 1;
+          border-top: none; /* 移除可能的边框遮挡 */
+        }
+
+        /* 确保阴影不会被父元素遮挡 */
+        body > .container {
+          overflow: visible;
+        }
+
+        /* 修复容器圆角显示 */
+        .container {
+          overflow: visible !important; /* 允许内部元素不被裁剪 */
+          border-radius: 16px; /* 确保容器本身有圆角 */
+        }
+
+        /* 修复header顶部圆角 */
+        .header {
+          border-top-left-radius: 16px; /* 顶部左圆角 */
+          border-top-right-radius: 16px; /* 顶部右圆角 */
+          overflow: hidden; /* 确保内部纹样不溢出圆角 */
+          /* 保留其他样式 */
+        }
+
+        /* 修复content底部圆角 */
+        .content {
+          border-bottom-left-radius: 16px; /* 底部左圆角 */
+          border-bottom-right-radius: 16px; /* 底部右圆角 */
+          overflow: hidden; /* 确保内容不溢出圆角 */
+          /* 保留其他样式 */
+        }
+
+        /* 确保阴影不遮挡圆角 */
+        .content {
+          box-shadow: 0 -6px 16px rgba(200, 200, 200, 0.15); /* 柔和浅灰色阴影 */
+          margin-top: -1px; /* 无缝衔接但不遮挡圆角 */
+        }
+
+        /* 全屏渐变遮罩 */
+        .fullscreen-gradient-mask {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(
+            135deg,
+            rgba(224, 242, 224, 0.3) 0%,
+            rgba(255, 255, 255, 0) 100%
+          );
+          z-index: 100;
+          pointer-events: none;
+        }
+
+        /* 修改tips容器的样式 */
+        .tips-container {
+          text-align: center;
+          font-size: 12px;
+          color: #666;
+          margin-top: 5px;
+          padding: 20px 0;
+          border-top: 1px dashed #eee; /* 可选的顶部分割线 */
+        }
+
+        /* 直接删除tips-container（通过样式隐藏并清除占位） */
+        .tips-container {
+          display: none !important; /* 完全隐藏区域 */
+          height: 0 !important; /* 清除高度占位 */
+          padding: 0 !important; /* 清除内边距占位 */
+          margin: 0 !important; /* 清除外边距占位 */
+        }
+
+        /* 调整相邻元素间距，确保布局紧凑 */
+        /* 若tips-container在content内，调整content内相关元素间距 */
+        .content {
+          padding-top: 20px !important; /* 保持原有顶部内边距，或根据需要微调 */
+          padding-bottom: 20px !important; /* 保留底部内边距，无需额外调整 */
+        }
+
+        /* 若tips-container在滑动容器后，调整滑动容器底部间距 */
+        .swipe-container {
+          margin-bottom: 0 !important; /* 清除原与tips-container的间距 */
+        }
+
+        /* 核心：保持按钮水平排列，同时让版权文字单独居中 */
+        /* 替换为你实际的上下题控件父容器类名（必须是包裹两个按钮的直接父容器） */
+        .navigation-buttons {
+          display: flex;
+          justify-content: center; /* 按钮水平居中排列 */
+          align-items: center;
+          gap: 15px; /* 按钮之间的间距，保留原有值 */
+          position: relative;
+          margin-bottom: 20px; /* 给版权文字留位置 */
+        }
+
+        /* 用伪元素添加版权文字，独立居中 */
+        .navigation-buttons:after {
+          content: "©2026 Fgyc Copyright.";
+          display: block;
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%); /* 强制水平居中，不受按钮影响 */
+          /*bottom: -18px; /* 位于按钮下方，调整距离 */
+          font-size: 12px;
+          color: #999;
+
+          line-height: 1;
+          width: 100%; /* 确保文字容器全屏，居中不偏移 */
+          text-align: center;
+        }
+
+        /* 滑动提示弹窗样式 */
+        .swipe-tip-modal {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 3000;
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s ease;
+        }
+
+        .swipe-tip-modal.active {
+          opacity: 1;
+          visibility: visible;
+        }
+
+        .swipe-tip-card {
+          background-color: white;
+          border-radius: 16px;
+          padding: 20px;
+          width: 80%;
+          max-width: 100%;
+          text-align: center;
+          box-shadow: 0 5px 15px rgba(200, 200, 200, 0.2); /* 柔和浅灰色阴影 */
+        }
+
+        .swipe-tip-content {
+          font-size: 16px;
+          margin-bottom: 20px;
+          color: #333;
+        }
+
+        .swipe-tip-confirm {
+          padding: 10px 20px;
+          background-color: #f5a623;
+          color: white;
+          border-radius: 30px;
+          border: none;
+          cursor: pointer;
+          font-size: 16px;
+        }
+
+        /* 滑动容器样式 */
+        .swipe-container {
+          width: 100%;
+          overflow: hidden;
+          position: relative;
+        }
+
+        .swipe-wrapper {
+          display: flex;
+          transition: transform 0.3s ease;
+          width: 100%;
+        }
+
+        .swipe-slide {
+          flex: 0 0 100%;
+          width: 100%;
+        }
+
+        /* ========== 修改导航容器样式 START ========== */
         .nav-container {
-          gap: 8px;
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          z-index: 1000;
+          flex-wrap: nowrap; /* 确保不换行 */
+          min-width: 0; /* 允许内容收缩 */
         }
 
         .nav-dropdown {
-          padding: 8px 12px;
-          font-size: 13px;
-          min-width: 70px;
+          backdrop-filter: blur(8px);
+          background-color: rgba(255, 255, 255, 0.45); /* 白色半透明 */
+          border-radius: 999px;
+          padding: 8px 15px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          box-shadow: 0 2px 4px rgba(200, 200, 200, 0.1); /* 柔和浅灰色阴影 */
+          border: 1px solid rgba(255, 255, 255, 0.4);
+          cursor: pointer;
+          position: relative;
+          font-size: 14px;
+          height: 36px;
+          min-width: 80px; /* 最小宽度 */
+          flex-shrink: 1; /* 允许收缩 */
+          white-space: nowrap; /* 防止文字换行 */
         }
 
         .search-container {
-          padding: 0 10px;
-          min-width: 100px;
-        }
-
-        .search-input {
-          width: 80px; /* 移动端固定宽度 */
-        }
-
-        .search-input:focus {
-          width: 120px;
-        }
-      }
-      /* ========== 移动端适配调整 END ========== */
-
-      /* 移动端适配 */
-      @media (max-width: 600px) {
-        .tips-container {
-          padding: 8px 0;
-          font-size: 11px;
-        }
-      }
-
-      .container {
-        width: 100%;
-        max-width: 800px;
-        background-color: white;
-        border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(200, 200, 200, 0.15); /* 柔和浅灰色阴影 */
-        overflow: hidden;
-        position: relative;
-        z-index: 200;
-      }
-
-      /* 修改header样式，移除原祥云图案，添加90度垂直渐变的白色半透明书本纹样遮罩 */
-      .header {
-        background: linear-gradient(
-          135deg,
-          #cde7c7 0%,
-          #cde7c7 100%
-        ); /* 90度垂直渐变基底 */
-        color: #333;
-        padding: 30px 40px;
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        height: 100px;
-        overflow: hidden; /* 确保背景图案不溢出 */
-      }
-
-      /* 书本纹样背景 - 90度垂直渐变遮罩（顶部透明度低，底部透明度高） */
-      /* 书本纹样背景 - 仅修改mask-image实现底部到顶部的线性渐变 */
-      .header::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%; /* 全局宽度 */
-        height: 100%; /* 全局高度 */
-        background-image: url("./img1.jpg");
-        background-size: cover; /* 覆盖整个区域 */
-        background-repeat: no-repeat;
-        background-position: center; /* 居中显示 */
-        /* 核心修改：180deg实现从底部到顶部的垂直渐变，80%高度前保留图案，之后渐隐 */
-        -webkit-mask-image: linear-gradient(
-          180deg,
-          /* 180度 = 垂直向上（从底部到顶部） */ rgb(255, 255, 255) -50%,
-          /* 底部80%区域完全显示图案 */ transparent 100%
-            /* 顶部20%区域渐变为透明 */
-        );
-        /*opacity: 0.15; /* 降低透明度，渐变基底更柔和 */
-        z-index: 1; /* 确保在内容下方 */
-      }
-
-      /* question-type的渐变也同步调整为90度垂直方向 */
-
-      /* 标题区域样式 - 修改为垂直对齐 */
-      .title-container {
-        display: flex;
-        align-items: center;
-        height: 100%;
-        gap: 10px;
-        flex-grow: 1; /* 允许增长 */
-        min-width: 0; /* 允许内容收缩 */
-      }
-
-      /* 主页图标容器 - 白色半透明毛玻璃 */
-      .home-container {
-        backdrop-filter: blur(8px);
-        background-color: rgba(255, 255, 255, 0.8); /* 白色半透明 */
-        border-radius: 999px;
-        padding: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow:
-          0 2px 4px rgba(200, 200, 200, 0.1),
-          inset 0 0 10px rgba(255, 255, 255, 0.8);
-        border: 1px solid rgba(255, 255, 255, 0.9);
-        width: 36px;
-        height: 36px;
-        cursor: pointer;
-      }
-
-      .home-icon {
-        width: 20px;
-        height: 20px;
-        /* 替换为新的双色SVG图标（URL编码适配） */
-        background: url('data:image/svg+xml;utf8,<svg t="1770521313273" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="12213" width="200" height="200"><path d="M883.2 84.8C828.8 48 761.6 35.2 692.8 48c-65.6 12.8-123.2 49.6-156.8 99.2-9.6 14.4-6.4 35.2 8 44.8 14.4 9.6 35.2 6.4 44.8-8 25.6-36.8 67.2-64 116.8-73.6 51.2-9.6 102.4 0 142.4 27.2 84.8 59.2 113.6 166.4 62.4 241.6L588.8 851.2c-38.4 56-97.6 92.8-168 102.4-70.4 11.2-144-6.4-206.4-49.6-60.8-43.2-104-104-120-174.4-14.4-64-4.8-126.4 25.6-179.2l256-376c9.6-14.4 6.4-35.2-8-44.8-14.4-9.6-35.2-6.4-44.8 8L80 494.4l-4.8 4.8c-3.2 4.8-4.8 9.6-8 14.4l-6.4 9.6c-1.6 3.2-3.2 6.4-3.2 8-33.6 64-43.2 137.6-25.6 212.8 19.2 86.4 72 161.6 147.2 212.8 60.8 41.6 131.2 64 201.6 64 16 0 33.6-1.6 49.6-3.2 88-12.8 163.2-59.2 211.2-129.6l326.4-476.8c1.6-1.6 1.6-4.8 3.2-6.4 59.2-104 22.4-244.8-88-320z" fill="%2343484D" p-id="12214"></path><path d="M731.2 377.6c-14.4-9.6-35.2-6.4-44.8 8l-219.2 320c-14.4 20.8-36.8 35.2-62.4 40-25.6 4.8-51.2 0-73.6-16-20.8-14.4-35.2-36.8-40-62.4-4.8-25.6 0-51.2 16-73.6l281.6-412.8c9.6-14.4 6.4-35.2-8-44.8-14.4-9.6-35.2-6.4-44.8 8L254.4 561.6c-24 35.2-33.6 78.4-25.6 120 8 41.6 32 78.4 67.2 104 27.2 19.2 59.2 28.8 91.2 28.8 9.6 0 20.8-1.6 30.4-3.2 41.6-8 78.4-32 104-67.2l219.2-320c8-16 4.8-35.2-9.6-46.4z" fill="%23229BFF" p-id="12215"></path></svg>')
-          no-repeat center;
-        background-size: contain; /* 自适应容器大小，避免变形 */
-        opacity: 0.7; /* 保留原有透明度，可根据需要调整为1（不透明） */
-      }
-
-      .divider {
-        height: 24px;
-        width: 1px;
-        background-color: rgba(0, 0, 0, 0.1);
-        margin: 0 5px;
-      }
-
-      .title-text {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        line-height: 1.3;
-        position: relative;
-        z-index: 2; /* 确保在祥云图案之上 */
-      }
-
-      .breadcrumb {
-        font-size: 12px;
-        color: #555;
-      }
-
-      .main-title {
-        font-size: clamp(14px, 3vw, 16px); /* 响应式字体大小 */
-        font-weight: bold;
-        color: #333;
-        white-space: normal; /* 允许文字换行 */
-        word-wrap: break-word; /* 单词换行 */
-        max-width: 100%; /* 最大宽度 */
-      }
-
-      /* 搜索容器 - 白色半透明 + 柔和浅灰色阴影 */
-      .search-container {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        backdrop-filter: blur(8px);
-        background-color: rgba(255, 255, 255, 0.8); /* 白色半透明 */
-        border-radius: 999px;
-        padding: 0 15px;
-        box-shadow:
-          0 2px 4px rgba(200, 200, 200, 0.1),
-          inset 0 0 10px rgba(255, 255, 255, 0.8);
-        border: 1px solid rgba(255, 255, 255, 0.9);
-        height: 46px;
-        cursor: text; /* 整个搜索框区域都显示文本光标 */
-      }
-
-      .search-icon {
-        width: 18px;
-        height: 18px;
-        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 0 0 1.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 0 0-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 0 0 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>')
-          no-repeat center;
-        opacity: 0.7;
-        cursor: pointer;
-        margin-left: 8px; /* 与输入框保持适当距离 */
-      }
-
-      .search-input {
-        border: none;
-        background: transparent;
-        outline: none;
-        width: 100%; /* 填充剩余空间 */
-        font-size: 14px;
-        color: #333;
-        padding: 4px 8px;
-        transition: all 0.3s;
-        border-bottom: none !important;
-        cursor: text; /* 输入框显示文本光标 */
-      }
-
-      .search-input:focus {
-        width: 180px;
-      }
-
-      /* 分享按钮样式 - 白色半透明 + 柔和浅灰色阴影 */
-      .share-container {
-        backdrop-filter: blur(8px);
-        background-color: rgba(255, 255, 255, 0.8); /* 白色半透明 */
-        border-radius: 999px;
-        padding: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow:
-          0 2px 4px rgba(200, 200, 200, 0.1),
-          inset 0 0 10px rgba(255, 255, 255, 0.8);
-        border: 1px solid rgba(255, 255, 255, 0.9);
-        cursor: pointer;
-        width: 36px;
-        height: 36px;
-        margin-left: 0;
-      }
-
-      .share-icon {
-        width: 20px;
-        height: 20px;
-        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>')
-          no-repeat center;
-        opacity: 0.7;
-      }
-
-      /* 分享模态框样式 */
-      .share-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 2000;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s;
-      }
-
-      .share-modal.active {
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .share-card {
-        background-color: white;
-        border-radius: 16px;
-        padding: 30px;
-        width: 90%;
-        max-width: 500px;
-        box-shadow: 0 10px 30px rgba(200, 200, 200, 0.2); /* 柔和浅灰色阴影 */
-        position: relative;
-      }
-
-      .share-title {
-        font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 20px;
-        color: #333;
-        text-align: center;
-      }
-
-      .share-content {
-        margin-bottom: 30px;
-      }
-
-      .share-question {
-        font-size: 18px;
-        line-height: 1.6;
-        margin-bottom: 20px;
-        color: #333;
-      }
-
-      .share-answer {
-        font-size: 16px;
-        line-height: 1.6;
-        color: #666;
-        padding-left: 20px;
-        border-left: 3px solid #f5a623;
-      }
-
-      .share-answer-item {
-        display: block;
-        margin-bottom: 10px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 100%;
-      }
-
-      .share-actions {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-      }
-
-      /* 按钮统一样式 */
-      .share-btn {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 20px;
-        color: white;
-        border-radius: 30px;
-        cursor: pointer;
-        border: none;
-        font-size: 16px;
-        transition: all 0.3s;
-        min-width: 100px;
-        justify-content: center;
-        box-shadow: 0 4px 8px rgba(200, 200, 200, 0.15); /* 柔和浅灰色阴影 */
-      }
-
-      .share-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(200, 200, 200, 0.2); /* hover时增强浅灰色阴影 */
-      }
-
-      .share-copy {
-        background-color: #67c23a;
-      }
-
-      .share-copy:hover {
-        background-color: #5daf34;
-      }
-
-      .share-download {
-        background-color: #f5a623;
-      }
-
-      .share-download:hover {
-        background-color: #e69500;
-      }
-
-      .share-share {
-        background-color: #409eff;
-      }
-
-      .share-share:hover {
-        background-color: #3a8ee6;
-      }
-
-      .btn-icon {
-        width: 20px;
-        height: 20px;
-      }
-
-      .copy-icon {
-        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>')
-          no-repeat center;
-      }
-
-      .download-icon {
-        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>')
-          no-repeat center;
-      }
-
-      .share-btn-icon {
-        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>')
-          no-repeat center;
-      }
-
-      .close-modal {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        width: 24px;
-        height: 24px;
-        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>')
-          no-repeat center;
-        opacity: 0.5;
-        cursor: pointer;
-      }
-
-      .content {
-        padding: 20px 40px 40px; /* 保留原有内边距 */
-        position: relative; /* 保留定位，用于伪元素 */
-        /* 移除原有单独的background-size/position/repeat，统一用background设置 */
-      }
-
-      /* 原有背景色作为遮罩层（覆盖在纹样之上） */
-      .content::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #cbe4c5; /* 原有背景色 */
-        z-index: -1; /* 放在纹样之上、内容之下 */
-        opacity: 0.8; /* 遮罩透明度，可调整（0-1），值越小纹样越明显 */
-        pointer-events: none; /* 不影响内容交互 */
-      }
-
-      /* 确保content内的内容在遮罩之上 */
-      .content > * {
-        position: relative;
-        z-index: 2;
-      }
-
-      /* 控件组样式 */
-      .controls-group {
-        position: relative;
-        margin: 0 20px 30px; /* 与搜索框和question-container保持安全外边距，调整为左右20px */
-        height: 10px; /* 固定高度，与内部控件一致 */
-      }
-
-      .question-container {
-        position: relative;
-        /*margin-bottom: 40px;*/
-        padding-bottom: 10px;
-      }
-
-      /* 修复分割线位置 - 搜索框和controls-group之间 */
-      .question-divider {
-        border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
-        margin: 0 20px 25px; /* 与搜索框和controls-group保持安全外边距 */
-        padding-bottom: 0;
-      }
-
-      .question {
-        font-size: clamp(16px, 3vw, 20px); /* 响应式字体大小，整体缩小一号 */
-        line-height: 1.6;
-        color: #333;
-        position: relative;
-        text-indent: 0; /* 移除固定缩进 */
-        /* 与上方控件组保持安全外边距，左右外边距分别为22px */
-        margin-top: 30px;
-        margin-right: 16px;
-        margin-bottom: 1rem;
-        margin-left: 22px;
-        font-family: "AlibabaPuHuiTi", sans-serif; /* 更细的非衬线体 */
-      }
-
-      /* 可选：为较大屏幕保留特定样式 */
-      @media (min-width: 768px) {
-        .question {
-          padding-left: 0; /* 移除左侧大间距 */
-          text-indent: 0; /* 移除文本缩进 */
-        }
-      }
-
-      .question-type {
-        position: absolute;
-        left: 0;
-        top: 0;
-        background: linear-gradient(
-          135deg,
-          rgb(213 233 209) 0%,
-          rgb(143 183 134) 100%
-        ); /* 白色半透明渐变 */
-        color: #ffffff; /* 文字更协调 */
-        padding: 0 24px; /* 垂直padding设为0，使用height控制高度 */
-        border-radius: 30px;
-        font-weight: bold;
-        font-size: 12px;
-        box-shadow: 0 6px 16px rgba(200, 200, 200, 0.15); /* 柔和浅灰色阴影 */
-        font-family: "AlibabaPuHuiTi", sans-serif; /* 使用更细的非衬线体 */
-        z-index: 300;
-        border: 1px solid rgba(255, 255, 255, 0.9);
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 30px; /* 固定高度，与控件组一致 */
-      }
-
-      /* 调整question-type样式，固定高度并与question-counter水平对齐 */
-      .question-type {
-        height: 30px !important; /* 强制设置高度为32px */
-        line-height: 30px !important; /* 行高与高度一致，实现文字垂直居中 */
-        display: inline-flex !important; /* 强制弹性布局，便于对齐 */
-        align-items: center !important; /* 垂直居中对齐 */
-        vertical-align: middle !important; /* 与相邻元素水平对齐 */
-        margin: 0 !important; /* 清除默认边距干扰 */
-        padding: 0 30px !important; /* 保留左右内边距，可根据需求调整 */
-      }
-
-      /* 确保question-counter同步对齐 */
-      .question-counter {
-        display: inline-flex !important;
-        align-items: center !important;
-        vertical-align: middle !important;
-        height: 30px !important; /* 与question-type高度保持一致 */
-        line-height: 30px !important;
-      }
-
-      /* 父容器确保子元素水平对齐 */
-      .question-header {
-        display: flex !important;
-        align-items: center !important;
-        gap: 8px !important; /* 两个元素之间的间距，可调整 */
-      }
-
-      .question-type:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(200, 200, 200, 0.2); /* hover增强浅灰色阴影 */
-      }
-
-      /* 题目计数控件 */
-      .question-counter {
-        position: absolute;
-        right: 0;
-        top: 0; /* 与题型控件同一水平高度 */
-        color: #95b38a;
-        font-size: 12px;
-        font-family: "AlibabaPuHuiTi", sans-serif; /* 更细的非衬线体 */
-        z-index: 300;
-        display: flex;
-        align-items: center;
-        height: 40px; /* 固定高度，与题型控件一致 */
-      }
-
-      .options {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 14px;
-        margin-bottom: 30px; /* 添加底部边距，为上下题按钮留出空间 */
-      }
-
-      /* 判断题样式 */
-      .judge-options {
-        display: flex;
-        gap: 30px;
-        margin-top: 20px;
-        margin-bottom: 30px; /* 添加底部边距，为上下题按钮留出空间 */
-      }
-
-      .option,
-      .judge-option {
-        padding: 14px;
-        border-radius: 12px;
-        background-color: #f8f9fa;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        border: 1px solid #e1e5eb;
-        position: relative;
-        box-shadow: 0 2px 4px rgba(200, 200, 200, 0.05); /* 极浅的灰色阴影 */
-      }
-
-      .judge-option {
-        flex: 1;
-        justify-content: center;
-        font-size: 20px;
-      }
-
-      /* 悬浮态样式调整 - 柔和浅灰色阴影 */
-      .option:hover,
-      .judge-option:hover {
-        transform: translateY(-3px);
-        background-color: #ffffff; /* 纯白背景更干净 */
-        box-shadow: 0 5px 15px rgba(200, 200, 200, 0.1); /* 柔和浅灰色阴影 */
-      }
-
-      .option:hover .option-label,
-      .judge-option:hover .option-label {
-        background-color: #e0e0e0; /* 浅灰色标签 */
-        color: #333;
-      }
-
-      /* 选中态样式调整 - 保持绿色但阴影改为浅灰色 */
-      .option.correct,
-      .judge-option.correct {
-        background-color: #ffffff; /* 纯白背景 */
-        border-color: #e0e0e0; /* 浅灰色边框 */
-        box-shadow: 0 4px 10px rgba(200, 200, 200, 0.15); /* 柔和浅灰色阴影 */
-      }
-
-      /* 错误选项样式 - 置灰并降低透明度 */
-      .option.incorrect,
-      .judge-option.incorrect {
-        background-color: #f8f9fa;
-        border-color: #e1e5eb;
-        opacity: 0.6; /* 降低透明度 */
-        cursor: not-allowed; /* 鼠标指针变为禁止符号 */
-        box-shadow: none; /* 移除阴影更弱化 */
-      }
-
-      .option.incorrect .option-label,
-      .judge-option.incorrect .option-label {
-        background-color: #e1e5eb;
-        color: #999;
-      }
-
-      .option.incorrect .option-text,
-      .judge-option.incorrect .option-text {
-        color: #999; /* 文字颜色变灰 */
-      }
-
-      .option.correct .option-label,
-      .judge-option.correct .option-label {
-        background-color: #95b38a;
-        color: white;
-      }
-
-      .option.correct::after,
-      .judge-option.correct::after {
-        content: "";
-        position: absolute;
-        right: 10px;
-        bottom: 10px;
-        width: 30px;
-        height: 30px;
-        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2367c23a"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>')
-          no-repeat;
-        opacity: 0.3;
-      }
-
-      .option-label {
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        width: 24px;
-        height: 24px;
-        background-color: #e1e5eb;
-        border-radius: 50%;
-        font-weight: bold;
-        margin-right: 15px;
-        flex-shrink: 0;
-        transition: all 0.3s ease;
-      }
-
-      .option-text {
-        font-size: 14px;
-        color: #444;
-        font-family: "AlibabaPuHuiTi", sans-serif; /* 更细的非衬线体 */
-      }
-
-      @media (max-width: 600px) {
-        .header {
-          padding: 20px;
-          flex-direction: column; /* 恢复纵向布局 */
-          align-items: flex-start; /* 左对齐 */
-          gap: 15px;
-        }
-
-        .nav-container {
-          width: 100%;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          backdrop-filter: blur(8px);
+          background-color: rgba(255, 255, 255, 0.45); /* 白色半透明 */
+          border-radius: 999px;
+          padding: 0 15px;
+          box-shadow: 0 2px 4px rgba(200, 200, 200, 0.1); /* 柔和浅灰色阴影 */
+          border: 1px solid rgba(255, 255, 255, 0.4);
+          height: 36px;
+          flex-grow: 1; /* 允许增长填充剩余空间 */
+          max-width: 100%; /* 最大宽度限制 */
+          min-width: 200px; /* 最小宽度 */
           justify-content: space-between;
-          flex-wrap: wrap;
-          height: auto;
-          gap: 10px;
         }
 
-        .content {
-          padding: 15px;
+        /* 修改在原有CSS基础上修改.search-container的样式，
+        确保点击容器任意区域都能聚焦到输入框
+        */
+        .search-container {
+          /* 保持原有样式不变 */
+          cursor: text; /* 整个容器显示文本光标 */
         }
 
-        .question {
-          font-size: 16px;
-          padding-left: 0; /* 移除移动端问题左侧内边距 */
-        }
-
-        .options {
-          grid-template-columns: 1fr;
-        }
-
-        .judge-options {
-          flex-direction: column;
-          gap: 15px;
-        }
-
-        .dropdown-menu {
-          width: 100%;
+        /* 移除搜索图标的单独点击限制 */
+        .search-icon {
+          cursor: inherit; /* 继承容器的光标样式 */
         }
 
         .search-input {
-          width: 100px;
+          border: none;
+          background: transparent;
+          outline: none;
+          width: 100%; /* 填充容器宽度 */
+          font-size: 14px;
+          color: #333;
+          padding: 4px 8px;
+          transition: all 0.3s;
+          border-bottom: none !important;
         }
 
-        .search-input:focus {
-          width: 120px;
+        .share-container {
+          flex-shrink: 0; /* 禁止收缩 */
+          /* 其他原有样式保持不变 */
+        }
+        /* ========== 修改导航容器样式 END ========== */
+
+        /* ========== 移动端适配调整 START ========== */
+
+        /* ========== 正确答案显示样式 START ========== */
+        .share-answer-item {
+          display: flex;
+          align-items: center;
+          margin-bottom: 10px;
+          line-height: 1.6;
+        }
+
+        .correct-dot {
+          display: inline-block;
+          width: 8px;
+          height: 8px;
+          background-color: #b9dbb2;
+          border-radius: 50%;
+          margin-right: 10px;
+          flex-shrink: 0;
+        }
+        /* ========== 正确答案显示样式 END ========== */
+        /* 上一题/下一题按钮核心修复 */
+        .nav-btn.prev-btn,
+        .nav-btn.next-btn {
+          /* 确保点击区域完整 */
+          padding: 12px 24px;
+          min-width: 100px;
+          min-height: 44px;
+
+          /* 解决层级遮挡问题 */
+          position: relative;
+          z-index: 100; /* 高于其他元素 */
+          pointer-events: auto !important; /* 强制允许点击 */
+
+          /* 基础样式 */
+          background-color: #b9dbb2;
+          border: 2px solid #b9dbb2;
+          border-radius: 100px;
+          color: #333;
+          font-size: 16px;
+          cursor: pointer;
+          transition: all 0.2s;
+
+          /* 确保按钮不被父容器裁剪 */
+          overflow: visible;
+        }
+
+        /* 交互反馈（增强可点击感知） */
+        .nav-btn.prev-btn:hover,
+        .nav-btn.next-btn:hover {
+          background-color: #b9dbb2;
+          transform: translateY(-2px);
+        }
+
+        .nav-btn.prev-btn:active,
+        .nav-btn.next-btn:active {
+          transform: scale(0.98);
+        }
+
+        /* 修复导航容器可能的遮挡 */
+        .navigation-buttons {
+          position: relative;
+          z-index: 100; /* 确保容器层级足够高 */
+          overflow: visible !important; /* 关键：不裁剪按钮 */
+          margin: 20px auto; /* 居中并预留空间 */
+          padding: 10px;
+        }
+
+        /* 调整版权文字位置，避免遮挡按钮点击区域 */
+        .navigation-buttons:after {
+          bottom: -20px !important; /* 移到按钮下方更远位置 */
+          z-index: 1; /* 版权文字在按钮下方 */
+        }
+
+        /* 按钮图标样式 */
+        .btn-icon {
+          width: 18px;
+          height: 18px;
+          transition: all 0.2s;
+        }
+
+        /* 上一题按钮布局 */
+        .prev-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px; /* 图标与文字间距 */
+        }
+
+        /* 下一题按钮布局 */
+        .next-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px; /* 文字与图标间距 */
+        }
+
+        /* 鼠标悬停时图标颜色变化 */
+        .prev-btn:hover .prev-icon,
+        .next-btn:hover .next-icon {
+          fill: #5daf34; /* 与按钮hover背景色呼应 */
+          transform: scale(1.1);
+        }
+
+        /* 确保按钮点击区域完整覆盖图标和文字 */
+        .nav-btn.prev-btn,
+        .nav-btn.next-btn {
+          padding: 12px 18px; /* 调整内边距，适配图标 */
+          display: inline-flex; /* 保持图标与文字在同一行 */
+          align-items: center;
+          justify-content: center;
+        }
+        /* 毛玻璃按钮核心样式 */
+        .nav-btn.prev-btn,
+        .nav-btn.next-btn {
+          /* 清透毛玻璃效果 - 白色半透明基底 */
+          backdrop-filter: blur(12px) saturate(120%);
+          -webkit-backdrop-filter: blur(12px) saturate(120%);
+          background-color: rgba(255, 255, 255, 0.8); /* 高透明白色 */
+          border: 1px solid rgba(255, 255, 255, 0.9); /* 接近纯白的边框 */
+
+          /* 柔和浅灰色阴影 */
+          box-shadow:
+            0 4px 12px rgba(200, 200, 200, 0.15),
+            inset 0 0 10px rgba(255, 255, 255, 0.8);
+
+          /* 保持原有交互区域 */
+          padding: 12px 18px;
+          min-width: 120px;
+          min-height: 48px;
+          border-radius: 12px; /* 圆润边角增强柔和感 */
+
+          /* 图标与文字布局 */
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 16px;
+          color: #333; /* 深色文字确保可读性 */
+          cursor: pointer;
+          transition: all 0.3s ease;
+          position: relative;
+          z-index: 100;
+          overflow: visible;
+        }
+
+        /* 悬停效果（增强清透感的同时保持交互反馈） */
+        .nav-btn.prev-btn:hover,
+        .nav-btn.next-btn:hover {
+          background-color: rgba(255, 255, 255, 0.9); /* 略提高不透明度 */
+          box-shadow:
+            0 6px 16px rgba(200, 200, 200, 0.2),
+            inset 0 0 12px rgba(255, 255, 255, 0.9);
+          transform: translateY(-2px); /* 轻微上浮增强交互感 */
+        }
+
+        /* 点击效果 */
+        .nav-btn.prev-btn:active,
+        .nav-btn.next-btn:active {
+          transform: translateY(0);
+          background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* 图标样式优化（与毛玻璃效果协调） */
+        .btn-icon {
+          width: 18px;
+          height: 18px;
+          transition: all 0.3s;
+          fill: #555; /* 稍浅的图标颜色增强清透感 */
+        }
+
+        .nav-btn.prev-btn:hover .prev-icon,
+        .nav-btn.next-btn:hover .next-icon {
+          fill: #333; /* 悬停时图标加深 */
+          transform: scale(1.1);
+        }
+
+        /* 调整按钮容器样式，避免影响毛玻璃效果 */
+        .navigation-buttons {
+          gap: 20px; /* 增加按钮间距，避免毛玻璃重叠 */
+          padding: 15px 0;
+          background: transparent; /* 确保容器背景透明 */
+        }
+        @media (max-width: 600px) {
+          .header {
+            padding: 15px;
+          }
+
+          .nav-container {
+            gap: 8px;
+          }
+
+          .nav-dropdown {
+            padding: 8px 12px;
+            font-size: 13px;
+            min-width: 70px;
+          }
+
+          .search-container {
+            padding: 0 10px;
+            min-width: 100px;
+          }
+
+          .search-input {
+            width: 80px; /* 移动端固定宽度 */
+          }
+
+          .search-input:focus {
+            width: 120px;
+          }
+        }
+        /* ========== 移动端适配调整 END ========== */
+
+        /* 移动端适配 */
+        @media (max-width: 600px) {
+          .tips-container {
+            padding: 8px 0;
+            font-size: 11px;
+          }
+        }
+
+        .container {
+          width: 100%;
+          max-width: 800px;
+          background-color: white;
+          border-radius: 16px;
+          box-shadow: 0 10px 30px rgba(200, 200, 200, 0.15); /* 柔和浅灰色阴影 */
+          overflow: hidden;
+          position: relative;
+          z-index: 200;
+        }
+
+        /* 修改header样式，移除原祥云图案，添加90度垂直渐变的白色半透明书本纹样遮罩 */
+        .header {
+      background: linear-gradient(135deg, #ffeac0 0%, #fef1d6 100%);
+          ); /* 90度垂直渐变基底 */
+          color: #333;
+          padding: 30px 40px;
+          position: relative;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+          height: 100px;
+          overflow: hidden; /* 确保背景图案不溢出 */
+        }
+
+        /* 书本纹样背景 - 90度垂直渐变遮罩（顶部透明度低，底部透明度高） */
+        /* 书本纹样背景 - 仅修改mask-image实现底部到顶部的线性渐变 */
+        .header::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%; /* 全局宽度 */
+          height: 100%; /* 全局高度 */
+          background-image: url("./img1.jpg");
+          background-size: cover; /* 覆盖整个区域 */
+          background-repeat: no-repeat;
+          background-position: center; /* 居中显示 */
+          /* 核心修改：180deg实现从底部到顶部的垂直渐变，80%高度前保留图案，之后渐隐 */
+          -webkit-mask-image: linear-gradient(
+            180deg,
+            /* 180度 = 垂直向上（从底部到顶部） */ rgb(255, 255, 255) -50%,
+            /* 底部80%区域完全显示图案 */ transparent 100%
+              /* 顶部20%区域渐变为透明 */
+          );
+          /*opacity: 0.15; /* 降低透明度，渐变基底更柔和 */
+          z-index: 1; /* 确保在内容下方 */
+        }
+
+        /* question-type的渐变也同步调整为90度垂直方向 */
+
+        /* 标题区域样式 - 修改为垂直对齐 */
+        .title-container {
+          display: flex;
+          align-items: center;
+          height: 100%;
+          gap: 10px;
+          flex-grow: 1; /* 允许增长 */
+          min-width: 0; /* 允许内容收缩 */
+        }
+
+        /* 主页图标容器 - 白色半透明毛玻璃 */
+        .home-container {
+          backdrop-filter: blur(8px);
+          background-color: rgba(255, 255, 255, 0.8); /* 白色半透明 */
+          border-radius: 999px;
+          padding: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow:
+            0 2px 4px rgba(200, 200, 200, 0.1),
+            inset 0 0 10px rgba(255, 255, 255, 0.8);
+          border: 1px solid rgba(255, 255, 255, 0.9);
+          width: 36px;
+          height: 36px;
+          cursor: pointer;
+        }
+
+        .home-icon {
+          width: 20px;
+          height: 20px;
+          /* 替换为新的双色SVG图标（URL编码适配） */
+          background: url('data:image/svg+xml;utf8,<svg t="1770521313273" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="12213" width="200" height="200"><path d="M883.2 84.8C828.8 48 761.6 35.2 692.8 48c-65.6 12.8-123.2 49.6-156.8 99.2-9.6 14.4-6.4 35.2 8 44.8 14.4 9.6 35.2 6.4 44.8-8 25.6-36.8 67.2-64 116.8-73.6 51.2-9.6 102.4 0 142.4 27.2 84.8 59.2 113.6 166.4 62.4 241.6L588.8 851.2c-38.4 56-97.6 92.8-168 102.4-70.4 11.2-144-6.4-206.4-49.6-60.8-43.2-104-104-120-174.4-14.4-64-4.8-126.4 25.6-179.2l256-376c9.6-14.4 6.4-35.2-8-44.8-14.4-9.6-35.2-6.4-44.8 8L80 494.4l-4.8 4.8c-3.2 4.8-4.8 9.6-8 14.4l-6.4 9.6c-1.6 3.2-3.2 6.4-3.2 8-33.6 64-43.2 137.6-25.6 212.8 19.2 86.4 72 161.6 147.2 212.8 60.8 41.6 131.2 64 201.6 64 16 0 33.6-1.6 49.6-3.2 88-12.8 163.2-59.2 211.2-129.6l326.4-476.8c1.6-1.6 1.6-4.8 3.2-6.4 59.2-104 22.4-244.8-88-320z" fill="%2343484D" p-id="12214"></path><path d="M731.2 377.6c-14.4-9.6-35.2-6.4-44.8 8l-219.2 320c-14.4 20.8-36.8 35.2-62.4 40-25.6 4.8-51.2 0-73.6-16-20.8-14.4-35.2-36.8-40-62.4-4.8-25.6 0-51.2 16-73.6l281.6-412.8c9.6-14.4 6.4-35.2-8-44.8-14.4-9.6-35.2-6.4-44.8 8L254.4 561.6c-24 35.2-33.6 78.4-25.6 120 8 41.6 32 78.4 67.2 104 27.2 19.2 59.2 28.8 91.2 28.8 9.6 0 20.8-1.6 30.4-3.2 41.6-8 78.4-32 104-67.2l219.2-320c8-16 4.8-35.2-9.6-46.4z" fill="%23229BFF" p-id="12215"></path></svg>')
+            no-repeat center;
+          background-size: contain; /* 自适应容器大小，避免变形 */
+          opacity: 0.7; /* 保留原有透明度，可根据需要调整为1（不透明） */
+        }
+
+        .divider {
+          height: 24px;
+          width: 1px;
+          background-color: rgba(0, 0, 0, 0.1);
+          margin: 0 5px;
         }
 
         .title-text {
-          margin-left: 3px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          line-height: 1.3;
+          position: relative;
+          z-index: 2; /* 确保在祥云图案之上 */
         }
 
         .breadcrumb {
-          font-size: 10px;
+          font-size: 12px;
+          color: #555;
         }
 
         .main-title {
+          font-size: clamp(14px, 3vw, 16px); /* 响应式字体大小 */
+          font-weight: bold;
+          color: #333;
+          white-space: normal; /* 允许文字换行 */
+          word-wrap: break-word; /* 单词换行 */
+          max-width: 100%; /* 最大宽度 */
+        }
+
+        /* 搜索容器 - 白色半透明 + 柔和浅灰色阴影 */
+        .search-container {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          backdrop-filter: blur(8px);
+          background-color: rgba(255, 255, 255, 0.8); /* 白色半透明 */
+          border-radius: 999px;
+          padding: 0 15px;
+          box-shadow:
+            0 2px 4px rgba(200, 200, 200, 0.1),
+            inset 0 0 10px rgba(255, 255, 255, 0.8);
+          border: 1px solid rgba(255, 255, 255, 0.9);
+          height: 46px;
+          cursor: text; /* 整个搜索框区域都显示文本光标 */
+        }
+
+        .search-icon {
+          width: 18px;
+          height: 18px;
+          background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 0 0 1.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 0 0-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 0 0 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>')
+            no-repeat center;
+          opacity: 0.7;
+          cursor: pointer;
+          margin-left: 8px; /* 与输入框保持适当距离 */
+        }
+
+        .search-input {
+          border: none;
+          background: transparent;
+          outline: none;
+          width: 100%; /* 填充剩余空间 */
           font-size: 14px;
+          color: #333;
+          padding: 4px 8px;
+          transition: all 0.3s;
+          border-bottom: none !important;
+          cursor: text; /* 输入框显示文本光标 */
+        }
+
+        .search-input:focus {
+          width: 180px;
+        }
+
+        /* 分享按钮样式 - 白色半透明 + 柔和浅灰色阴影 */
+        .share-container {
+          backdrop-filter: blur(8px);
+          background-color: rgba(255, 255, 255, 0.8); /* 白色半透明 */
+          border-radius: 999px;
+          padding: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow:
+            0 2px 4px rgba(200, 200, 200, 0.1),
+            inset 0 0 10px rgba(255, 255, 255, 0.8);
+          border: 1px solid rgba(255, 255, 255, 0.9);
+          cursor: pointer;
+          width: 36px;
+          height: 36px;
+          margin-left: 0;
+        }
+
+        .share-icon {
+          width: 20px;
+          height: 20px;
+          background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>')
+            no-repeat center;
+          opacity: 0.7;
+        }
+
+        /* 分享模态框样式 */
+        .share-modal {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 2000;
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s;
+        }
+
+        .share-modal.active {
+          opacity: 1;
+          visibility: visible;
         }
 
         .share-card {
-          padding: 20px;
-          box-shadow: 0 8px 20px rgba(200, 200, 200, 0.15); /* 移动端更柔和的阴影 */
+          background-color: white;
+          border-radius: 16px;
+          padding: 30px;
+          width: 90%;
+          max-width: 500px;
+          box-shadow: 0 10px 30px rgba(200, 200, 200, 0.2); /* 柔和浅灰色阴影 */
+          position: relative;
         }
 
         .share-title {
-          font-size: 18px;
+          font-size: 20px;
+          font-weight: bold;
+          margin-bottom: 20px;
+          color: #333;
+          text-align: center;
+        }
+
+        .share-content {
+          margin-bottom: 30px;
         }
 
         .share-question {
-          font-size: 16px;
+          font-size: 18px;
+          line-height: 1.6;
+          margin-bottom: 20px;
+          color: #333;
         }
 
         .share-answer {
-          font-size: 14px;
+          font-size: 16px;
+          line-height: 1.6;
+          color: #666;
+          padding-left: 20px;
+          border-left: 3px solid #f5a623;
+        }
+
+        .share-answer-item {
+          display: block;
+          margin-bottom: 10px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 100%;
         }
 
         .share-actions {
-          flex-direction: column;
-          gap: 10px;
+          display: flex;
+          justify-content: center;
+          gap: 15px;
         }
 
+        /* 按钮统一样式 */
         .share-btn {
-          width: 100%;
-          box-shadow: 0 3px 6px rgba(200, 200, 200, 0.1); /* 移动端更浅的阴影 */
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 20px;
+          color: white;
+          border-radius: 30px;
+          cursor: pointer;
+          border: none;
+          font-size: 16px;
+          transition: all 0.3s;
+          min-width: 100px;
+          justify-content: center;
+          box-shadow: 0 4px 8px rgba(200, 200, 200, 0.15); /* 柔和浅灰色阴影 */
         }
-      }
-      /* 导航按钮样式 */
-      .navigation-buttons {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-      }
 
-      .nav-btn {
-        padding: 10px 20px;
-        border-radius: 30px;
-        border: none;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-      }
+        .share-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 12px rgba(200, 200, 200, 0.2); /* hover时增强浅灰色阴影 */
+        }
+
+        .share-copy {
+          background-color: #67c23a;
+        }
+
+        .share-copy:hover {
+          background-color: #5daf34;
+        }
+
+        .share-download {
+          background-color: #f5a623;
+        }
+
+        .share-download:hover {
+          background-color: #e69500;
+        }
+
+        .share-share {
+          background-color: #409eff;
+        }
+
+        .share-share:hover {
+          background-color: #3a8ee6;
+        }
+
+        .btn-icon {
+          width: 20px;
+          height: 20px;
+        }
+
+        .copy-icon {
+          background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>')
+            no-repeat center;
+        }
+
+        .download-icon {
+          background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>')
+            no-repeat center;
+        }
+
+        .share-btn-icon {
+          background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>')
+            no-repeat center;
+        }
+
+        .close-modal {
+          position: absolute;
+          top: 15px;
+          right: 15px;
+          width: 24px;
+          height: 24px;
+          background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>')
+            no-repeat center;
+          opacity: 0.5;
+          cursor: pointer;
+        }
+
+        .content {
+          padding: 20px 40px 40px; /* 保留原有内边距 */
+          position: relative; /* 保留定位，用于伪元素 */
+          /* 移除原有单独的background-size/position/repeat，统一用background设置 */
+        }
+
+        /* 原有背景色作为遮罩层（覆盖在纹样之上） */
+        .content::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: #ffecc7; /* 原有背景色 */
+          z-index: -1; /* 放在纹样之上、内容之下 */
+          opacity: 0.8; /* 遮罩透明度，可调整（0-1），值越小纹样越明显 */
+          pointer-events: none; /* 不影响内容交互 */
+        }
+
+        /* 确保content内的内容在遮罩之上 */
+        .content > * {
+          position: relative;
+          z-index: 2;
+        }
+
+        /* 控件组样式 */
+        .controls-group {
+          position: relative;
+          margin: 0 20px 30px; /* 与搜索框和question-container保持安全外边距，调整为左右20px */
+          height: 10px; /* 固定高度，与内部控件一致 */
+        }
+
+        .question-container {
+          position: relative;
+          /*margin-bottom: 40px;*/
+          padding-bottom: 10px;
+        }
+
+        /* 修复分割线位置 - 搜索框和controls-group之间 */
+        .question-divider {
+          border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+          margin: 0 20px 25px; /* 与搜索框和controls-group保持安全外边距 */
+          padding-bottom: 0;
+        }
+
+        .question {
+          font-size: clamp(16px, 3vw, 20px); /* 响应式字体大小，整体缩小一号 */
+          line-height: 1.6;
+          color: #333;
+          position: relative;
+          text-indent: 0; /* 移除固定缩进 */
+          /* 与上方控件组保持安全外边距，左右外边距分别为22px */
+          margin-top: 30px;
+          margin-right: 16px;
+          margin-bottom: 1rem;
+          margin-left: 22px;
+          font-family: "AlibabaPuHuiTi", sans-serif; /* 更细的非衬线体 */
+        }
+
+        /* 可选：为较大屏幕保留特定样式 */
+        @media (min-width: 768px) {
+          .question {
+            padding-left: 0; /* 移除左侧大间距 */
+            text-indent: 0; /* 移除文本缩进 */
+          }
+        }
+
+        .question-type {
+          position: absolute;
+          left: 0;
+          top: 0;
+          background: linear-gradient(
+            135deg,
+            #ffe7b7 0%,
+            #f5ba58 100%
+
+          ); /* 白色半透明渐变 */
+          color: #ffffff; /* 文字更协调 */
+          padding: 0 24px; /* 垂直padding设为0，使用height控制高度 */
+          border-radius: 30px;
+          font-weight: bold;
+          font-size: 12px;
+          box-shadow: 0 6px 16px rgba(200, 200, 200, 0.15); /* 柔和浅灰色阴影 */
+          font-family: "AlibabaPuHuiTi", sans-serif; /* 使用更细的非衬线体 */
+          z-index: 300;
+          border: 1px solid rgba(255, 255, 255, 0.9);
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 30px; /* 固定高度，与控件组一致 */
+        }
+
+        /* 调整question-type样式，固定高度并与question-counter水平对齐 */
+        .question-type {
+          height: 30px !important; /* 强制设置高度为32px */
+          line-height: 30px !important; /* 行高与高度一致，实现文字垂直居中 */
+          display: inline-flex !important; /* 强制弹性布局，便于对齐 */
+          align-items: center !important; /* 垂直居中对齐 */
+          vertical-align: middle !important; /* 与相邻元素水平对齐 */
+          margin: 0 !important; /* 清除默认边距干扰 */
+          padding: 0 30px !important; /* 保留左右内边距，可根据需求调整 */
+        }
+
+        /* 确保question-counter同步对齐 */
+        .question-counter {
+          display: inline-flex !important;
+          align-items: center !important;
+          vertical-align: middle !important;
+          height: 30px !important; /* 与question-type高度保持一致 */
+          line-height: 30px !important;
+        }
+
+        /* 父容器确保子元素水平对齐 */
+        .question-header {
+          display: flex !important;
+          align-items: center !important;
+          gap: 8px !important; /* 两个元素之间的间距，可调整 */
+        }
+
+        .question-type:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(200, 200, 200, 0.2); /* hover增强浅灰色阴影 */
+        }
+
+        /* 题目计数控件 */
+        .question-counter {
+          position: absolute;
+          right: 0;
+          top: 0; /* 与题型控件同一水平高度 */
+          color: #a2762c;
+          font-size: 12px;
+          font-family: "AlibabaPuHuiTi", sans-serif; /* 更细的非衬线体 */
+          z-index: 300;
+          display: flex;
+          align-items: center;
+          height: 40px; /* 固定高度，与题型控件一致 */
+        }
+
+        .options {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 14px;
+          margin-bottom: 30px; /* 添加底部边距，为上下题按钮留出空间 */
+        }
+
+        /* 判断题样式 */
+        .judge-options {
+          display: flex;
+          gap: 30px;
+          margin-top: 20px;
+          margin-bottom: 30px; /* 添加底部边距，为上下题按钮留出空间 */
+        }
+
+        .option,
+        .judge-option {
+          padding: 14px;
+          border-radius: 12px;
+          background-color: #f8f9fa;
+          transition: all 0.3s ease;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          border: 1px solid #e1e5eb;
+          position: relative;
+          box-shadow: 0 2px 4px rgba(200, 200, 200, 0.05); /* 极浅的灰色阴影 */
+        }
+
+        .judge-option {
+          flex: 1;
+          justify-content: center;
+          font-size: 20px;
+        }
+
+        /* 悬浮态样式调整 - 柔和浅灰色阴影 */
+        .option:hover,
+        .judge-option:hover {
+          transform: translateY(-3px);
+          background-color: #ffffff; /* 纯白背景更干净 */
+          box-shadow: 0 5px 15px rgba(200, 200, 200, 0.1); /* 柔和浅灰色阴影 */
+        }
+
+        .option:hover .option-label,
+        .judge-option:hover .option-label {
+          background-color: #e0e0e0; /* 浅灰色标签 */
+          color: #333;
+        }
+
+        /* 选中态样式调整 - 保持绿色但阴影改为浅灰色 */
+        .option.correct,
+        .judge-option.correct {
+          background-color: #ffffff; /* 纯白背景 */
+          border-color: #e0e0e0; /* 浅灰色边框 */
+          box-shadow: 0 4px 10px rgba(200, 200, 200, 0.15); /* 柔和浅灰色阴影 */
+        }
+
+        /* 错误选项样式 - 置灰并降低透明度 */
+        .option.incorrect,
+        .judge-option.incorrect {
+          background-color: #f8f9fa;
+          border-color: #e1e5eb;
+          opacity: 0.6; /* 降低透明度 */
+          cursor: not-allowed; /* 鼠标指针变为禁止符号 */
+          box-shadow: none; /* 移除阴影更弱化 */
+        }
+
+        .option.incorrect .option-label,
+        .judge-option.incorrect .option-label {
+          background-color: #e1e5eb;
+          color: #999;
+        }
+
+        .option.incorrect .option-text,
+        .judge-option.incorrect .option-text {
+          color: #999; /* 文字颜色变灰 */
+        }
+
+        .option.correct .option-label,
+        .judge-option.correct .option-label {
+          background-color: #eca127ab;
+          color: white;
+        }
+
+        .option.correct::after,
+        .judge-option.correct::after {
+          content: "";
+          position: absolute;
+          right: 10px;
+          bottom: 10px;
+          width: 30px;
+          height: 30px;
+          background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2367c23a"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>')
+            no-repeat;
+          opacity: 0.3;
+        }
+
+        .option-label {
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          width: 24px;
+          height: 24px;
+          background-color: #e1e5eb;
+          border-radius: 50%;
+          font-weight: bold;
+          margin-right: 15px;
+          flex-shrink: 0;
+          transition: all 0.3s ease;
+        }
+
+        .option-text {
+          font-size: 14px;
+          color: #444;
+          font-family: "AlibabaPuHuiTi", sans-serif; /* 更细的非衬线体 */
+        }
+
+        @media (max-width: 600px) {
+          .header {
+            padding: 20px;
+            flex-direction: column; /* 恢复纵向布局 */
+            align-items: flex-start; /* 左对齐 */
+            gap: 15px;
+          }
+
+          .nav-container {
+            width: 100%;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            height: auto;
+            gap: 10px;
+          }
+
+          .content {
+            padding: 15px;
+          }
+
+          .question {
+            font-size: 16px;
+            padding-left: 0; /* 移除移动端问题左侧内边距 */
+          }
+
+          .options {
+            grid-template-columns: 1fr;
+          }
+
+          .judge-options {
+            flex-direction: column;
+            gap: 15px;
+          }
+
+          .dropdown-menu {
+            width: 100%;
+          }
+
+          .search-input {
+            width: 100px;
+          }
+
+          .search-input:focus {
+            width: 120px;
+          }
+
+          .title-text {
+            margin-left: 3px;
+          }
+
+          .breadcrumb {
+            font-size: 10px;
+          }
+
+          .main-title {
+            font-size: 14px;
+          }
+
+          .share-card {
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(200, 200, 200, 0.15); /* 移动端更柔和的阴影 */
+          }
+
+          .share-title {
+            font-size: 18px;
+          }
+
+          .share-question {
+            font-size: 16px;
+          }
+
+          .share-answer {
+            font-size: 14px;
+          }
+
+          .share-actions {
+            flex-direction: column;
+            gap: 10px;
+          }
+
+          .share-btn {
+            width: 100%;
+            box-shadow: 0 3px 6px rgba(200, 200, 200, 0.1); /* 移动端更浅的阴影 */
+          }
+        }
+        /* 导航按钮样式 */
+        .navigation-buttons {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 20px;
+        }
+
+        .nav-btn {
+          padding: 10px 20px;
+          border-radius: 30px;
+          border: none;
+          font-size: 16px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+        }
     </style>
   </head>
   <body>
@@ -1244,7 +1242,7 @@
           <div class="divider"></div>
           <div class="title-text">
             <div class="breadcrumb">宝丰人 › 企业文化践行 › 政策热点学习</div>
-            <div class="main-title">2026年07月政策热点学习试题分享</div>
+            <div class="main-title">2026年08月政策热点学习试题分享</div>
           </div>
         </div>
       </div>
@@ -1319,162 +1317,180 @@
 
     <script>
       // 题目数据
-const questions = [
-  {
-    id: 1,
-    type: "single",
-    question: "依据《新型能源体系建设“十五五”规划》，我国建设新型能源体系的战略牵引主线是（）。",
-    options: [
-      { text: "能源保供稳价", correct: false },
-      { text: "碳达峰碳中和", correct: true },
-      { text: "电力市场改革", correct: false },
-      { text: "能源国际合作", correct: false }
-    ]
-  },
-  {
-    id: 2,
-    type: "single",
-    question: "规划明确指导我国能源高质量发展的根本能源安全战略是（）。",
-    options: [
-      { text: "风光大基地优先开发战略", correct: false },
-      { text: "“四个革命、一个合作”能源安全新战略", correct: true },
-      { text: "煤炭兜底保障战略", correct: false },
-      { text: "能源进口多元化战略", correct: false }
-    ]
-  },
-  {
-    id: 3,
-    type: "single",
-    question: "《规划》设定2030年我国能源综合生产能力约束性目标为（）亿吨标准煤。",
-    options: [
-      { text: "51.3", correct: false },
-      { text: "55", correct: false },
-      { text: "58", correct: true },
-      { text: "60", correct: false }
-    ]
-  },
-  {
-    id: 4,
-    type: "single",
-    question: "规划专栏指标中，2030年非化石能源消费比重约束性指标为（）。",
-    options: [
-      { text: "21.7%", correct: false },
-      { text: "25%", correct: true },
-      { text: "35%", correct: false },
-      { text: "50%", correct: false }
-    ]
-  },
-  {
-    id: 5,
-    type: "single",
-    question: "到2030年，将成为我国电力装机主体的能源类型是（）。",
-    options: [
-      { text: "煤电", correct: false },
-      { text: "风电、太阳能发电", correct: true },
-      { text: "常规水电", correct: false },
-      { text: "核电", correct: false }
-    ]
-  },
-  {
-    id: 6,
-    type: "single",
-    question: "在新型电力系统整体框架下，煤电的核心转型定位为（）。",
-    options: [
-      { text: "基础电量主力电源", correct: false },
-      { text: "支撑调节性电源", correct: true },
-      { text: "逐步全部关停退出", correct: false },
-      { text: "唯一稳定基荷电源", correct: false }
-    ]
-  },
-  {
-    id: 7,
-    type: "single",
-    question: "《新型能源体系建设“十五五”规划》提出2030年全国新型储能装机规划目标为（）亿千瓦。",
-    options: [
-      { text: "1.6", correct: true },
-      { text: "3", correct: false },
-      { text: "4.2", correct: false },
-      { text: "5.4", correct: false }
-    ]
-  },
-  {
-    id: 8,
-    type: "single",
-    question: "下列选项中，不属于非化石能源五大增长板块的是（）。",
-    options: [
-      { text: "“三北”风电光伏基地", correct: false },
-      { text: "西南水风光一体化基地", correct: false },
-      { text: "内陆煤电一体化基地", correct: true },
-      { text: "沿海核电基地", correct: false }
-    ]
-  },
-  {
-    id: 9,
-    type: "single",
-    question: "规划确定2030年可再生能源制氢发展规模目标为（）万吨。",
-    options: [
-      { text: "100", correct: false },
-      { text: "200", correct: true },
-      { text: "300", correct: false },
-      { text: "500", correct: false }
-    ]
-  },
-  {
-    id: 10,
-    type: "single",
-    question: "我国能源安全保障体系中，发挥兜底保障压舱石作用的化石能源是（）。",
-    options: [
-      { text: "原油", correct: false },
-      { text: "天然气", correct: false },
-      { text: "煤炭", correct: true },
-      { text: "页岩油气", correct: false }
-    ]
-  },
-  {
-    id: 11,
-    type: "single",
-    question: "全国统一电力市场体系不包含以下哪类市场（）。",
-    options: [
-      { text: "中长期电力市场", correct: false },
-      { text: "电力现货市场", correct: false },
-      { text: "房地产实物交易市场", correct: true },
-      { text: "电力辅助服务市场", correct: false }
-    ]
-  },
-  {
-    id: 12,
-    type: "single",
-    question: "规划专栏列入前瞻布局的颠覆性未来能源前沿技术是（）。",
-    options: [
-      { text: "常规煤电节能改造", correct: false },
-      { text: "可控核聚变", correct: true },
-      { text: "普通组件光伏应用", correct: false },
-      { text: "传统煤炭洗选加工", correct: false }
-    ]
-  },
-  {
-    id: 13,
-    type: "single",
-    question: "按照规划目标，2030年我国充电基础设施总量需达到（）万个，实现规模倍增。",
-    options: [
-      { text: "2000", correct: false },
-      { text: "3000", correct: false },
-      { text: "4000", correct: true },
-      { text: "5000", correct: false }
-    ]
-  },
-  {
-    id: 14,
-    type: "single",
-    question: "我国规划布局的四大油气进口战略通道不包括（）。",
-    options: [
-      { text: "东北油气通道", correct: false },
-      { text: "西北油气通道", correct: false },
-      { text: "西南油气通道", correct: false },
-      { text: "华中油气通道", correct: true }
-    ]
-  }
-];
+      const questions = [
+        {
+          id: 1,
+          type: "single",
+          question: "宝丰集团2026年中经营管理工作会的会议主题是(　)",
+          options: [
+            { text: "稳中求进拓产业、降本增效促转型", correct: false },
+            { text: "创新务实抓发展、精益求精要效益", correct: true },
+            { text: "深耕绿色能源构建完整产业链", correct: false },
+            { text: "广纳英才强队伍、合规经营防风险", correct: false },
+          ],
+        },
+        {
+          id: 2,
+          type: "single",
+          question:
+            "针对会议过多占用干部精力问题，集团推行会议管理以(　)为主，杜绝无效会议。",
+          options: [
+            { text: "专题会", correct: true },
+            { text: "全员综合大会", correct: false },
+            { text: "月度复盘大会", correct: false },
+            { text: "跨区域联席会", correct: false },
+          ],
+        },
+        {
+          id: 3,
+          type: "single",
+          question: "企业行稳致远、基业长青的核心引擎是(　)",
+          options: [
+            { text: "人才", correct: false },
+            { text: "创新", correct: true },
+            { text: "资金", correct: false },
+            { text: "市场", correct: false },
+          ],
+        },
+        {
+          id: 4,
+          type: "single",
+          question: "企业战略必须聚焦主业，坚持以(　)为核心导向",
+          options: [
+            { text: "短期利润最大化", correct: false },
+            { text: "产业链协同效应", correct: false },
+            { text: "国家战略需求与市场需求", correct: true },
+            { text: "国际竞争优势", correct: false },
+          ],
+        },
+        {
+          id: 5,
+          type: "single",
+          question: "2026年燕宝奖学金新增高校总数为(　)所",
+          options: [
+            { text: "38", correct: false },
+            { text: "50", correct: true },
+            { text: "12", correct: false },
+            { text: "100", correct: false },
+          ],
+        },
+        {
+          id: 6,
+          type: "single",
+          question:
+            "宝丰能源在宁夏落地推进的大型煤化工项目为500万吨(　)及下游聚酯项目",
+          options: [
+            { text: "煤制烯烃", correct: false },
+            { text: "乙二醇", correct: true },
+            { text: "煤制芳烃", correct: false },
+            { text: "PTA", correct: false },
+          ],
+        },
+        {
+          id: 7,
+          type: "single",
+          question:
+            "从2026年起，宝丰集团燕宝慈善基金会对革命老区延安连续开展(　)年教育助学，资助(　)届大学生",
+          options: [
+            { text: "10 13", correct: false },
+            { text: "13 10", correct: true },
+            { text: "13 13", correct: false },
+            { text: "10 10", correct: false },
+          ],
+        },
+        {
+          id: 8,
+          type: "single",
+          question: "没有(　)担当，就没有企业的稳健发展",
+          options: [
+            { text: "创新", correct: false },
+            { text: "务实", correct: true },
+            { text: "精益", correct: false },
+            { text: "高效", correct: false },
+          ],
+        },
+        {
+          id: 9,
+          type: "single",
+          question: "精益求精追求卓越，是企业的(　)",
+          options: [
+            { text: "发展底线", correct: false },
+            { text: "核心竞争力", correct: true },
+            { text: "发展引擎", correct: false },
+            { text: "立身之本", correct: false },
+          ],
+        },
+        {
+          id: 10,
+          type: "single",
+          question:
+            "团队管理的核心是把合适的人放到合适岗位上，人才盘点的目的就是实现(　)",
+          options: [
+            { text: "人薪匹配", correct: false },
+            { text: "人岗匹配", correct: true },
+            { text: "人际匹配", correct: false },
+            { text: "人效匹配", correct: false },
+          ],
+        },
+        {
+          id: 11,
+          type: "single",
+          question:
+            "企业实现持续发展，离不开(　)，面对不少工作落地难的现实，必须坚持(　)",
+          options: [
+            { text: "守成 求变", correct: false },
+            { text: "创新 务实", correct: true },
+            { text: "改革 变通", correct: false },
+            { text: "突破 变通", correct: false },
+          ],
+        },
+        {
+          id: 12,
+          type: "single",
+          question:
+            "在科技创新方面，要通过(　)深度赋能，加快智能替代，推动转型升级",
+          options: [
+            { text: "大数据", correct: false },
+            { text: "物联网", correct: false },
+            { text: "5G", correct: false },
+            { text: "AI", correct: true },
+          ],
+        },
+        {
+          id: 13,
+          type: "single",
+          question: "在团队务实方面，良好的沟通能够带来最低的成本和(　)",
+          options: [
+            { text: "最高的效益", correct: false },
+            { text: "最高的效率", correct: true },
+            { text: "最好的结果", correct: false },
+            { text: "最快的进度", correct: false },
+          ],
+        },
+        {
+          id: 14,
+          type: "single",
+          question:
+            "关于人才引进，重点要看从业经历、成长路径，特别要了解他的(　)",
+          options: [
+            { text: "专业能力", correct: false },
+            { text: "工作业绩", correct: false },
+            { text: "思想理念", correct: true },
+            { text: "沟通技巧", correct: false },
+          ],
+        },
+        {
+          id: 15,
+          type: "single",
+          question: "在管理创新方面，制度流程必须兼顾管控力度与(　)",
+          options: [
+            { text: "操作的便捷性", correct: true },
+            { text: "执行的效率", correct: false },
+            { text: "管理的全面性", correct: false },
+            { text: "流程的规范性", correct: false },
+          ],
+        },
+      ];
       // 当前显示的题目ID
       let currentQuestionId = 0;
       let currentSlideIndex = 0;
