@@ -1242,7 +1242,7 @@
           <div class="divider"></div>
           <div class="title-text">
             <div class="breadcrumb">宝丰人 › 企业文化践行 › 政策热点学习</div>
-            <div class="main-title">2026年10月政策热点学习试题分享</div>
+            <div class="main-title">2026年11月政策热点学习试题分享</div>
           </div>
         </div>
       </div>
@@ -1317,140 +1317,188 @@
 
     <script>
       // 题目数据
-const questions = [
-  {
-    id: 1,
-    type: "single",
-    question: "1. 2026年4月，明确提出重点加强“六张网”建设的会议是（）。",
-    options: [
-      { text: "中央经济工作会议", correct: false },
-      { text: "中共中央政治局会议", correct: true },
-      { text: "党的二十届四中全会", correct: false },
-      { text: "国务院常务会议", correct: false }
-    ]
-  },
-  {
-    id: 2,
-    type: "single",
-    question: "2.“六张网”建设是（）提出的重大工程，是扩大有效投资、稳定经济增长、促进转型升级的重要抓手。",
-    options: [
-      { text: "“十三五”规划", correct: false },
-      { text: "“十四五”规划", correct: false },
-      { text: "“十五五”规划", correct: true },
-      { text: "“十六五”规划", correct: false }
-    ]
-  },
-  {
-    id: 3,
-    type: "single",
-    question: "3.随着我国进入高质量发展阶段，基础设施需求发生的转变是（）。",
-    options: [
-      { text: "从“多不多”转向“省不省”", correct: false },
-      { text: "从“有没有”转向“好不好、绿不绿、智不智”", correct: true },
-      { text: "从“快不快”转向“稳不稳”", correct: false },
-      { text: "从“大", correct: false }
-    ]
-  },
-  {
-    id: 4,
-    type: "single",
-    question: "4.“六张网”总体格局覆盖六个领域，构成支撑经济社会运行的基础网络，可以概括为（）。",
-    options: [
-      { text: "“水—能—数—信—城—物”", correct: true },
-      { text: "“水—电—路—气—网—港”", correct: false },
-      { text: "“农—工—商—贸—城—乡”", correct: false },
-      { text: "“陆—海—空—天—电—网”", correct: false }
-    ]
-  },
-  {
-    id: 5,
-    type: "single",
-    question: "5.在“六张网”分类中，新能源基建以（）为代表。",
-    options: [
-      { text: "算力网", correct: false },
-      { text: "通信网", correct: false },
-      { text: "新型电网", correct: true },
-      { text: "物流网", correct: false }
-    ]
-  },
-  {
-    id: 6,
-    type: "single",
-    question: "6.新型电力系统的“清洁化”特征，是指风电、光伏等新能源逐步成为（）。",
-    options: [
-      { text: "装机和电量主体", correct: true },
-      { text: "输电和配电主体", correct: false },
-      { text: "调频和调峰主体", correct: false },
-      { text: "供热和供气主体", correct: false }
-    ]
-  },
-  {
-    id: 7,
-    type: "single",
-    question: "7.宝丰集团大力发展新兴产业，建成绿色风力发电、光伏发电的规模分别是（）。",
-    options: [
-      { text: "风电4GW、光伏10GW", correct: false },
-      { text: "风电10GW、光伏4GW", correct: true },
-      { text: "风电10GW、光伏10GW", correct: false },
-      { text: "风电5GW、光伏10GW", correct: false }
-    ]
-  },
-  {
-    id: 8,
-    type: "single",
-    question: "8.“六张网”建设重大意义中的“利当前”，是指其（）。",
-    options: [
-      { text: "系统提升各方面安全保障能力", correct: false },
-      { text: "是扩大有效内需、稳定宏观经济运行的重要支撑", correct: true },
-      { text: "为新质生产力发展提供坚实底座", correct: false },
-      { text: "优化水资源配置、保障水安全", correct: false }
-    ]
-  },
-  {
-    id: 9,
-    type: "single",
-    question: "9.建设全国一体化算力网络，其枢纽布局被概括为（）。",
-    options: [
-      { text: "六大枢纽、八大集群", correct: false },
-      { text: "七大枢纽、九大集群", correct: false },
-      { text: "八大枢纽、十大集群", correct: true },
-      { text: "十大枢纽、八大集群", correct: false }
-    ]
-  },
-  {
-    id: 10,
-    type: "single",
-    question: "10.宝丰集团依托苏银产业园国家零碳园区建设，规划布局的Token智造工厂规模为（）。",
-    options: [
-      { text: "全球最大1-5GW", correct: false },
-      { text: "全球最大5-10GW", correct: true },
-      { text: "全国最大5-10GW", correct: false },
-      { text: "全球最大10-20GW", correct: false }
-    ]
-  },
-  {
-    id: 11,
-    type: "single",
-    question: "11.重点围绕国家综合立体交通网主骨架，建设零碳公路运输通道的长度为（）。",
-    options: [
-      { text: "5000公里", correct: false },
-      { text: "1万公里", correct: false },
-      { text: "3万公里", correct: true },
-      { text: "5万公里", correct: false }
-    ]
-  },
-  {
-    id: 12,
-    type: "single",
-    question: "12.宝丰集团按照国家“十五五”交通运输零碳运输走廊部署，规划建设双向六车道专用物流大通道高速公路，其布局以（）地区为中心。",
-    options: [
-      { text: "宁夏", correct: false },
-      { text: "内蒙古", correct: false },
-      { text: "甘肃", correct: false },
-      { text: "新疆", correct: true }
-    ]
-  }
-];
+      const questions = [
+        {
+          id: 1,
+          type: "single",
+          question:
+            "1.《中共中央国务院关于发展新质生产力的意见》指出，发展新质生产力是推动高质量发展的（）。",
+          options: [
+            { text: "根本动力和主要抓手", correct: false },
+            { text: "战略支撑和关键环节", correct: false },
+            { text: "内在要求和重要着力点", correct: true },
+            { text: "基础条件和根本保障", correct: false },
+          ],
+        },
+        {
+          id: 2,
+          type: "single",
+          question:
+            "2.发展新质生产力，以科技创新为引领，以（）大幅提升为核心标志。",
+          options: [
+            { text: "全社会研发投入", correct: false },
+            { text: "全要素生产率", correct: true },
+            { text: "制造业增加值", correct: false },
+            { text: "高新技术产业产值", correct: false },
+          ],
+        },
+        {
+          id: 3,
+          type: "single",
+          question:
+            "3.发展新质生产力，要坚持创新主导、改革为要、因地制宜、先立后破，坚持（）。",
+          options: [
+            { text: "高速增长、规模扩张、全面布局", correct: false },
+            { text: "智能化、绿色化、融合化", correct: false },
+            { text: "高投入、高产出、高效益", correct: false },
+            { text: "高技术、高效能、高质量", correct: true },
+          ],
+        },
+        {
+          id: 4,
+          type: "single",
+          question:
+            "4.加强原创性颠覆性科技创新，要坚持“四个面向”，下列不属于“四个面向”的是（）。",
+          options: [
+            { text: "面向世界科技前沿", correct: false },
+            { text: "面向经济主战场", correct: false },
+            { text: "面向国际科技合作", correct: true },
+            { text: "面向人民生命健康", correct: false },
+          ],
+        },
+        {
+          id: 5,
+          type: "single",
+          question:
+            "5.强化企业科技创新主体地位，要建立（），强化企业科技投入主导作用。",
+          options: [
+            { text: "企业创新风险补偿机制", correct: false },
+            { text: "企业研发准备金制度", correct: true },
+            { text: "企业技术改造专项基金", correct: false },
+            { text: "企业科技成果转化基金", correct: false },
+          ],
+        },
+        {
+          id: 6,
+          type: "single",
+          question:
+            "6.加速科技成果向现实生产力转化，要以（）引领科研范式变革，助力提升科研效率。",
+          options: [
+            { text: "区块链", correct: false },
+            { text: "大数据", correct: false },
+            { text: "人工智能", correct: true },
+            { text: "量子计算", correct: false },
+          ],
+        },
+        {
+          id: 7,
+          type: "single",
+          question:
+            "7.改造提升传统产业，要巩固提升矿业、冶金、化工、轻工、纺织、机械、船舶、建筑等产业在（）中的地位和竞争力。",
+          options: [
+            { text: "全球产业分工", correct: true },
+            { text: "国内产业分工", correct: false },
+            { text: "区域产业协作", correct: false },
+            { text: "国际产业链上游", correct: false },
+          ],
+        },
+        {
+          id: 8,
+          type: "single",
+          question:
+            "8.培育壮大新兴产业，要深化产业内、产品内专业分工，促进跨行业跨区域融合，避免（）。",
+          options: [
+            { text: "同质化竞争", correct: false },
+            { text: "低水平重复建设", correct: false },
+            { text: "产能过剩", correct: false },
+            { text: "“内卷式”竞争", correct: true },
+          ],
+        },
+        {
+          id: 9,
+          type: "single",
+          question:
+            "9.前瞻布局未来产业，推动量子科技、生物制造、氢能和核聚变能、脑机接口、具身智能、（）等未来产业发展。",
+          options: [
+            { text: "第六代移动通信", correct: true },
+            { text: "第五代移动通信", correct: false },
+            { text: "卫星互联网", correct: false },
+            { text: "元宇宙", correct: false },
+          ],
+        },
+        {
+          id: 10,
+          type: "single",
+          question:
+            "10.全面实施“人工智能+”行动，加快人工智能等数智技术创新，突破基础理论和核心技术，强化（）等高效供给。",
+          options: [
+            { text: "芯片、网络、平台", correct: false },
+            { text: "算力、算法、数据", correct: true },
+            { text: "人才、资金、场景", correct: false },
+            { text: "数据、标准、算力", correct: false },
+          ],
+        },
+        {
+          id: 11,
+          type: "single",
+          question:
+            "11.构建绿色低碳循环发展经济体系，要坚持源头减量、过程控制、末端高效治理相结合，建设一批（）。",
+          options: [
+            { text: "绿色工厂和绿色园区", correct: false },
+            { text: "低碳社区和园区", correct: false },
+            { text: "零碳工厂和园区", correct: true },
+            { text: "循环经济示范园区", correct: false },
+          ],
+        },
+        {
+          id: 12,
+          type: "single",
+          question:
+            "12.健全生态产品价值实现机制，全面实施（）双控制度，加快健全碳排放统计核算体系。",
+          options: [
+            { text: "污染物排放总量和浓度", correct: false },
+            { text: "能耗总量和强度", correct: false },
+            { text: "用水总量和强度", correct: false },
+            { text: "碳排放总量和强度", correct: true },
+          ],
+        },
+        {
+          id: 13,
+          type: "single",
+          question:
+            "13.加大金融创新产品供给，要完善长期资本投早、投小、投长期、（）的支持政策，壮大耐心资本。",
+          options: [
+            { text: "投基础设施", correct: false },
+            { text: "投绿色产业", correct: false },
+            { text: "投硬科技", correct: true },
+            { text: "投民生领域", correct: false },
+          ],
+        },
+        {
+          id: 14,
+          type: "single",
+          question:
+            "14.深化人才工作机制创新，要健全（）职业技能等级制度，畅通产业工人向上发展通道。",
+          options: [
+            { text: "“新八级工”", correct: true },
+            { text: "“八级工”", correct: false },
+            { text: "“首席技师”", correct: false },
+            { text: "“技能等级认定”", correct: false },
+          ],
+        },
+        {
+          id: 15,
+          type: "single",
+          question:
+            "15.加强组织实施，要坚持先立后破、稳中求进，不能脱实向虚、贪大求全、搞泡沫化，不能出现（）现象。",
+          options: [
+            { text: "低端锁定", correct: false },
+            { text: "产业空心化或产业断层", correct: true },
+            { text: "产能过剩", correct: false },
+            { text: "同质化竞争", correct: false },
+          ],
+        },
+      ];
       // 当前显示的题目ID
       let currentQuestionId = 0;
       let currentSlideIndex = 0;
@@ -1763,4 +1811,3 @@ const questions = [
     <!-- 分享功能已删除，相关库也已移除 -->
   </body>
 </html>
-
